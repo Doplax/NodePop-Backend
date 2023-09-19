@@ -10,7 +10,7 @@ function Fruta(nombre){
 
 const limon = new Fruta('Limon');
 
-console.log(limon)
+
 
 // limon.saluda()
 
@@ -20,5 +20,11 @@ setTimeout(limon.saluda, 2000);
 // y lo que haya a la izquierda de  ese punto, lo usa como this.
 
 
+//Const saludoDeLimon = limon.saluda.bind(limon);
+const saludoDeLimon = limon.saluda;
+
+// saludoDeLimon()
+saludoDeLimon.call(limon, 'hola', 'que', 'tal')
+saludoDeLimon.apply(limon, ['hola','que','tal'])
 
 
