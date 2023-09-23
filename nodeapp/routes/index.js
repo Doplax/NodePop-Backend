@@ -6,4 +6,8 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+router.get('/facturas', (req, res, next) => {
+  res.send('lista de facturas')
+})
+
 module.exports = router;
