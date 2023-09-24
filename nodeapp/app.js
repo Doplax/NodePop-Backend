@@ -14,6 +14,9 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+
+app.locals.title = 'NodeApp';
+
 // Middleware
 app.use(logger('dev'));
 app.use(express.json());
@@ -21,10 +24,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//app.use((req, res, next) => {
-//  console.log('Ha llegado una petición a', req.url);
-//  next();
-//})
+app.use((req, res, next) => {
+  console.log('Ha llegado una petición a', req.url);
+  next();
+})
 
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
