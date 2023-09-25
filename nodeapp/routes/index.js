@@ -9,11 +9,10 @@ router.get('/', function(req, res, next) {
   res.locals.esPar = (ahora.getSeconds() % 2) === 0 ;
   res.locals.segundoActual = ahora.getSeconds();
 
-  res.locals.usuarios = [
-    {nombre: 'Smith' , edad:37},
-    {nombre: 'Pedro' , edad:32}
-
-  ]
+  //res.locals.usuarios = [
+  //  {nombre: 'Smith' , edad:37},
+  //  {nombre: 'Pedro' , edad:32}
+  //]
 
   res.render('index') // Sin esto no cargará la página
 });
@@ -36,9 +35,12 @@ router.get('/parametro_opcional:numero?', (req, res, next) => {
 //GET /producto/:nombre/talla/:talla/color/:color
 router.get('/producto/:nombre/talla/:talla/color/:color',(req, res, next) => {
   console.log(req.params);
-  const nombre = req.params.nombre;
-  const talla = req.params.talla;
-  const color = req.params.color;
+  //const nombre = req.params.nombre;
+  //const talla = req.params.talla;
+  //const color = req.params.color;
+
+  const { nombre, talla, color } = req.params // Asi nos ahorramos las 3 lineas de arriba
+
   res.send(`Me pediste ${nombre} talla ${talla} color ${color}`);
 
 }); 
