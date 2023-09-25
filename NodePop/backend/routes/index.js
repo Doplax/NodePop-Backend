@@ -43,4 +43,12 @@ router.get('/producto/:nombre/talla/:talla/color/:color',(req, res, next) => {
 
 }); 
 
+
+
+
+// Pruea
+router.get('/prueba',(req,res, next) =>{
+  console.log(req);
+  res.json("Soy una prueba")
+});
 module.exports = router;
