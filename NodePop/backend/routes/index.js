@@ -37,7 +37,7 @@ router.get('/parametro_opcional:numero?', (req, res, next) => {
 router.get('/producto/:nombre/talla/:talla/color/:color',(req, res, next) => {
   console.log(req.params);
   const nombre = req.params.nombre;
-  const talla = req.params.talla;
+  const talla = req.params.talla; 
   const color = req.params.color;
   res.send(`Me pediste ${nombre} talla ${talla} color ${color}`);
 
@@ -47,7 +47,7 @@ router.get('/producto/:nombre/talla/:talla/color/:color',(req, res, next) => {
 
 
 // Pruea
-router.get('/prueba',(req,res, next) =>{
+router.get('/products',(req,res, next) =>{
   console.log(req);
   res.json("Soy una prueba")
 });
