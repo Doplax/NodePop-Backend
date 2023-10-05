@@ -4,8 +4,12 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+require('./lib/connectMongoose');
 
-
+const Agente = require('./models/Agente')
+const agentes = Agente.find().then((results) => {
+  console.log(results);
+}).catch((err) => console.log(err));
 
 
 

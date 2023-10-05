@@ -35,18 +35,12 @@ router.get('/parametro_opcional:numero?', (req, res, next) => {
 //GET /producto/:nombre/talla/:talla/color/:color
 router.get('/producto/:nombre/talla/:talla/color/:color',(req, res, next) => {
   console.log(req.params);
-<<<<<<< HEAD:nodeapp/routes/index.js
   //const nombre = req.params.nombre;
   //const talla = req.params.talla;
   //const color = req.params.color;
 
   const { nombre, talla, color } = req.params // Asi nos ahorramos las 3 lineas de arriba
 
-=======
-  const nombre = req.params.nombre;
-  const talla = req.params.talla; 
-  const color = req.params.color;
->>>>>>> 49e0cab5ed54c340ecd0e5ab4c451a20eb106a4a:NodePop/backend/routes/index.js
   res.send(`Me pediste ${nombre} talla ${talla} color ${color}`);
 
 }); 
