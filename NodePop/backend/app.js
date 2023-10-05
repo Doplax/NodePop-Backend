@@ -33,12 +33,24 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+//app.use('/pdfs', express.static(path.join(__dirname, 'public')));
 
-app.use((req, res, next) => {
-  console.log('Ha llegado una petición a', req.url);
-  next();
-})
+//app.use((req, res, next) => {
+//  console.log('Ha llegado una petición a', req.url);
+//  next();
+//})
 
+/**
+ * Rutas del API
+ */
+
+
+app.use('/api/agentes', require('./routes/api/agentes'));
+
+
+/**
+ * Rutas del website
+ */
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
 
