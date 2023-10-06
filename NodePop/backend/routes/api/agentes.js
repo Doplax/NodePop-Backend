@@ -20,7 +20,7 @@ router.get('/', async (req, res, next) => {
         // 'Agente.find()' busca todos los documentos en la colección de agentes.
         const agentes = await Agente.find();
 
-        throw new Error('fallo forzado')
+        //throw new Error('fallo forzado')
 
         // Enviamos los resultados como una respuesta JSON.
         res.json({ results: agentes });
@@ -55,18 +55,51 @@ router.get('/', async (req, res,next) => {
 
 router.put('/:id', async (req, res, next) => {
     try {
-        const id = req.params.id;
-
-        const data = req.body;
-
+        //const id = req.params.id;
+        //const data = req.body
         const agenteActualizado = await Agente.findByIdAndUpdate(id, data, {new: true});
-
         res.json({result: agenteActualizado})
 
     } catch (error) {
         next(error);
     }
 })
+
+// POST /api/agentes
+// Crea un agente
+router.post('/', async (req, res, next) => {
+    try {
+        const agenteData = req.body;
+
+        // creamos una instancia de agente en memoria
+        const agente = new Agente(agenteData);
+
+        // La persisitimos en la BD (guardar)
+        const agenteGuardado = await agente.save();
+        res.json({ result: agenteGuardado})
+
+    } catch (error) {
+        next(error);
+    }
+})
+
+
+// DELETE /api/agentes/(_id)
+// Elimina un agente
+router.delete('/:id', async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        await Agente.deleteOne({_id});
+
+        res.json() // No es necesario que responda nada, con un 200 OK
+
+    } catch (error) {
+        
+    }
+})
+
+
+
 
 // Exportamos el router para que pueda ser usado en otros archivos.
 module.exports = router;
