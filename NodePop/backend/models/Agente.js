@@ -9,8 +9,11 @@ const agenteSchema = mongoose.Schema({
 
 // Tipos de métodos
 // - Estático: Método que está en el modelo (p.e. Agente.lista())
-agenteSchema.statics.lista = function(filtro){
+agenteSchema.statics.lista = function(filtro, skip, limit, sort){
     const query = Agente.find(filtro); //Devuelve un objeto de tipo query que es un thenable
+    query.skip(skip) // Método de mongoDB
+    query.limit(limit);
+    query.sort(sort);
     return query.exec()
 }
 

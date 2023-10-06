@@ -16,12 +16,29 @@ const Agente = require('../../models/Agente');
 router.get('/', async (req, res, next) => {
 
     try {
-
+        // Filtros
+        // http://127.0.0.1:3000/api/agentes?name=Jones
         const filtreByName = req.query.name;
-        // Usamos 'await' para esperar a que se complete la consulta a la base de datos.
-        // 'Agente.find()' busca todos los documentos en la colección de agentes.
-        //const agentes = await Agente.find();
-        const agentes = await Agente.lista({name:filtreByName});
+        const filterByAge = req.query.age;
+        // Paginación
+        // http://127.0.0.1:3000/api/agentes?skip=2&limit=2
+        const skip = req.query.skip;
+        const limit = req.query.limit;
+        // Ordenación
+        const sort = req.query.sort;
+
+
+        const filtro = {}
+
+        if (filtreByName){
+            filtro.name = filtreByName;
+        }
+
+        if (filterByAge){
+            filtro.age = filterByAge;
+        }
+
+        const agentes = await Agente.lista(filtro, skip , limit, sort );
 
 
         //throw new Error('fallo forzado')
