@@ -26,6 +26,8 @@ router.get('/', async (req, res, next) => {
         const limit = req.query.limit;
         // Ordenación
         const sort = req.query.sort;
+        //field selction
+        const fields = req.query.fields;
 
 
         const filtro = {}
@@ -38,7 +40,7 @@ router.get('/', async (req, res, next) => {
             filtro.age = filterByAge;
         }
 
-        const agentes = await Agente.lista(filtro, skip , limit, sort );
+        const agentes = await Agente.lista(filtro, skip , limit, sort, fields );
 
 
         //throw new Error('fallo forzado')
