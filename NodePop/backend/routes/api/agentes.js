@@ -16,9 +16,13 @@ const Agente = require('../../models/Agente');
 router.get('/', async (req, res, next) => {
 
     try {
+
+        const filtreByName = req.query.name;
         // Usamos 'await' para esperar a que se complete la consulta a la base de datos.
         // 'Agente.find()' busca todos los documentos en la colección de agentes.
-        const agentes = await Agente.find();
+        //const agentes = await Agente.find();
+        const agentes = await Agente.lista({name:filtreByName});
+
 
         //throw new Error('fallo forzado')
 
@@ -28,9 +32,7 @@ router.get('/', async (req, res, next) => {
     } catch (err) {
         // Si hay algún error, lo pasamos al siguiente middleware de manejo de errores.
         next(err);
-
     }
-
 });
 
 
