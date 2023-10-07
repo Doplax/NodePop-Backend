@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 
 // Definir el esquema de los agentes
 const agenteSchema = mongoose.Schema({
-    name: String,
-    age: {type : Number, min: 18, max: 120},
+    name: {type: String, index: true }, 
+    age: {type : Number, min: 18, max: 120, indexed: true},
 });
 
 

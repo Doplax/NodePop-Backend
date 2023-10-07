@@ -9,3 +9,5 @@ mongoose.connection.once('open', () => {
 });
 
 mongoose.connect('mongodb://localhost') // No hace falta especificar el puerto? Se supone que si está en el x defecto no
+
+module.exports = mongoose.connection;
