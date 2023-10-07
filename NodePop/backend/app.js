@@ -6,7 +6,8 @@ var logger = require('morgan');
 
 require('./lib/connectMongoose');
 
-const Agente = require('./models/Agente')
+const Agente = require('./models/Agente');
+const basicAuthMiddleware = require('./lib/basicAuthMiddleware');
 const agentes = Agente.find().then((results) => {
   console.log(results);
 }).catch((err) => console.log(err));
@@ -51,7 +52,8 @@ app.use('/api/agentes', require('./routes/api/agentes'));
 /**
  * Rutas del website
  */
-app.use('/', require('./routes/index'));
+// Podemos usar basicAuthMiddleware para proteger las rutas
+app.use('/',basicAuthMiddleware, require('./routes/index'));
 app.use('/users', require('./routes/users'));
 
 // catch 404 and forward to error handler
@@ -75,7 +77,7 @@ app.use(function(err, req, res, next) {
     return; // Para que no se siga ejecutando el código de abajo
   }
 
-  // Set locals, only providing error in development  
+  // Set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 

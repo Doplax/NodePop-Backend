@@ -9,10 +9,10 @@ router.get('/', function(req, res, next) {
   res.locals.esPar = (ahora.getSeconds() % 2) === 0 ;
   res.locals.segundoActual = ahora.getSeconds();
 
-  //res.locals.usuarios = [
-  //  {nombre: 'Smith' , edad:37},
-  //  {nombre: 'Pedro' , edad:32}
-  //]
+  res.locals.usuarios = [
+    {nombre: 'Smith' , edad:37},
+    {nombre: 'Pedro' , edad:32}
+  ]
 
   res.render('index') // Sin esto no cargará la página
 });

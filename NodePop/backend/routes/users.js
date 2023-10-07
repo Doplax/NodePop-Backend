@@ -15,11 +15,8 @@ router.get('/', function(req, res, next) {
   if (filtroName) {
     res.json(usuarios.filter(usuario => usuario.nombre === filtroName))
   } else {
-    res.jaon(usuarios)
+    res.json(usuarios)
   }
-
-  res.json(usuarios); // Hace lo mismo que arriba pero devolviendo un json
-
 });
 
 // POST /users/ (body)
