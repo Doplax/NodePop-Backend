@@ -1,17 +1,16 @@
-// Para resetear la base de datos de la aplicación
 "use strict";
 
-const readline = require("node:readline"); // 'node:' Se usa para especificar que es nativa de node
+const readline = require("node:readline");
+const fs = require("fs").promises; // Asegúrate de añadir esto para leer el archivo JSON
+const path = require("node:path");
 
 const connection = require("./lib/connectMongoose");
-const Agente = require("./models/Agente");
-const { resolve } = require("node:path");
+const Producto = require("./models/Product"); // Cambiado de Agente a Producto
 
 main().catch((err) => console.error(err));
 
 async function main() {
-    // Espero a que se conecte a la base de datos
-    await new Promise(resolve => connection.once('open', resolve)); // Con esto se evita que aparezca este mensaje pegado al de func pregunta()
+    await new Promise(resolve => connection.once('open', resolve));
 
     const borrar = await pregunta(
         "Estas seguro de que quieres borrar la base de datos y cargar datos iniciales?"
@@ -20,47 +19,32 @@ async function main() {
         process.exit();
     }
 
-    // Inicializar la colección de agentes
-    await initAgentes();
+    await initProductos(); // Cambiado de initAgentes a initProductos
 
     await connection.close();
 }
 
-async function initAgentes() {
-  // Borrar todos los documentos de la colección de agentes
-  const deleted = await Agente.deleteMany();
-  console.log(`Eliminados ${deleted.deletedCount} agentes.`);
+async function initProductos() {
+  const deleted = await Producto.deleteMany();
+  console.log(`Eliminados ${deleted.deletedCount} productos.`);
 
-  //Crear agentes iniciales
-  const inserted = await Agente.insertMany([
-    { name: "John", age: 28 },
-    { name: "Jane", age: 45 },
-    { name: "Emily", age: 22 },
-    { name: "Michael", age: 35 },
-    { name: "Sarah", age: 40 },
-    { name: "David", age: 29 },
-    { name: "Lucy", age: 31 },
-    { name: "Daniel", age: 24 },
-    { name: "Sophia", age: 55 },
-    { name: "Jack", age: 18 },
-  ]);
-  console.log(`Creados ${inserted.length} agentes.`);
+  // Lee los datos iniciales desde product-list.json
+  const jsonData = await fs.readFile(path.join(__dirname, "product-list.json"), "utf-8");
+  const productos = JSON.parse(jsonData);
+
+  const inserted = await Producto.insertMany(productos);
+  console.log(`Creados ${inserted.length} productos.`);
 }
 
 function pregunta(texto) {
-  return new Promise(function (resolve, reject) {
-    // Conectart readline con la consola
-    const ifc = readline.createInterface({ // ifc = Interface es un palabra reservada, por eso usamos esta
+  return new Promise(function (resolve) {
+    const ifc = readline.createInterface({
       input: process.stdin,
       output: process.stdout,
     });
     ifc.question(texto, (respuesta) => {
         ifc.close();
-        if (respuesta.toLocaleLowerCase() === 'si') {
-            resolve(true);
-        } else {
-            resolve(false);
-        }
+        resolve(respuesta.toLocaleLowerCase() === 'si');
     });
   });
 }

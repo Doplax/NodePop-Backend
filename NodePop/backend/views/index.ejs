@@ -1,28 +1,43 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <% include cabecera.ejs %>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+<head>
+  <title>Tienda de Productos</title>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/style.css"> 
+</head>
+<body>
 
+  <!-- Cabecera -->
+  <header>
+    <% include header.ejs %>
+  </header>
 
-    <!--<p><%= texto %></p>-->
+  <!-- Contenido principal -->
+  <main>
+    <h1>Bienvenido a nuestra tienda</h1>
+    <section id="products">
+      <h2>Productos destacados</h2>
+    
+      <!-- Bucle a través de la lista de productos -->
+      <% products.forEach((product) => { %>
+        <div class="product-card">
+          <h3 class="product-title"><%= product.nombre %></h3>
+          <% if (product.foto) { %>
+            <img src="<%= product.foto %>" alt="<%= product.nombre %>" class="product-image">
+          <% } %>
+          <p class="product-price">Precio: $<%= product.precio %></p>
+          <% if (product.tags && product.tags.length > 0) { %>
+            <p class="product-tags">Tags: <%= product.tags.join(', ') %></p>
+          <% } %>
+          <p class="product-status">En venta: <%= product.venta ? 'Sí' : 'No' %></p>
+        </div>
+      <% }) %>
+    </section>
+  </main>
 
-    <h2>Condicionales</h2>
-    <% if (esPar) { %>
-      <p>El segundo actual es Par</p>
-    <% } else { %>
-      <p>El segundo acual es Impar</p>
-    <% } %>
-    <p>Segundo actual <%= segundoActual %> </p>
+  <!-- Pie de página -->
+  <footer>
+    <% include footer.ejs %>
+  </footer>
 
-    <h2> Usuarios </h2>
-    <% usuarios.forEach(usuario => { %>
-      <p>El agente <%= usuario.nombre %> tiene <%= usuario.edad %> años</p>
-    <%}) %>
-  </body>
+</body>
 </html>

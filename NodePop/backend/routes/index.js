@@ -1,21 +1,25 @@
 var express = require('express');
 var router = express.Router();
+const Product = require('../models/Product')
+
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.locals.texto = 'Hola';
+router.get('/', async function(req, res, next) {
 
-  const ahora = new Date();
-  res.locals.esPar = (ahora.getSeconds() % 2) === 0 ;
-  res.locals.segundoActual = ahora.getSeconds();
+  try {
+    const products = await Product.find({})
+    res.locals.products = products;
+    res.render('index');
 
-  res.locals.usuarios = [
-    {nombre: 'Smith' , edad:37},
-    {nombre: 'Pedro' , edad:32}
-  ]
+  } catch (err) {
+    next(err)
+  }
 
-  res.render('index') // Sin esto no cargará la página
+
+  //res.render('index') // Sin esto no cargará la página
 });
+
+
 
 router.get('/parametro_en_ruta/:numero', (req, res, next) => {
   const numero = req.params.numero;
@@ -32,7 +36,7 @@ router.get('/parametro_opcional:numero?', (req, res, next) => {
 })// el ? indica que puede venir o no
 
 
-//GET /producto/:nombre/talla/:talla/color/:color
+//GET //http://localhost:3000/producto/zapatos/talla/42/color/rojo
 router.get('/producto/:nombre/talla/:talla/color/:color',(req, res, next) => {
   console.log(req.params);
   //const nombre = req.params.nombre;
@@ -46,11 +50,4 @@ router.get('/producto/:nombre/talla/:talla/color/:color',(req, res, next) => {
 }); 
 
 
-
-
-// Pruea
-router.get('/products',(req,res, next) =>{
-  console.log(req);
-  res.json("Soy una prueba")
-});
 module.exports = router;

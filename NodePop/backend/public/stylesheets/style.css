@@ -1,8 +1,40 @@
+/* Estilo general */
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: Arial, sans-serif;
 }
 
-a {
-  color: #00B7FF;
+/* Estilo para la product card */
+.product-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 300px;
+  padding: 16px;
+  margin: 16px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.product-image {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 16px;
+}
+
+.product-title {
+  font-size: 1.2em;
+  margin-bottom: 8px;
+}
+
+.product-price {
+  color: #e44d26;
+}
+
+.product-tags {
+  font-size: 0.8em;
+  color: #777;
+}
+
+.product-status {
+  font-size: 0.9em;
+  margin-top: 12px;
 }

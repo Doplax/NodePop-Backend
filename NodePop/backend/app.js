@@ -3,21 +3,11 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const basicAuthMiddleware = require('./lib/basicAuthMiddleware');
+const basicAuthMiddleware = require('./lib/basicAuthMiddleware'); // Para control de inicio de sesión
 const swaggerMiddleware = require('./lib/swaggerUIMiddleware');
 
 require('./lib/connectMongoose');
 
-
-//const Agente = require('./models/Agente');
-//const agentes = Agente.find().then((results) => {
-//  console.log(results);
-//}).catch((err) => console.log(err));
-
-
-
-//var indexRouter = ;
-//var usersRouter = ;
 
 var app = express();
 
@@ -36,25 +26,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-//app.use('/pdfs', express.static(path.join(__dirname, 'public')));
 
-//app.use((req, res, next) => {
-//  console.log('Ha llegado una petición a', req.url);
-//  next();
-//})
-
-/**
- * Rutas del API
- */
 app.use('/api-doc', swaggerMiddleware);
-app.use('/api/agentes', require('./routes/api/agentes'));
+app.use('/api/products', require('./routes/api/products'));
 
 
 /**
  * Rutas del website
  */
-// Podemos usar basicAuthMiddleware para proteger las rutas
-app.use('/',basicAuthMiddleware, require('./routes/index'));
+app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
 
 // catch 404 and forward to error handler
