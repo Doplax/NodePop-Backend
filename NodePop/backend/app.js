@@ -3,14 +3,16 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const basicAuthMiddleware = require('./lib/basicAuthMiddleware');
+const swaggerMiddleware = require('./lib/swaggerUIMiddleware');
 
 require('./lib/connectMongoose');
 
-const Agente = require('./models/Agente');
-const basicAuthMiddleware = require('./lib/basicAuthMiddleware');
-const agentes = Agente.find().then((results) => {
-  console.log(results);
-}).catch((err) => console.log(err));
+
+//const Agente = require('./models/Agente');
+//const agentes = Agente.find().then((results) => {
+//  console.log(results);
+//}).catch((err) => console.log(err));
 
 
 
@@ -44,8 +46,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 /**
  * Rutas del API
  */
-
-
+app.use('/api-doc', swaggerMiddleware);
 app.use('/api/agentes', require('./routes/api/agentes'));
 
 
