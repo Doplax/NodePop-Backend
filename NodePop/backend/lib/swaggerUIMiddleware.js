@@ -9,6 +9,7 @@ const options = {
             description: 'API de agentes'
         },
     },
+    //apis: ['swagger.yml'], // Para cogerla del documnento
     apis: ['./routes/*.js'], // O la ruta donde tienes tus definiciones de API.
 };
 

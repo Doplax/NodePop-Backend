@@ -11,6 +11,16 @@ const Agente = require('../../models/Agente');
 // Definimos una ruta GET para la raíz ('/') de este router.
 // Usamos 'async' porque vamos a hacer operaciones asíncronas dentro de esta función.
 
+/**
+ * @openapi
+ * /api/agentes:
+ * get:
+ *   description: Devuelve la lista de agetes/
+ *   responses:
+ *      200:
+ *      description: Devuelve JSON
+ */
+
 // GET api/agentes
 // Devuelve ;una lista de agentes
 router.get('/', async (req, res, next) => {
