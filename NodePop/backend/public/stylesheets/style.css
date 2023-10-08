@@ -1,9 +1,57 @@
 /* Estilo general */
 body {
   font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
+
+#main {
+  display: flex;
+  justify-content: center;
+}
+
+
+/* Formulario */
+/* Estilo para el formulario en general */
+.filter-form {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Estilo para los campos de input */
+.filter-input {
+  width: 30%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Estilo para el botón */
+.filter-button {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.filter-button:hover {
+  background-color: #0056b3;
+}
+
+
 /* Estilo para la product card */
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .product-card {
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -37,4 +85,54 @@ body {
 .product-status {
   font-size: 0.9em;
   margin-top: 12px;
+}
+
+
+
+/* Create Product Form */
+.create-product-section {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  max-width: 600px;
+}
+
+/* Style for the section title */
+.create-product-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Style for the form */
+.create-product-form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Style for the form input fields */
+.create-product-input {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Style for the label for the 'For Sale' input field */
+.create-product-label {
+  margin-bottom: 10px;
+}
+
+/* Style for the submit button */
+.create-product-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.create-product-button:hover {
+  background-color: #0056b3;
 }

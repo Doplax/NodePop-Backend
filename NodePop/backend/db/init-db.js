@@ -4,8 +4,8 @@ const readline = require("node:readline");
 const fs = require("fs").promises; // Asegúrate de añadir esto para leer el archivo JSON
 const path = require("node:path");
 
-const connection = require("./lib/connectMongoose");
-const Producto = require("./models/Product"); // Cambiado de Agente a Producto
+const connection = require("../lib/connectMongoose");
+const Producto = require("../models/Product"); // Cambiado de Agente a Producto
 
 main().catch((err) => console.error(err));
 

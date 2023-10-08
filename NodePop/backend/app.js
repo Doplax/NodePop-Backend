@@ -3,7 +3,9 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const basicAuthMiddleware = require('./lib/basicAuthMiddleware'); // Para control de inicio de sesión
+const cors = require('cors');
+
+//const basicAuthMiddleware = require('./lib/basicAuthMiddleware'); // Para control de inicio de sesión
 const swaggerMiddleware = require('./lib/swaggerUIMiddleware');
 
 require('./lib/connectMongoose');
@@ -21,21 +23,30 @@ app.set('view engine', 'ejs');
 app.locals.title = 'NodeApp';
 
 // Middleware
+app.use(cors());
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  next();
+});
+
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api-doc', swaggerMiddleware);
-app.use('/api/products', require('./routes/api/products'));
+
 
 
 /**
  * Rutas del website
  */
 app.use('/', require('./routes/index'));
-app.use('/users', require('./routes/users'));
+app.use('/create-product', require('./routes/createProduct'));
+
+app.use('/api-doc', swaggerMiddleware);
+app.use('/api/products', require('./routes/api/products'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

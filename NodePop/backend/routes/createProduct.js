@@ -6,10 +6,7 @@ const Product = require('../models/Product')
 /* GET home page. */
 router.get('/', async function(req, res, next) {
   try {
-    const products = await Product.find({})
-    res.locals.products = products;
-    res.render('index');
-
+    res.render('../views/createProduct.ejs');
   } catch (err) {
     next(err)
   }

@@ -3,6 +3,9 @@
 <head>
   <title>Tienda de Productos</title>
   <link rel="stylesheet" type="text/css" href="/stylesheets/style.css"> 
+  <link rel="stylesheet" type="text/css" href="/stylesheets/header.css"> 
+  <link rel="stylesheet" type="text/css" href="/stylesheets/footer.css"> 
+
 </head>
 <body>
 
@@ -11,26 +14,35 @@
     <% include header.ejs %>
   </header>
 
+  <!-- Filtro -->
+  <form id="filter-form" class="filter-form">
+    <input type="text" name="nombre" placeholder="Nombre" class="filter-input">
+    <input type="number" name="precioMin" placeholder="Precio mínimo" class="filter-input">
+    <input type="number" name="precioMax" placeholder="Precio máximo" class="filter-input">
+    <button type="submit" class="filter-button">Aplicar Filtros</button>
+</form>
+
+
   <!-- Contenido principal -->
-  <main>
-    <h1>Bienvenido a nuestra tienda</h1>
+  <main id="main">
     <section id="products">
-      <h2>Productos destacados</h2>
+      <div class="container">
+        <!-- Bucle a través de la lista de productos -->
+        <% products.forEach((product) => { %>
+          <div class="product-card">
+            <h3 class="product-title"><%= product.nombre %></h3>
+            <% if (product.foto) { %>
+              <img src="<%= product.foto %>" alt="<%= product.nombre %>" class="product-image">
+            <% } %>
+            <p class="product-price">Precio: $<%= product.precio %></p>
+            <% if (product.tags && product.tags.length > 0) { %>
+              <p class="product-tags">Tags: <%= product.tags.join(', ') %></p>
+            <% } %>
+            <p class="product-status">En venta: <%= product.venta ? 'Sí' : 'No' %></p>
+          </div>
+        <% }) %>
+      </div>
     
-      <!-- Bucle a través de la lista de productos -->
-      <% products.forEach((product) => { %>
-        <div class="product-card">
-          <h3 class="product-title"><%= product.nombre %></h3>
-          <% if (product.foto) { %>
-            <img src="<%= product.foto %>" alt="<%= product.nombre %>" class="product-image">
-          <% } %>
-          <p class="product-price">Precio: $<%= product.precio %></p>
-          <% if (product.tags && product.tags.length > 0) { %>
-            <p class="product-tags">Tags: <%= product.tags.join(', ') %></p>
-          <% } %>
-          <p class="product-status">En venta: <%= product.venta ? 'Sí' : 'No' %></p>
-        </div>
-      <% }) %>
     </section>
   </main>
 
@@ -38,6 +50,52 @@
   <footer>
     <% include footer.ejs %>
   </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.getElementById('filter-form');
+    
+      form.addEventListener('submit', function(event) {
+        event.preventDefault();
+    
+        let queryParameters = [];
+        for (const [key, value] of new FormData(form)) {
+          if (value) {
+            queryParameters.push(`${key}=${value}`);
+          }
+        }
+    
+        const queryString = queryParameters.join('&');
+        fetch(`/api/products?${queryString}`)
+          .then(response => response.json())
+          .then(data => {
+            const container = document.querySelector('.container');
+            container.innerHTML = '';
+          
+            data.forEach(product => {
+              const productImage = product.foto ? `<img class="product-image" src="${product.foto}" alt="${product.nombre}">` : '';
+              const productTags = product.tags && product.tags.length > 0 ? `<p class="product-tags">Tags: ${product.tags.join(', ')}</p>` : '';
+    
+              const productCard = `
+                <div class="product-card">
+                  <h3 class="product-title">${product.nombre}</h3>
+                  <p class="product-price">Precio: $${product.precio}</p>
+                  <p class="product-status">En venta: ${product.venta ? 'Sí' : 'No'}</p>
+                  ${productImage}
+                  ${productTags}
+                </div>
+              `;
+    
+              container.insertAdjacentHTML('beforeend', productCard);
+            });
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+      });
+    });
+    
+  </script>
 
 </body>
 </html>
