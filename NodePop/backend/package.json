@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "dev": "cross-env DEBUG=nodeapp:* nodemon ./bin/www",
-    "init-db": "node ./db/init-db.js"
+    "init-db": "node ./db/init-db.js",
+    "init-docker": "docker-compose up -d"
   },
   "dependencies": {
     "basic-auth": "^2.0.1",

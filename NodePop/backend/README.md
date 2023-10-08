@@ -1,5 +1,4 @@
 # NodePop
-
 Website and API application.
 
 ## Install

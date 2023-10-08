@@ -1,106 +1,142 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Tienda de Productos</title>
-  <link rel="stylesheet" type="text/css" href="/stylesheets/style.css"> 
-  <link rel="stylesheet" type="text/css" href="/stylesheets/header.css"> 
-  <link rel="stylesheet" type="text/css" href="/stylesheets/footer.css"> 
+  <head>
+    <title>Tienda de Productos</title>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/header.css" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/footer.css" />
+  </head>
+  <body>
+    <!-- Cabecera -->
+    <header>
+      <% include header.ejs %>
+    </header>
 
-</head>
-<body>
+    <!-- Filtro -->
+    <form id="filter-form" class="filter-form">
+      <input
+        type="text"
+        name="nombre"
+        placeholder="Product Name"
+        class="filter-input"
+      />
+      <input
+        type="number"
+        name="minPrice"
+        placeholder="mín price"
+        class="filter-input"
+      />
+      <input
+        type="number"
+        name="maxPrice"
+        placeholder="máx price"
+        class="filter-input"
+      />
+      <select name="sort" class="filter-input">
+        <option value="">Order By</option>
+        <option value="asc">Ascending Price</option>
+        <option value="desc">Descending Price</option>
+      </select>
+      <button type="submit" class="filter-button">Apply filters</button>
+    </form>
 
-  <!-- Cabecera -->
-  <header>
-    <% include header.ejs %>
-  </header>
+    <!-- Contenido principal -->
+    <main id="main">
+      <section id="products">
+        <div class="container">
+          <!-- Donde se cargan los productos -->
+        </div>
+      </section>
+    </main>
 
-  <!-- Filtro -->
-  <form id="filter-form" class="filter-form">
-    <input type="text" name="nombre" placeholder="Nombre" class="filter-input">
-    <input type="number" name="precioMin" placeholder="Precio mínimo" class="filter-input">
-    <input type="number" name="precioMax" placeholder="Precio máximo" class="filter-input">
-    <select name="sort" class="filter-select">
-      <option value="">Order By</option>
-      <option value="asc">Ascending Price</option>
-      <option value="desc">Descending Price</option>
-    </select>
-    <button type="submit" class="filter-button">Apply filters</button>
-</form>
+    <!-- Pie de página -->
+    <footer><% include footer.ejs %></footer>
 
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Función para actualizar la lista de productos
+        const updateProductList = (queryString = "") => {
+          console.log("Fetch de productos...");
+          fetch(`/api/products?${queryString}`)
+            .then((response) => response.json())
+            .then((data) => {
+              const container = document.querySelector(".container");
+              container.innerHTML = "";
 
-  <!-- Contenido principal -->
-  <main id="main">
-    <section id="products">
-      <div class="container">
-        <!-- Bucle a través de la lista de productos -->
-        <% products.forEach((product) => { %>
-          <div class="product-card">
-            <h3 class="product-title"><%= product.nombre %></h3>
-            <% if (product.foto) { %>
-              <img src="<%= product.foto %>" alt="<%= product.nombre %>" class="product-image">
-            <% } %>
-            <p class="product-price">Precio: $<%= product.precio %></p>
-            <% if (product.tags && product.tags.length > 0) { %>
-              <p class="product-tags">Tags: <%= product.tags.join(', ') %></p>
-            <% } %>
-            <p class="product-status">En venta: <%= product.venta ? 'Sí' : 'No' %></p>
-          </div>
-        <% }) %>
-      </div>
-    
-    </section>
-  </main>
+              data.forEach((product) => {
+                const productImage = product.foto
+                  ? `<img class="product-image" src="${product.foto}" alt="${product.nombre}">`
+                  : "";
+                const productTags =
+                  product.tags && product.tags.length > 0
+                    ? `<p class="product-tags">Tags: ${product.tags.join(
+                        ", "
+                      )}</p>`
+                    : "";
 
-  <!-- Pie de página -->
-  <footer>
-    <% include footer.ejs %>
-  </footer>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const form = document.getElementById('filter-form');
-    
-      form.addEventListener('submit', function(event) {
-        event.preventDefault();
-    
-        let queryParameters = [];
-        for (const [key, value] of new FormData(form)) {
-          if (value) {
-            queryParameters.push(`${key}=${value}`);
-          }
-        }
-    
-        const queryString = queryParameters.join('&');
-        fetch(`/api/products?${queryString}`)
-          .then(response => response.json())
-          .then(data => {
-            const container = document.querySelector('.container');
-            container.innerHTML = '';
-          
-            data.forEach(product => {
-              const productImage = product.foto ? `<img class="product-image" src="${product.foto}" alt="${product.nombre}">` : '';
-              const productTags = product.tags && product.tags.length > 0 ? `<p class="product-tags">Tags: ${product.tags.join(', ')}</p>` : '';
-    
-              const productCard = `
+                const productCard = `
                 <div class="product-card">
                   <h3 class="product-title">${product.nombre}</h3>
                   <p class="product-price">Precio: $${product.precio}</p>
-                  <p class="product-status">En venta: ${product.venta ? 'Sí' : 'No'}</p>
+                  <p class="product-status">En venta: ${
+                    product.venta ? "Sí" : "No"
+                  }</p>
                   ${productImage}
                   ${productTags}
+                  <button class="delete-button" data-id="${
+                    product._id
+                  }">Eliminar</button>
                 </div>
               `;
-    
-              container.insertAdjacentHTML('beforeend', productCard);
-            });
-          })
-          .catch(error => {
-            console.error('Error:', error);
-          });
-      });
-    });
-    
-  </script>
 
-</body>
+                container.insertAdjacentHTML("beforeend", productCard);
+              });
+
+              // Vuelve a añadir los event listeners para los botones de eliminar
+              document.querySelectorAll(".delete-button").forEach((button) => {
+                button.addEventListener("click", function (event) {
+                  const productId = event.target.getAttribute("data-id");
+
+                  fetch(`/api/products/${productId}`, {
+                    method: "DELETE",
+                  })
+                    .then((response) => {
+                      console.log(response);
+                    })
+
+                    .catch((error) => {
+                      console.error("Error:", error);
+                    });
+
+                  console.log("El producto:", productId, "ha sido eliminado");
+                  updateProductList(queryString); // Actualiza la lista de productos
+                });
+              });
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+        };
+
+        // Inicializa la lista de productos
+        updateProductList();
+
+        const form = document.getElementById("filter-form");
+
+        form.addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          let queryParameters = [];
+          for (const [key, value] of new FormData(form)) {
+            if (value) {
+              queryParameters.push(`${key}=${value}`);
+            }
+          }
+
+          const queryString = queryParameters.join("&");
+          updateProductList(queryString);
+        });
+      });
+    </script>
+  </body>
 </html>
