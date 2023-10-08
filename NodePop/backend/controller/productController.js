@@ -3,35 +3,45 @@ const Product = require("../models/Product");
 
 
 const getAllProducts = async (req, res, next) => {
-    try {
-      const { nombre, precioMin, precioMax } = req.query;
-      
-      // Create filter object
-      const filter = {};
-  
-      if (nombre) {
-        filter.nombre = new RegExp(nombre, 'i'); // Case-insensitive search
-      }
-      
-      if (precioMin !== undefined) {
-        filter.precio = filter.precio || {};
-        filter.precio.$gte = precioMin; // Greater than or equal to
-      }
-      
-      if (precioMax !== undefined) {
-        filter.precio = filter.precio || {};
-        filter.precio.$lte = precioMax; // Less than or equal to
-      }
-      
-      // Find products with the filter
-      const products = await Product.find(filter);
-      
-      res.json(products);
-    } catch (error) {
-      next(error);
+  try {
+    const { nombre, minPrice, maxPrice, sort } = req.query;
+    
+    // Create filter object
+    const filter = {};
+
+    if (nombre) {
+      filter.nombre = new RegExp(nombre, 'i'); // Case-insensitive search
     }
-  };
-  
+    
+    if (minPrice !== undefined) {
+      filter.precio = filter.precio || {};
+      filter.precio.$gte = minPrice; // Greater than or equal to
+    }
+    
+    if (maxPrice !== undefined) {
+      filter.precio = filter.precio || {};
+      filter.precio.$lte = maxPrice; // Less than or equal to
+    }
+
+     // Options for sorting
+     const sortOptions = {};
+     if (sort === 'asc') {
+       sortOptions.precio = 1; // ascending
+     } else if (sort === 'desc') {
+       sortOptions.precio = -1; // descending
+     }
+    
+    // Find products with the filter
+    const products = await Product
+                                .find(filter)
+                                .sort(sortOptions);
+    
+    res.json(products);
+  } catch (error) {
+    next(error);
+  }
+};
+
 
 // CREATE: Añadir un nuevo producto
 const createProduct = async (req, res, next) => {
