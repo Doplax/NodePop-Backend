@@ -29,19 +29,11 @@ npm run dev
 ```
 
 
-
-
 ## API Endpoints
+Available endpoints
+- GET /api/api/products: Get all products.
+- GET /api/products/:id: Get a product by ID.
+- POST /api/products: Create a new product.
+- PUT /api/products/:id: Update an existing product.
+- DELETE /api/products/:id: Delete a product.
 
-
-### GET /api/agentes
-```json
-{
-    "result": {
-        "name": "Pedrito",
-        "age": 55,
-        "_id": "651fb6ce85ea8baad9e52035",
-        "__v": 0
-    }
-}
-```
