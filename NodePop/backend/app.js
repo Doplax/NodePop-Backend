@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');
+const i18n = require('i18n');
 
 //const basicAuthMiddleware = require('./lib/basicAuthMiddleware'); // Para control de inicio de sesión
 const swaggerMiddleware = require('./lib/swaggerUIMiddleware');
@@ -42,9 +43,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 /**
  * Rutas del website
  */
+app.use(i18n.init)
 app.use('/', require('./routes/index'));
 app.use('/create-product', require('./routes/createProduct'));
 
+// catch 404 and forward to error handler
 app.use('/api-doc', swaggerMiddleware);
 app.use('/api/products', require('./routes/api/products'));
 

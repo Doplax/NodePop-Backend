@@ -23,6 +23,10 @@ if (cluster.isPrimary) {
   // 
   cluster.on('exit',(worker, code, signal )=>{
     console.log(`Worker ${worker.id}con PID ${worker.process.pid} se ha parado con codigo ${code} y signal ${signal}`);
+    
+    
+    console.log('Arrancando otro worker'); // Con esto hacemos que siempre que caida un worker se vuelva a levantar otro
+    cluster.fork();
 
   })
   // si soy primary no hago nada más
