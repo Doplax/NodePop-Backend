@@ -17,12 +17,12 @@ if (cluster.isPrimary) {
   
   // Nos subscibimos al evento indicado, en este caso escucha peticiones
   cluster.on('listening',(worker,address) =>{
-    console.log(`Worker ${worker.id} arrancando con PID: ${worker.process.pid}`);
+    //console.log(`Worker ${worker.id} arrancando con PID: ${worker.process.pid}`);
   } )
 
   // 
   cluster.on('exit',(worker, code, signal )=>{
-    console.log(`Worker ${worker.id}con PID ${worker.process.pid} se ha parado con codigo ${code} y signal ${signal}`);
+    //console.log(`Worker ${worker.id}con PID ${worker.process.pid} se ha parado con codigo ${code} y signal ${signal}`);
     
     
     console.log('Arrancando otro worker'); // Con esto hacemos que siempre que caida un worker se vuelva a levantar otro

@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "dev": "cross-env DEBUG=nodeapp:* nodemon ./bin/www",
+    "dev:cluster": "cross-env DEBUG=nodeapp:* nodemon ./bin/cluster",
     "init-db": "node ./db/init-db.js",
     "init-docker": "docker-compose up -d"
   },
@@ -17,6 +18,7 @@
     "ejs": "~2.6.1",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
+    "i18n": "^0.15.1",
     "mongoose": "^7.5.4",
     "morgan": "~1.9.1",
     "swagger-jsdoc": "^6.2.8",
