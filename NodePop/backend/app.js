@@ -6,6 +6,7 @@ var logger = require('morgan');
 const cors = require('cors');
 const i18n = require('./lib/i18nConfigure');
 const FeaturesController = require('./controller/FeaturesController')
+const LangController = require('./controller/LangController')
 
 require('./lib/connectMongoose')
 
@@ -49,10 +50,14 @@ app.use(express.static(path.join(__dirname, 'public')));
  */
 
 const featuresController = new FeaturesController();
+const langController = new LanguagesController();
 
 app.use(i18n.init)
 app.use('/', require('./routes/index'));
 app.get('/features', featuresController.index)
+app.get('/change-locale', langController.changeLocale)
+
+
 //app.use('/create-product', require('./routes/createProduct'));
 
 // catch 404 and forward to error handler
