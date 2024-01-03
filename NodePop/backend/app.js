@@ -5,6 +5,10 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');
 const i18n = require('./lib/i18nConfigure');
+const FeaturesController = require('./controller/FeaturesController')
+
+require('./lib/connectMongoose')
+
 
 //const basicAuthMiddleware = require('./lib/basicAuthMiddleware'); // Para control de inicio de sesión
 const swaggerMiddleware = require('./lib/swaggerUIMiddleware');
@@ -43,13 +47,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 /**
  * Rutas del website
  */
+
+const featuresController = new FeaturesController();
+
 app.use(i18n.init)
 app.use('/', require('./routes/index'));
-app.use('/create-product', require('./routes/createProduct'));
+app.get('/features', featuresController.index)
+//app.use('/create-product', require('./routes/createProduct'));
 
 // catch 404 and forward to error handler
-app.use('/api-doc', swaggerMiddleware);
-app.use('/api/products', require('./routes/api/products'));
+//app.use('/api-doc', swaggerMiddleware);
+//app.use('/api/products', require('./routes/api/products'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
