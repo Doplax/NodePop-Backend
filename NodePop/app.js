@@ -74,12 +74,17 @@ app.use(session({
   store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI})
 }));
 
-
+// Hacemos que el objeto session esté disponible al renderizar las vistas
+app.use((req,res,next) => {
+  res.locals.session = req.session;
+  next();
+});
 app.use('/', require('./routes/index'));
 app.get('/features', featuresController.index)
 app.get('/change-locale', langController.changeLocale)
 app.get('/login', loginController.index)
 app.post('/login', loginController.post)
+app.get('/logout', logoutController.logout)
 app.get('/privado', sessionAuthMiddleware, privadoController.index)
 
 

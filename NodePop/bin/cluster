@@ -1,4 +1,7 @@
 // MODULE DEPENDENCIES
+require('dotent').congif()
+
+
 var app = require("../app");
 var debug = require("debug")("nodeapp:server");
 var http = require("http");

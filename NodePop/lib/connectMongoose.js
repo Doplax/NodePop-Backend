@@ -8,5 +8,5 @@ mongoose.connection.once('open', () => {
     //console.log('Conectado a MongoDB en', mongoose.connection.name);
 });
 
-mongoose.connect('mongodb://localhost') 
+mongoose.connect(process.enc.MONGODB_URI) 
 module.exports = mongoose.connection;
