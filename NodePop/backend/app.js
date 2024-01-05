@@ -3,16 +3,23 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+
+const session = require('express-session');
+const sessionAuthMiddleware = require('./lib/sessionAuthMiddleware')
 const cors = require('cors');
 const i18n = require('./lib/i18nConfigure');
 const FeaturesController = require('./controller/FeaturesController')
 const LangController = require('./controller/LangController')
+const LoginController = require('./controller/LoginController')
+const PrivadoController = require('./controller/PrivadoController')
+
 
 require('./lib/connectMongoose')
 
 
 //const basicAuthMiddleware = require('./lib/basicAuthMiddleware'); // Para control de inicio de sesión
 const swaggerMiddleware = require('./lib/swaggerUIMiddleware');
+const { Session } = require('inspector');
 
 require('./lib/connectMongoose');
 
@@ -50,12 +57,30 @@ app.use(express.static(path.join(__dirname, 'public')));
  */
 
 const featuresController = new FeaturesController();
-const langController = new LanguagesController();
+const langController = new LangController();
+const loginController = new LoginController();
+const privadoController = new PrivadoController();
 
 app.use(i18n.init)
+
+app.use(session({
+  name: 'nodeapp-session', // nombre de la cookie
+  secret: 'as98987asd98ashiujkasas768tasdgyy',
+  saveUninitialized: true, // Forces a session that is "uninitialized" to be saved to the store
+  resave: false, // Forces the session to be saved back to the session store, even if the session was never modified during the request
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 * 2 // 2d - expiración de la sesión por inactividad
+  },
+  store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI})
+}));
+
+
 app.use('/', require('./routes/index'));
 app.get('/features', featuresController.index)
 app.get('/change-locale', langController.changeLocale)
+app.get('/login', loginController.index)
+app.post('/login', loginController.post)
+app.get('/privado', sessionAuthMiddleware, privadoController.index)
 
 
 //app.use('/create-product', require('./routes/createProduct'));
