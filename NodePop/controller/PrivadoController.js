@@ -15,7 +15,13 @@ class PrivadoController {
             return;
         }
 
-        res.render('privado', {email: usuario.email})
+        // Cargar lista de agentes que percenecen al usuario
+        const agentes = await Agente.find({owner: usuarioId})
+        
+        res.render('privado', {
+            email: usuario.email,
+            agentes: 
+        })
 
     } catch (error) {
             

@@ -37,3 +37,10 @@ Available endpoints
 - PUT /api/products/:id: Update an existing product.
 - DELETE /api/products/:id: Delete a product.
 
+Copy .env.exapmle to yout custom .env.
+
+```sh
+cp .env.example .env
+
+```
+And setup yout configuration.

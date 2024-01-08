@@ -12,6 +12,7 @@ const FeaturesController = require('./controller/FeaturesController')
 const LangController = require('./controller/LangController')
 const LoginController = require('./controller/LoginController')
 const PrivadoController = require('./controller/PrivadoController')
+const AgentesController = require('./controller/AgentesController')
 
 
 require('./lib/connectMongoose')
@@ -60,6 +61,7 @@ const featuresController = new FeaturesController();
 const langController = new LangController();
 const loginController = new LoginController();
 const privadoController = new PrivadoController();
+const agentesController = new AgentesController();
 
 app.use(i18n.init)
 
@@ -86,6 +88,7 @@ app.get('/login', loginController.index)
 app.post('/login', loginController.post)
 app.get('/logout', logoutController.logout)
 app.get('/privado', sessionAuthMiddleware, privadoController.index)
+app.get('/agentes-new', sessionAuthMiddleware, agentesController.new)
 
 
 //app.use('/create-product', require('./routes/createProduct'));
