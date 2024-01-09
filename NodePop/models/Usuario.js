@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const emailTransportConfigure = require('../lib/emailTransportConfigure');
+const nodemailer = require('nodemailer');
 
 // Creacion del esquema
 const usuarioSchema = mongoose.Schema({
@@ -18,6 +20,30 @@ usuarioSchema.methods.comparePassword = function (passwordEnClaro) {
     return bcrypt.compare(passwordEnClaro,this.password)
 }
 
+/** Envía un correo electrónico al usuario.
+ * 
+ * Este método configura un transporte de correo electrónico y luego lo utiliza para
+ * enviar un correo electrónico al usuario con el asunto y cuerpo especificados.
+ * 
+ * @param {string} asunto - El asunto del correo electrónico.
+ * @param {string} cuerpo - El cuerpo del correo electrónico en formato HTML.
+ * @returns {Promise<Object>} Un objeto Promise que resuelve al resultado del envío de correo electrónico.
+ */
+usuarioSchema.methods.sendEmail = async function(asunto, cuerpo){
+    // Crear un Transport
+    const transport = await emailTransportConfigure();
+
+    // enviar email
+    const result = await transport.sendMail({
+        from: process.env.EMAIL_SERVICE_FROM,
+        to: this.email,
+        subject: asunto,
+        html: cuerpo
+    });
+    
+    console.log(`URL de previsualización: ${nodemailer.getTestMessageUrl(result)}`);
+    return result;
+}
 
 // Creamos el modelo
 const Usuario = mongoose.model('Usuario', usuarioSchema);
