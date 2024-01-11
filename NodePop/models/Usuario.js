@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const emailTransportConfigure = require('../lib/emailTransportConfigure');
 const nodemailer = require('nodemailer');
+const canalPromise = require('../lib/rabbitMQLib')
+
+
+
 
 // Creacion del esquema
 const usuarioSchema = mongoose.Schema({
@@ -43,6 +47,28 @@ usuarioSchema.methods.sendEmail = async function(asunto, cuerpo){
     
     console.log(`URL de previsualización: ${nodemailer.getTestMessageUrl(result)}`);
     return result;
+}
+
+// Método para pedir a otro servicio que envie un email (RabbitMQ)
+usuarioSchema.methods.sendEmailRabbitMQ = async function(asunto, cuerpo) {
+    // Cargar modulo de rabbitMQLib y enviamos un mensaje
+    const canal = await canalPromise;
+
+    // Aseuramos que existe el exchange
+    const exchange = 'email-request'
+    await canal.assertExchange(exchange, 'direct', {
+        durable: true // the exchange will survive broker restarts
+    });
+
+
+    const mensaje = {
+        asunto,
+        cuerpo
+    };
+
+    canal.publish(exchange, '*', Buffer.from(JSON.stringify(mensaje)), {
+        persistent: true, // the message will survive broker restarts
+    })
 }
 
 // Creamos el modelo
