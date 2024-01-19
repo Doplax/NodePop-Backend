@@ -20,7 +20,7 @@ class PrivadoController {
         
         res.render('privado', {
             email: usuario.email,
-            agentes: 
+            agentes: agentes
         })
 
     } catch (error) {

@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const MongoStore = require('connect-mongo');
 
 const session = require('express-session');
 const sessionAuthMiddleware = require('./lib/sessionAuthMiddleware')
@@ -86,7 +87,7 @@ app.get('/features', featuresController.index)
 app.get('/change-locale', langController.changeLocale)
 app.get('/login', loginController.index)
 app.post('/login', loginController.post)
-app.get('/logout', logoutController.logout)
+app.get('/logout', loginController.logout)
 app.get('/privado', sessionAuthMiddleware, privadoController.index)
 app.get('/agentes-new', sessionAuthMiddleware, agentesController.new)
 

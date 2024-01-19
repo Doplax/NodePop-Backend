@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-require('dotent').congif()
+require('dotenv').config();
 
 /**
  * Module dependencies.

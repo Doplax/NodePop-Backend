@@ -1,5 +1,5 @@
 // MODULE DEPENDENCIES
-require('dotent').congif()
+require('dotenv').congif()
 
 
 var app = require("../app");
