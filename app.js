@@ -9,11 +9,6 @@ const session = require('express-session');
 const sessionAuthMiddleware = require('./lib/sessionAuthMiddleware')
 const cors = require('cors');
 const i18n = require('./lib/i18nConfigure');
-const FeaturesController = require('./controller/FeaturesController')
-const LangController = require('./controller/LangController')
-const LoginController = require('./controller/LoginController')
-const PrivadoController = require('./controller/PrivadoController')
-const AgentesController = require('./controller/AgentesController')
 
 
 require('./lib/connectMongoose')
@@ -50,6 +45,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(i18n.init)
 
 
 
@@ -58,13 +54,7 @@ app.use(express.static(path.join(__dirname, 'public')));
  * Rutas del website
  */
 
-const featuresController = new FeaturesController();
-const langController = new LangController();
-const loginController = new LoginController();
-const privadoController = new PrivadoController();
-const agentesController = new AgentesController();
 
-app.use(i18n.init)
 
 app.use(session({
   name: 'nodeapp-session', // nombre de la cookie
@@ -82,14 +72,9 @@ app.use((req,res,next) => {
   res.locals.session = req.session;
   next();
 });
-app.use('/', require('./routes/index'));
-app.get('/features', featuresController.index)
-app.get('/change-locale', langController.changeLocale)
-app.get('/login', loginController.index)
-app.post('/login', loginController.post)
-app.get('/logout', loginController.logout)
-app.get('/privado', sessionAuthMiddleware, privadoController.index)
-app.get('/agentes-new', sessionAuthMiddleware, agentesController.new)
+app.use('/', require('./routes'));
+
+
 
 
 //app.use('/create-product', require('./routes/createProduct'));

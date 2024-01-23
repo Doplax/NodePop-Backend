@@ -1,19 +1,24 @@
-var express = require('express');
-var router = express.Router();
-const Product = require('../models/Product')
+const express = require('express');
+const router = express.Router();
+const fs = require('fs');
+const PATH_ROUTES = __dirname
 
+const removeFileExtension = (fileName) => {
+    return fileName.split('.').shift()
+}
 
-/* GET home page. */
-router.get('/', async function(req, res, next) {
-  try {
-    const products = await Product.find({})
-    res.locals.products = products;
-    res.render('index');
+fs.readdirSync(PATH_ROUTES).filter((file) => {
+    const name = removeFileExtension(file)
+    if (name !== 'index') {
 
-  } catch (err) {
-    next(err)
-  }
+        console.log('cargando indice de la ruta....');
+        router.use(`/${name}`,require(`./${file}`))
+    } else {
 
+    }
 })
 
-module.exports = router;
+
+
+
+module.exports = router
