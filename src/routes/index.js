@@ -11,14 +11,11 @@ fs.readdirSync(PATH_ROUTES).filter((file) => {
     const name = removeFileExtension(file)
     if (name !== 'index') {
 
-        console.log('cargando indice de la ruta....');
+        console.log(`cargando indice de la ruta: /${name} - /${file}`)
         router.use(`/${name}`,require(`./${file}`))
     } else {
 
     }
 })
-
-
-
 
 module.exports = router

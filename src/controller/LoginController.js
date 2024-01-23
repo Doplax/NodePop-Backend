@@ -1,12 +1,12 @@
-const jwt = require('jsonwebtoken');
-const Usuario = require('../models/Usuario');
+const jwt = require("jsonwebtoken");
+const Usuario = require("../models/Usuario");
 
 class LoginController {
-
   index(req, res, next) {
-    res.locals.error = '';
-    res.locals.email = '';
-    res.render('login');
+    res.locals.error = "";
+    res.locals.email = "";
+    console.log("login");
+    res.render("login");
   }
 
   async post(req, res, next) {
@@ -17,10 +17,10 @@ class LoginController {
       const usuario = await Usuario.findOne({ email: email });
 
       // si no lo encuentro o la contraseña no coincide --> error
-      if (!usuario || !(await usuario.comparePassword(password)) ) {
-        res.locals.error = req.__('Invalid credentials');
+      if (!usuario || !(await usuario.comparePassword(password))) {
+        res.locals.error = req.__("Invalid credentials");
         res.locals.email = email;
-        res.render('login');
+        res.render("login");
         return;
       }
 
@@ -30,26 +30,24 @@ class LoginController {
 
       // enviar email al usuario
       // usuario.sendEmail('Bienvenido', 'Bienvenido a NodeApp');
-       usuario.sendEmailRabbitMQ('Bienvenido', 'Bienvenido a NodeApp');
+      usuario.sendEmailRabbitMQ("Bienvenido", "Bienvenido a NodeApp");
       //const result = await usuario.sendEmailCote('Bienvenido', 'Bienvenido a NodeApp');
       //console.log(result);
 
-      res.redirect('/privado');
-
+      res.redirect("/privado");
     } catch (err) {
       next(err);
     }
-
   }
 
   logout(req, res, next) {
-    req.session.regenerate(err => {
+    req.session.regenerate((err) => {
       if (err) {
         next(err);
         return;
       }
-      res.redirect('/');
-    })
+      res.redirect("/");
+    });
   }
 
   async postJWT(req, res, next) {
@@ -60,24 +58,24 @@ class LoginController {
       const usuario = await Usuario.findOne({ email: email });
 
       // si no lo encuentro o la contraseña no coincide --> error
-      if (!usuario || !(await usuario.comparePassword(password)) ) {
-        res.json({ error: 'Invalid credentials' });
+      if (!usuario || !(await usuario.comparePassword(password))) {
+        res.json({ error: "Invalid credentials" });
         return;
       }
 
       // si existe y la contraseña coincide --> devuelvo un JWT
-      const tokenJWT = await jwt.sign({ _id: usuario._id }, process.env.JWT_SECRET, {
-        expiresIn: '2h'
-      });
+      const tokenJWT = await jwt.sign(
+        { _id: usuario._id },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: "2h",
+        }
+      );
       res.json({ jwt: tokenJWT });
-
     } catch (err) {
       next(err);
     }
-
   }
-
-
 }
 
 module.exports = LoginController;

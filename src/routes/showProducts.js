@@ -7,6 +7,7 @@ const Product = require('../models/Product')
 router.get('/', async function(req, res, next) {
   try {
     const products = await Product.find({})
+    console.log('index');
     res.locals.products = products;
     res.render('index');
 

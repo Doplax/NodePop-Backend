@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "cross-env node NODE_ENV=production ./bin/www",
-    "dev": "cross-env NODE_ENV=development DEBUG=nodeapp:* nodemon ./bin/www",
+    "start": "cross-env NODE_ENV=production node ./bin/www",
+    "dev": "cross-env NODE_ENV=development DEBUG=nodeapp:* nodemon ./src/bin/www",
     "dev:cluster": "cross-env DEBUG=nodeapp:* nodemon ./bin/cluster",
     "init-db": "node ./db/init-db.js",
     "init-docker": "docker-compose up -d",
