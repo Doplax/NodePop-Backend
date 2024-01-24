@@ -4,9 +4,10 @@ const Product = require('../models/Product')
 
 
 /* GET home page. */
-router.get('/create-product', async function(req, res, next) {
+router.get('/', async function(req, res, next) {
   try {
-    res.render('../views/createProduct.ejs');
+    console.log('create product');
+    res.render('createProduct');
   } catch (err) {
     next(err)
   }
