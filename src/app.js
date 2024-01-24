@@ -19,15 +19,21 @@ require("./lib/connectMongoose");
 const app = express();
 
 // view engine setup
-app.set("views", path.join(__dirname, "./views"));
+app.set("views", path.join(__dirname, "/views"));
 app.set("view engine", "ejs");
+
+
 
 app.locals.title = "NodeApp";
 
 // Middleware
 app.use(cors());
+
+app.use(express.static(path.join(__dirname, '../public')));
+console.log('PUBLIC',path.join(__dirname, "/public")); 
+
 //app.use((req, res, next) => {
-//  res.setHeader('X-Content-Type-Options', 'nosniff');
+  //  res.setHeader('X-Content-Type-Options', 'nosniff');
 //  next();
 //});
 
@@ -35,7 +41,6 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static("../public"));
 app.use(i18n.init);
 
 //app.use(session({
@@ -58,8 +63,8 @@ app.use(i18n.init);
 /**
  * Rutas del website
  */
-app.use("/", require("./routes/showProducts"));
-app.use("/api", require("./routes/api/products"));
+app.use("/", require("./routes"));
+app.use("/api", require("./routes/api"));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
