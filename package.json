@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "cross-env NODE_ENV=production node ./bin/www",
+    "start": "cross-env NODE_ENV=production node ./src/bin/www",
     "dev": "cross-env NODE_ENV=development DEBUG=nodeapp:* nodemon ./src/bin/www",
-    "dev:cluster": "cross-env DEBUG=nodeapp:* nodemon ./bin/cluster",
-    "init-db": "node ./db/init-db.js",
+    "dev:cluster": "cross-env DEBUG=nodeapp:* nodemon ./src/bin/cluster",
+    "init-db": "node ./src/db/init-db.js",
     "init-docker": "docker-compose up -d",
     "email-sender-service": "node ./micro-services/emailSender.js"
   },

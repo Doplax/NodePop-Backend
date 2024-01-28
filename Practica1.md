@@ -7,12 +7,12 @@ Desarrollo de la API para el servicio de venta de artículos de segunda mano "No
 ### Tareas
 
 - [ ] **Configuración Inicial**
-  - [ ] Crear app Express y probarla (`npx express-generator nodepop --ejs`).
-  - [ ] Instalar Mongoose y probar el modelo de anuncios (ej. `anuncio.save`).
+  - [ x ] Crear app Express y probarla (`npx express-generator nodepop --ejs`).
+  - [ x ] Instalar Mongoose y probar el modelo de anuncios (ej. `anuncio.save`).
 
 - [ ] **Inicialización de Base de Datos**
-  - [ ] Crear script de inicialización de la base de datos (`initDB.js`).
-  - [ ] Configurar `initDB.js` para borrar tablas y cargar anuncios usando `deleteMany` e `insertMany`.
+  - [ x ] Crear script de inicialización de la base de datos (`initDB.js`).
+  - [ x ] Configurar `initDB.js` para borrar tablas y cargar anuncios usando `deleteMany` e `insertMany`.
 
 - [ ] **Documentación y README**
   - [ ] Crear un fichero `README.md` con instrucciones de uso.
