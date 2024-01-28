@@ -1,11 +1,9 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const LangController = require('./../controller/LangController')
+const LangController = require("./../controller/LangController");
 
 const langController = new LangController();
 
-
-router.get('/change-locale', langController.changeLocale)
-
+router.get("/change-locale", langController.changeLocale);
 
 module.exports = router;

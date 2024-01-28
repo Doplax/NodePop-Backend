@@ -3,10 +3,14 @@
         "browser": true,
         "es2021": true
     },
-    "extends": "standard",
+    "extends": ["standard", "prettier"],
     "parserOptions": {
         "ecmaVersion": "latest"
     },
+    "plugins": ["prettier"],
     "rules": {
+        "prettier/prettier": "error",
+        "spaced-comment": "off"
+
     }
 }

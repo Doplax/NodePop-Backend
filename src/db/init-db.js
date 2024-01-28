@@ -1,23 +1,21 @@
-'use strict';
+"use strict";
 
-require('dotenv').config();
+require("dotenv").config();
 
-const readline = require('node:readline');
-const connection = require('./../lib/connectMongoose');
+const readline = require("node:readline");
+const connection = require("./../lib/connectMongoose");
 
-const { Agente, Usuario } = require('./../models');
+const { Agente, Usuario } = require("./../models");
 
-
-main().catch(err => console.log('Hubo un error', err));
+main().catch((err) => console.log("Hubo un error", err));
 
 async function main() {
-
   // espero a que se conecte a la base de datos
-  await new Promise(resolve => connection.once('open', resolve))
+  await new Promise((resolve) => connection.once("open", resolve));
 
   const borrar = await pregunta(
-    'Estas seguro de que quieres borrar la base de datos y cargar datos iniciales?'
-  )
+    "Estas seguro de que quieres borrar la base de datos y cargar datos iniciales?",
+  );
   if (!borrar) {
     process.exit();
   }
@@ -34,16 +32,16 @@ async function initAgentes() {
   const deleted = await Agente.deleteMany();
   console.log(`Eliminados ${deleted.deletedCount} agentes.`);
 
-  const [ adminUser, usuario1User ] = await Promise.all([
-    Usuario.findOne({ email: 'admin@example.com'}),
-    Usuario.findOne({ email: 'usuario1@example.com' })
-  ])
+  const [adminUser, usuario1User] = await Promise.all([
+    Usuario.findOne({ email: "admin@example.com" }),
+    Usuario.findOne({ email: "usuario1@example.com" }),
+  ]);
 
   // crear agentes iniciales
   const inserted = await Agente.insertMany([
-    { "name": "Smith", "age": 33, owner: adminUser._id },
-    { "name": "Jones", "age": 23, owner: adminUser._id },
-    { "name": "Brown", "age": 46, owner: usuario1User._id }
+    { name: "Smith", age: 33, owner: adminUser._id },
+    { name: "Jones", age: 23, owner: adminUser._id },
+    { name: "Brown", age: 46, owner: usuario1User._id },
   ]);
   console.log(`Creados ${inserted.length} agentes.`);
 }
@@ -55,10 +53,16 @@ async function initUsuarios() {
 
   // crear
   const inserted = await Usuario.insertMany([
-    { email: 'admin@example.com', password: await Usuario.hashPassword('1234')},
-    { email: 'usuario1@example.com', password: await Usuario.hashPassword('1234')},
+    {
+      email: "admin@example.com",
+      password: await Usuario.hashPassword("1234"),
+    },
+    {
+      email: "usuario1@example.com",
+      password: await Usuario.hashPassword("1234"),
+    },
   ]);
-  console.log(`Creados ${inserted.length} usuarios.`)
+  console.log(`Creados ${inserted.length} usuarios.`);
 }
 
 function pregunta(texto) {
@@ -66,11 +70,11 @@ function pregunta(texto) {
     // conectar readline con la consola
     const ifc = readline.createInterface({
       input: process.stdin,
-      output: process.stdout
+      output: process.stdout,
     });
-    ifc.question(texto, respuesta => {
+    ifc.question(texto, (respuesta) => {
       ifc.close();
-      resolve(respuesta.toLowerCase() === 'si');
-    })
+      resolve(respuesta.toLowerCase() === "si");
+    });
   });
 }

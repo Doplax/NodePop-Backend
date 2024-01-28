@@ -1,37 +1,34 @@
 // MODULE DEPENDENCIES
-require('dotenv').congif()
+require("dotenv").congif();
 
-
-var app = require("../app");
-var debug = require("debug")("nodeapp:server");
-var http = require("http");
+const app = require("../app");
+const debug = require("debug")("nodeapp:server");
+const http = require("http");
 
 const cluster = require("node:cluster");
 const os = require("node:os");
 
 if (cluster.isPrimary) {
   // Arranca los workers
-  console.log('Arrancando el primario');
-  
-  numCores = os.cpus().length
+  console.log("Arrancando el primario");
+
+  const numCores = os.cpus().length;
   for (let i = 0; i < numCores; i++) {
     cluster.fork(); // creamos un worker
   }
-  
+
   // Nos subscibimos al evento indicado, en este caso escucha peticiones
-  cluster.on('listening',(worker,address) =>{
+  cluster.on("listening", (worker, address) => {
     //console.log(`Worker ${worker.id} arrancando con PID: ${worker.process.pid}`);
-  } )
+  });
 
-  // 
-  cluster.on('exit',(worker, code, signal )=>{
+  //
+  cluster.on("exit", (worker, code, signal) => {
     //console.log(`Worker ${worker.id}con PID ${worker.process.pid} se ha parado con codigo ${code} y signal ${signal}`);
-    
-    
-    console.log('Arrancando otro worker'); // Con esto hacemos que siempre que caida un worker se vuelva a levantar otro
-    cluster.fork();
 
-  })
+    console.log("Arrancando otro worker"); // Con esto hacemos que siempre que caida un worker se vuelva a levantar otro
+    cluster.fork();
+  });
   // si soy primary no hago nada más
 } else {
   // Soy un worker, por tanto me pongo a atender peticiones
@@ -57,7 +54,6 @@ if (cluster.isPrimary) {
   server.on("error", onError);
   server.on("listening", onListening);
 }
-
 
 /**
  * Normalize a port into a number, string, or false.

@@ -5,12 +5,10 @@ body {
   padding: 0;
 }
 
-
 #main {
   display: flex;
   justify-content: center;
 }
-
 
 /* Formulario */
 /* Estilo para el formulario en general */
@@ -37,7 +35,7 @@ body {
   background-color: #007bff;
   color: white;
   width: 160px;
-  padding: 0px ;
+  padding: 0px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -46,7 +44,6 @@ body {
 .filter-button:hover {
   background-color: #0056b3;
 }
-
 
 /* Estilo para la product card */
 .container {
@@ -61,7 +58,7 @@ body {
   width: 300px;
   padding: 16px;
   margin: 16px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
@@ -89,8 +86,6 @@ body {
   font-size: 0.9em;
   margin-top: 12px;
 }
-
-
 
 /* Create Product Form */
 .create-product-section {

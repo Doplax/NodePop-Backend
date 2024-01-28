@@ -12,7 +12,7 @@ const i18n = require("./lib/i18nConfigure");
 require("./lib/connectMongoose");
 
 //const basicAuthMiddleware = require('./lib/basicAuthMiddleware'); // Para control de inicio de sesión
-const { Session } = require("inspector");
+//const { Session } = require("inspector");
 
 require("./lib/connectMongoose");
 
@@ -22,18 +22,16 @@ const app = express();
 app.set("views", path.join(__dirname, "/views"));
 app.set("view engine", "ejs");
 
-
-
 app.locals.title = "NodeApp";
 
 // Middleware
 app.use(cors());
 
-app.use(express.static(path.join(__dirname, '../public')));
-console.log('PUBLIC',path.join(__dirname, "/public")); 
+app.use(express.static(path.join(__dirname, "../public")));
+console.log("PUBLIC", path.join(__dirname, "/public"));
 
 //app.use((req, res, next) => {
-  //  res.setHeader('X-Content-Type-Options', 'nosniff');
+//  res.setHeader('X-Content-Type-Options', 'nosniff');
 //  next();
 //});
 

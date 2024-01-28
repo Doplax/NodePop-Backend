@@ -7,12 +7,11 @@ const removeFileExtension = (fileName) => {
   return fileName.split(".").shift();
 };
 
-fs.readdirSync(PATH_ROUTES).filter((file) => {
+fs.readdirSync(PATH_ROUTES).forEach((file) => {
   const name = removeFileExtension(file);
   if (name !== "index") {
     console.log(`cargando indice de la ruta: /${name} - /${file}`);
     router.use(`/${name}`, require(`./${file}`));
-  } else {
   }
 });
 

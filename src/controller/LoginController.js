@@ -69,7 +69,7 @@ class LoginController {
         process.env.JWT_SECRET,
         {
           expiresIn: "2h",
-        }
+        },
       );
       res.json({ jwt: tokenJWT });
     } catch (err) {
