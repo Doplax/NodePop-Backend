@@ -12,7 +12,7 @@ Desarrollo de la API para el servicio de venta de artículos de segunda mano "No
 
 - [ ] **Inicialización de Base de Datos**
   - [ x ] Crear script de inicialización de la base de datos (`initDB.js`).
-  - [ x ] Configurar `initDB.js` para borrar tablas y cargar anuncios usando `deleteMany` e `insertMany`.
+  - [ ] Configurar `initDB.js` para borrar tablas y cargar anuncios usando `deleteMany` e `insertMany`.
 
 - [ ] **Documentación y README**
   - [ ] Crear un fichero `README.md` con instrucciones de uso.

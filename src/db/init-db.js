@@ -3,9 +3,9 @@
 require('dotenv').config();
 
 const readline = require('node:readline');
-const connection = require('./lib/connectMongoose');
+const connection = require('./../lib/connectMongoose');
 
-const { Agente, Usuario } = require('./models');
+const { Agente, Usuario } = require('./../models');
 
 
 main().catch(err => console.log('Hubo un error', err));
