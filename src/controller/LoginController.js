@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const Usuario = require("../models/Usuario");
+const Usuario = require("../models/User");
 
 class LoginController {
   index(req, res, next) {
@@ -14,7 +14,7 @@ class LoginController {
       const { email, password } = req.body;
 
       // buscar el usuario en la base de datos
-      const usuario = await Usuario.findOne({ email: email });
+      const usuario = await Usuario.findOne({ email });
 
       // si no lo encuentro o la contraseña no coincide --> error
       if (!usuario || !(await usuario.comparePassword(password))) {
@@ -55,7 +55,7 @@ class LoginController {
       const { email, password } = req.body;
 
       // buscar el usuario en la base de datos
-      const usuario = await Usuario.findOne({ email: email });
+      const usuario = await Usuario.findOne({ email });
 
       // si no lo encuentro o la contraseña no coincide --> error
       if (!usuario || !(await usuario.comparePassword(password))) {

@@ -70,7 +70,7 @@ usuarioSchema.methods.sendEmailRabbitMQ = async function (asunto, cuerpo) {
 };
 
 // Creamos el modelo
-const Usuario = mongoose.model("Usuario", usuarioSchema);
+const User = mongoose.model("User", usuarioSchema);
 
 // Exportación del modelo
-module.exports = Usuario;
+module.exports = User;

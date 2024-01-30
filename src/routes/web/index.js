@@ -3,7 +3,7 @@ const router = express.Router();
 const fs = require("fs");
 const PATH_ROUTES = __dirname;
 
-const Product = require("../models/Product");
+const Product = require("../../models/Product");
 
 const removeFileExtension = (fileName) => {
   return fileName.split(".").shift();

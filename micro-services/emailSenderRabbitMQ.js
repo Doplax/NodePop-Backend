@@ -9,16 +9,8 @@ const QUEUE = "email-sender";
 
 main().catch((err) => console.log("Hubo un error", err));
 
-/**
- * Función para simular una espera.
- * @param {number} ms - Milisegundos a esperar.
- * @returns {Promise} - Una promesa que se resuelve después del tiempo especificado.
- */
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-/**
- * Función principal que conecta con RabbitMQ y consume mensajes de la cola.
- */
 async function main() {
   // conectar al broker de RabbitMQ
   const connection = await amqplib.connect(process.env.RABBITMQ_BROKER_URL);
@@ -29,10 +21,10 @@ async function main() {
 
   // asegurar que existe la cola para recibir mensajes
   await canal.assertQueue(QUEUE, {
-    durable: true,
+    durable: true, // the queue will survive broker restarts
   });
 
-  canal.prefetch(1);
+  canal.prefetch(1); // pending ack's
 
   canal.consume(QUEUE, async (mensaje) => {
     const payload = JSON.parse(mensaje.content.toString());
@@ -41,7 +33,7 @@ async function main() {
       from: process.env.EMAIL_SERVICE_FROM,
       to: payload.to,
       subject: payload.asunto,
-      html: payload.cuerpo,
+      html: payload.cuerpo, // text: --> para emails con texto plano
     });
     console.log(
       `URL de previsualización: ${nodemailer.getTestMessageUrl(result)}`,
@@ -51,16 +43,12 @@ async function main() {
   });
 }
 
-/**
- * Crea un transporte de nodemailer para enviar correos electrónicos.
- * @returns {nodemailer.Transporter} - Un transporte de nodemailer.
- */
 async function createTransport() {
   // entorno desarrollo
   const testAccount = await nodemailer.createTestAccount();
 
   const developmetTransport = {
-    host: testAccount.smtp.host,
+    host: testAccount.smtp.host, //'smtp.ethereal.email',
     port: testAccount.smtp.port,
     secure: testAccount.smtp.secure,
     auth: {

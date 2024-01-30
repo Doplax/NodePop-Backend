@@ -1,6 +1,5 @@
-const Usuario = require("../models/Usuario");
+const User = require("../models/User");
 const createError = require("http-errors");
-const Agente = require("../models/Agente");
 class PrivadoController {
   async index(req, res, next) {
     try {
@@ -8,7 +7,7 @@ class PrivadoController {
       const usuarioId = req.session.usuarioLogado;
 
       // Buscar el usuario en la BD
-      const usuario = await Usuario.findById(usuarioId);
+      const usuario = await User.findById(usuarioId);
 
       if (!usuario) {
         next(createError(500, "Usuario no encontrado"));
@@ -16,7 +15,7 @@ class PrivadoController {
       }
 
       // Cargar lista de agentes que percenecen al usuario
-      const agentes = await Agente.find({ owner: usuarioId });
+      const agentes = await User.find({ owner: usuarioId });
 
       res.render("privado", {
         email: usuario.email,

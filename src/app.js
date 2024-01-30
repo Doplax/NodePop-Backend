@@ -61,7 +61,7 @@ app.use(i18n.init);
 /**
  * Rutas del website
  */
-app.use("/", require("./routes"));
+app.use("/", require("./routes/web"));
 app.use("/api", require("./routes/api"));
 
 // catch 404 and forward to error handler

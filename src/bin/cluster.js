@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 // MODULE DEPENDENCIES
 require("dotenv").congif();
 

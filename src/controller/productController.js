@@ -2,6 +2,8 @@ const express = require("express");
 const Product = require("../models/Product");
 
 const getAllProducts = async (req, res, next) => {
+  const { file } = req;
+  console.log({ file });
   try {
     const { nombre, minPrice, maxPrice, sort } = req.query;
 
@@ -35,13 +37,21 @@ const getAllProducts = async (req, res, next) => {
 
     res.json(products);
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };
 
 // CREATE: Añadir un nuevo producto
 const createProduct = async (req, res, next) => {
-  const newProduct = new Product(req.body);
+  const file = req.file;
+  //let image = file.filename ;
+  //if (req.file) {
+  //  image = "";
+  //}
+  const image = file ? file.filename : "";
+  console.log({ file });
+  const newProduct = new Product({ ...req.body, foto: image });
   try {
     await newProduct.save();
     res.status(201).json(newProduct);

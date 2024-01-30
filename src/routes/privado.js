@@ -5,6 +5,6 @@ const sessionAuthMiddleware = require("../lib/sessionAuthMiddleware");
 
 const privadoController = new PrivadoController();
 
-router.get("/privado", sessionAuthMiddleware, privadoController.index);
+router.get("/", sessionAuthMiddleware, privadoController.index);
 
 module.exports = router;

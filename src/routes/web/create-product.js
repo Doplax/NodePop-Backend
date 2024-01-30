@@ -5,8 +5,7 @@ const router = express.Router();
 /* GET home page. */
 router.get("/", async function (req, res, next) {
   try {
-    console.log("create product");
-    res.render("createProduct");
+    res.render("create-product");
   } catch (err) {
     next(err);
   }
