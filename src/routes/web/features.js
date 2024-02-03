@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const FeaturesController = require("./../controller/FeaturesController");
+const FeaturesController = require("../../controller/FeaturesController");
 
 const featuresController = new FeaturesController();
 

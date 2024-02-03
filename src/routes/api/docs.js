@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const swaggerMiddleware = require("../../lib/swaggerUIMiddleware");
+const swaggerMiddleware = require("../../middlewares/swaggerUIMiddleware");
 
 router.use("/docs", swaggerMiddleware);
 
