@@ -9,5 +9,10 @@
         <a href="/create-product" class="nav-link">Create Product</a>
       </li>
     </ul>
+    <div>
+      <% getLocales().forEach(locale => { %>
+        <a href="/change-locale/<%= locale %>"><%= locale %></a> &nbsp;
+      <% }) %>
+    </div>
   </nav>
 </header>
