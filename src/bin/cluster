@@ -3,7 +3,7 @@
 // MODULE DEPENDENCIES
 require("dotenv").congif();
 
-const app = require("../app");
+const app = require("../app.ts");
 const debug = require("debug")("nodeapp:server");
 const http = require("http");
 

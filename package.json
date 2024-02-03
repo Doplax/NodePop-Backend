@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "cross-env NODE_ENV=production node ./src/bin/www",
-    "dev": "cross-env NODE_ENV=development DEBUG=nodeapp:* nodemon ./src/bin/www",
-    "dev:cluster": "cross-env DEBUG=nodeapp:* nodemon ./src/bin/cluster",
+    "start": "cross-env NODE_ENV=production node ./dist/bin/www",
+    "dev": "cross-env NODE_ENV=development DEBUG=nodeapp:* nodemon --exec ts-node ./src/bin/www",
+    "build": "tsc --build .",
+    "dev:cluster": "cross-env DEBUG=nodeapp:* nodemon --exec ts-node ./src/bin/cluster.ts",
     "init-db": "node ./src/db/init-db.js",
     "init-docker": "docker-compose up -d",
     "email-sender-service": "node ./micro-services/emailSender.js"
@@ -34,8 +35,18 @@
     "swagger-ui-express": "^5.0.0"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cookie-parser": "^1.4.6",
+    "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.5",
+    "@types/mongoose-delete": "^1.0.3",
+    "@types/morgan": "^1.9.9",
+    "@types/multer": "^1.4.11",
     "@types/node": "^20.11.5",
+    "@types/sequelize": "^4.28.20",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.6",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-standard": "^17.1.0",
@@ -45,6 +56,7 @@
     "eslint-plugin-promise": "^6.1.1",
     "nodemon": "^3.0.1",
     "prettier": "^3.2.4",
+    "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   }
 }

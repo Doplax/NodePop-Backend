@@ -6,7 +6,7 @@ require("dotenv").config();
  * Module dependencies.
  */
 
-const app = require("../app");
+const app = require("../app.ts");
 const debug = require("debug")("nodeapp:server");
 const http = require("http");
 

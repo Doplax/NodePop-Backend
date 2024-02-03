@@ -1,4 +1,4 @@
 module.exports = {
-  Agente: require("./Agente"),
+  //Agente: require("./Agente"),
   Usuario: require("./User"),
 };

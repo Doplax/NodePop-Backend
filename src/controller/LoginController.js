@@ -13,33 +13,34 @@ class LoginController {
     try {
       const { email, password } = req.body;
 
-      // buscar el usuario en la base de datos
-      const usuario = await Usuario.findOne({ email });
-
+      const user = await Usuario.findOne({ email }); // Search user in database
+      console.log(user);
+      res.send(user);
       // si no lo encuentro o la contraseña no coincide --> error
-      if (!usuario || !(await usuario.comparePassword(password))) {
-        res.locals.error = req.__("Invalid credentials");
-        res.locals.email = email;
-        res.render("login");
-        return;
-      }
+      //if (!usuario || !(await usuario.comparePassword(password))) {
+      //  res.locals.error = req.__("Invalid credentials");
+      //  res.locals.email = email;
+      //  res.render("login");
+      //  return;
+      //}
 
       // si existe y la contraseña coincide --> zona privada
       // apuntar en la sesión del usuario, que está autenticado
-      req.session.usuarioLogado = usuario._id;
+      //req.session.usuarioLogado = usuario._id;
 
       // enviar email al usuario
       // usuario.sendEmail('Bienvenido', 'Bienvenido a NodeApp');
-      usuario.sendEmailRabbitMQ("Bienvenido", "Bienvenido a NodeApp");
+      //usuario.sendEmailRabbitMQ("Bienvenido", "Bienvenido a NodeApp");
       //const result = await usuario.sendEmailCote('Bienvenido', 'Bienvenido a NodeApp');
       //console.log(result);
 
-      res.redirect("/privado");
+      //res.redirect("/privado");
     } catch (err) {
       next(err);
     }
   }
 
+  // Funcionamiento?
   logout(req, res, next) {
     req.session.regenerate((err) => {
       if (err) {
@@ -72,6 +73,15 @@ class LoginController {
         },
       );
       res.json({ jwt: tokenJWT });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async listAllUsers(req, res, next) {
+    try {
+      const users = await Usuario.find(); // Buscar todos los usuarios
+      res.send(users); // Enviar la lista de usuarios como respuesta
     } catch (err) {
       next(err);
     }
