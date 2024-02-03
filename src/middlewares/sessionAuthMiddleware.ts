@@ -1,12 +1,12 @@
-// modulo que exporta un middleware que controla si estamos logrados o no
+import { Request, Response, NextFunction } from "express";
 
-module.exports = (req, res, next) => {
-  // Si el cliente que hace la petición, no tiene en su sesión la variable usuarioLogado
-  // Le mandamosal login porque no le conocemos
-  if (!req.session.usuarioLogado) {
+export default (req: Request, res: Response, next: NextFunction) => {
+  // Si el cliente que hace la petición no tiene en su sesión la variable isLoggedUser
+  // Lo redirigimos al login porque no lo conocemos
+  if (!req.session.isLoggedUser) {
     res.redirect("./login");
     return;
   }
 
-  next(); // Para que continue sin hacer nada
+  next(); // Para que continúe sin hacer nada
 };

@@ -1,5 +1,4 @@
 import express, { Request, Response, NextFunction } from "express";
-
 import path from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
@@ -10,6 +9,8 @@ import { i18n } from "./lib/i18nConfigure";
 import { getSessionConfig } from "./middlewares/sessionConfig";
 import { securityHeaders } from "./middlewares/securityHeaders";
 import { catch404, handleErrors } from "./middlewares/errorHandlers";
+import indexRouter from "./routes/index";
+
 
 require("./lib/connectMongoose");
 
@@ -41,8 +42,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 // ROUTES
-app.use("/", require("./routes/web"));
-app.use("/api", require("./routes/api"));
+app.use(indexRouter);
 
 // catch 404 and forward to error handler
 app.use(catch404);

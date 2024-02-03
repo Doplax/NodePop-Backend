@@ -4,7 +4,7 @@ class PrivadoController {
   async index(req, res, next) {
     try {
       // Obtener el ID del usuario de la sesión
-      const usuarioId = req.session.usuarioLogado;
+      const usuarioId = req.session.isLoggedUser;
 
       // Buscar el usuario en la BD
       const usuario = await User.findById(usuarioId);

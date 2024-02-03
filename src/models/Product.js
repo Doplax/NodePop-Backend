@@ -1,3 +1,4 @@
+// @ts-ignore
 const mongoose = require("mongoose");
 
 // Definir el esquema de los agentes

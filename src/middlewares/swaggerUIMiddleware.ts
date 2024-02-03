@@ -9,10 +9,11 @@ const options = {
       description: "API de agentes",
     },
   },
-  //apis: ['swagger.yml'], // Para cogerla del documnento
-  apis: ["./routes/*.js"], // O la ruta donde tienes tus definiciones de API.
+  apis: ["./routes/*.js"], // Ajusta la ruta según la estructura de tu proyecto
 };
 
-const expecificacion = swaggerJSDoc(options);
+const specification = swaggerJSDoc(options);
 
-module.exports = [swaggerUI.serve, swaggerUI.setup(expecificacion)];
+const swaggerMiddleware = [swaggerUI.serve, swaggerUI.setup(specification)];
+
+export { swaggerMiddleware };

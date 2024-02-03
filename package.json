@@ -6,7 +6,7 @@
     "start": "cross-env NODE_ENV=production node ./dist/bin/www",
     "dev": "cross-env NODE_ENV=development DEBUG=nodeapp:* nodemon --exec ts-node ./src/bin/www",
     "build": "tsc --build .",
-    "dev:cluster": "cross-env DEBUG=nodeapp:* nodemon --exec ts-node ./src/bin/cluster.ts",
+    "dev:cluster": "cross-env DEBUG=nodeapp:* nodemon --inspect --exec ts-node ./src/bin/cluster.ts",
     "init-db": "node ./src/db/init-db.js",
     "init-docker": "docker-compose up -d",
     "email-sender-service": "node ./micro-services/emailSender.js"
