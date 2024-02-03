@@ -1,6 +1,6 @@
 import { Router } from "express";
 import upload from "../../lib/uploadConfigure";
-import productController from "../../controller/productController";
+import productController from "../../controller/ProductController";
 
 const router = Router();
 

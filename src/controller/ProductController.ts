@@ -1,54 +1,58 @@
-const express = require("express");
-const Product = require("../models/Product");
+import { Request, Response, NextFunction } from "express";
+import Product from "../models/Product";
 
-const getAllProducts = async (req, res, next) => {
+const getAllProducts = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   const { file } = req;
   console.log({ file });
   try {
     const { nombre, minPrice, maxPrice, sort } = req.query;
 
     // Create filter object
-    const filter = {};
+    const filter: any = {};
 
     if (nombre) {
-      filter.nombre = new RegExp(nombre, "i"); // Case-insensitive search
+      filter.nombre = new RegExp(nombre, "i"); // Búsqueda sin distinción de mayúsculas
     }
 
     if (minPrice !== undefined) {
       filter.precio = filter.precio || {};
-      filter.precio.$gte = minPrice; // Greater than or equal to
+      filter.precio.$gte = minPrice; // Mayor o igual que
     }
 
     if (maxPrice !== undefined) {
       filter.precio = filter.precio || {};
-      filter.precio.$lte = maxPrice; // Less than or equal to
+      filter.precio.$lte = maxPrice; // Menor o igual que
     }
 
-    // Options for sorting
-    const sortOptions = {};
+    // Opciones de ordenamiento
+    const sortOptions: any = {};
     if (sort === "asc") {
-      sortOptions.precio = 1; // ascending
+      sortOptions.precio = 1; // ascendente
     } else if (sort === "desc") {
-      sortOptions.precio = -1; // descending
+      sortOptions.precio = -1; // descendente
     }
 
-    // Find products with the filter
+    // Encontrar productos con el filtro
     const products = await Product.find(filter).sort(sortOptions);
 
     res.json(products);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     next(error);
   }
 };
 
 // CREATE: Añadir un nuevo producto
-const createProduct = async (req, res, next) => {
-  const file = req.file;
-  //let image = file.filename ;
-  //if (req.file) {
-  //  image = "";
-  //}
+const createProduct = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const file: any = req.file;
   const image = file ? file.filename : "";
   console.log({ file });
   const newProduct = new Product({ ...req.body, foto: image });
@@ -61,7 +65,11 @@ const createProduct = async (req, res, next) => {
 };
 
 // READ: Obtener un producto por ID
-const getProductById = async (req, res, next) => {
+const getProductById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const product = await Product.findById(req.params.id);
     if (!product) return res.status(404).send("Producto no encontrado");
@@ -72,7 +80,11 @@ const getProductById = async (req, res, next) => {
 };
 
 // UPDATE: Actualizar un producto por ID
-const updateProduct = async (req, res, next) => {
+const updateProduct = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,
@@ -87,7 +99,11 @@ const updateProduct = async (req, res, next) => {
 };
 
 // DELETE: Eliminar un producto por ID
-const deleteProduct = async (req, res, next) => {
+const deleteProduct = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const deletedProduct = await Product.findByIdAndDelete(req.params.id);
     if (!deletedProduct) return res.status(404).send("Producto no encontrado");
@@ -97,9 +113,9 @@ const deleteProduct = async (req, res, next) => {
   }
 };
 
-module.exports = {
+export {
   createProduct,
-  getAllProducts, // tu función original para obtener todos los productos
+  getAllProducts,
   getProductById,
   updateProduct,
   deleteProduct,

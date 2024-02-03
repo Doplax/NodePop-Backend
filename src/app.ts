@@ -11,7 +11,6 @@ import { securityHeaders } from "./middlewares/securityHeaders";
 import { catch404, handleErrors } from "./middlewares/errorHandlers";
 import indexRouter from "./routes/index";
 
-
 require("./lib/connectMongoose");
 
 const app = express();

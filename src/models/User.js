@@ -5,7 +5,7 @@ const nodemailer = require("nodemailer");
 const canalPromise = require("../lib/rabbitMQLib");
 
 // Creacion del esquema
-const usuarioSchema = mongoose.Schema({
+const usuarioSchema = new mongoose.Schema({
   email: { type: String, unique: true },
   password: String,
 });

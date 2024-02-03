@@ -1,7 +1,9 @@
-const User = require("../models/User");
-const createError = require("http-errors");
+import { Request, Response, NextFunction } from "express";
+import User from "../models/User";
+import createError from "http-errors";
+
 class PrivadoController {
-  async index(req, res, next) {
+  public async index(req: Request, res: Response, next: NextFunction) {
     try {
       // Obtener el ID del usuario de la sesión
       const usuarioId = req.session.isLoggedUser;
@@ -14,15 +16,17 @@ class PrivadoController {
         return;
       }
 
-      // Cargar lista de agentes que percenecen al usuario
+      // Cargar lista de agentes que pertenecen al usuario
       const agentes = await User.find({ owner: usuarioId });
 
       res.render("privado", {
         email: usuario.email,
         agentes,
       });
-    } catch (error) {}
+    } catch (error) {
+      next(error);
+    }
   }
 }
 
-module.exports = PrivadoController;
+export default PrivadoController;

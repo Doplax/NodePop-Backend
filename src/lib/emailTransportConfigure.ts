@@ -1,7 +1,7 @@
-const nodemailer = require("nodemailer");
+import nodemailer, { Transporter } from "nodemailer";
 
-module.exports = async function () {
-  // Entorno desarollo
+export default async function createMailTransport(): Promise<Transporter> {
+  // Entorno desarrollo
   const testAccount = await nodemailer.createTestAccount();
 
   const developmentTransport = {
@@ -24,7 +24,7 @@ module.exports = async function () {
   };
   console.log("process.env.NODE_ENV", process.env.NODE_ENV);
 
-  // Se selecciona dependiendo del entrono en el que me encuentre
+  // Se selecciona dependiendo del entorno en el que me encuentre
   const activeTransport =
     process.env.NODE_ENV === "development"
       ? developmentTransport
@@ -33,4 +33,4 @@ module.exports = async function () {
   const transport = nodemailer.createTransport(activeTransport);
 
   return transport;
-};
+}

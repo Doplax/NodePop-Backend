@@ -1,7 +1,7 @@
-const multer = require("multer");
-const path = require("node:path");
+import multer from "multer";
+import path from "path";
 
-// declaro una configuración de almacenamiento
+// Declaro una configuración de almacenamiento
 const storage = multer.diskStorage({
   destination: function (req, file, callback) {
     const ruta = path.join(__dirname, "..", "..", "public", "avatares");
@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
   },
 });
 
-// declaro una configuración de upload
+// Declaro una configuración de carga
 const upload = multer({ storage });
 
-module.exports = upload;
+export default upload;

@@ -1,4 +1,3 @@
-// Importamos los tipos existentes para extenderlos
 import "express-session";
 
 declare module "express-session" {
