@@ -1,5 +1,5 @@
 // Recuerda, los modulos són singelton
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 mongoose.connection.on("error", (err) => {
   console.log("Error de conexión", err);
@@ -8,5 +8,5 @@ mongoose.connection.once("open", () => {
   //console.log('Conectado a MongoDB en', mongoose.connection.name);
 });
 
-mongoose.connect(process.env.MONGODB_URI);
-module.exports = mongoose.connection;
+mongoose.connect(<string>process.env.MONGODB_URI);
+export { mongoose };

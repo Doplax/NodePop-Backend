@@ -1,6 +1,6 @@
 // Librerias
-const i18n = require("i18n");
-const path = require("node:path");
+import i18n from "i18n";
+import path from "node:path";
 
 const directoryPath = path.join(__dirname, "..", "locales");
 console.log(directoryPath);
@@ -18,4 +18,4 @@ i18n.configure({
 // Para script
 i18n.setLocale("en");
 
-module.exports = i18n;
+export {i18n};

@@ -1,16 +1,18 @@
 {
     "env": {
-        "browser": true,
-        "es2021": true
+      "browser": true,
+      "es2021": true
     },
     "extends": ["standard", "prettier"],
+    "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "ecmaVersion": "latest"
+      "ecmaVersion": 2021,
+      "sourceType": "module"
     },
-    "plugins": ["prettier"],
+    "plugins": ["prettier", "@typescript-eslint"],
     "rules": {
-        "prettier/prettier": "error",
-        "spaced-comment": "off"
-
+      "prettier/prettier": "error",
+      "spaced-comment": "off"
     }
-}
+  }
+  

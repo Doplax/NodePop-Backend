@@ -1,16 +1,17 @@
-import  express, { Request, Response, NextFunction }  from 'express';
+import express, { Request, Response, NextFunction } from "express";
 
 import path from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 import cors from "cors";
-import i18n from "./lib/i18nConfigure";
+import { i18n } from "./lib/i18nConfigure";
 //const basicAuthMiddleware = require('./lib/basicAuthMiddleware'); // Para control de inicio de sesión
-require("./lib/connectMongoose");
 
-import sessionConfig from "./middlewares/sessionConfig";
-import securityHeaders from "./middlewares/securityHeaders";
+import { getSessionConfig } from "./middlewares/sessionConfig";
+import { securityHeaders } from "./middlewares/securityHeaders";
 import { catch404, handleErrors } from "./middlewares/errorHandlers";
+
+require("./lib/connectMongoose");
 
 const app = express();
 
@@ -31,7 +32,7 @@ app.use(express.json()); // Analizar solicitudes con formato JSON.
 app.use(express.urlencoded({ extended: true })); // Analizar cuerpos de solicitud con tipo de contenido application/x-www-form-urlencoded
 app.use(cookieParser()); // Analizar cookies en las solicitudes
 app.use(i18n.init); // Internacionalización (i18n).
-app.use(sessionConfig); // Configuración de sesiones.
+app.use(getSessionConfig); // Configuración de sesiones.
 
 // Hacemos que el objeto session esté disponible al renderizar las vistas
 app.use((req: Request, res: Response, next: NextFunction) => {
