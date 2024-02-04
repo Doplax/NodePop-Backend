@@ -1,0 +1,45 @@
+{
+  "name": "nodepop-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=production node ./src/bin/www",
+    "dev": "cross-env NODE_ENV=development DEBUG=nodeapp:* nodemon ./src/bin/www",
+    "dev:cluster": "cross-env DEBUG=nodeapp:* nodemon --inspect --exec ts-node ./src/bin/cluster.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "init-db": "node ./src/db/init-db.js",
+    "init-docker": "docker-compose up -d",
+    "lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Doplax/NodePop-Backend.git"
+  },
+  "author": "Doplax (Pol Valle)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Doplax/NodePop-Backend/issues"
+  },
+  "homepage": "https://github.com/Doplax/NodePop-Backend#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.1",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-validator": "^7.0.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.1.1",
+    "multer": "^1.4.5-lts.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.56.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-promise": "^6.1.1",
+    "nodemon": "^3.0.3"
+  }
+}
