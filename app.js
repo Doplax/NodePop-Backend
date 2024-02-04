@@ -1,7 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("node:path");
-const indexRouter = require("./src/routes/index.js"); // Asegúrate de que la ruta coincida con la ubicación de tu archivo de rutas
+const indexRouter = require("./src/routes/index.js");
+require("./src/config/mongo.js")(); // Connects to the database
 
 const app = express();
 
@@ -11,9 +12,9 @@ app.set("view engine", "ejs");
 
 // MIDDLEWARES
 app.use(cors()); // Avoid CORS errors
-app.use(express.json()); // Permite recibir información en JSON
-app.use(express.static(path.join(__dirname, "..", "/public"))); // Sirve los ficheros estáticos  en la carpeta públic
-app.use(express.urlencoded({ extended: true })); // Analizar cuerpos de solicitud con tipo de contenido application/x-www-form-urlencoded
+app.use(express.json()); // Allows to receive information in JSON
+app.use(express.static(path.join(__dirname, "..", "/public"))); // Serves static files in the public folder
+app.use(express.urlencoded({ extended: true })); // Parse request bodies with content type application/x-www-form-urlencoded
 
 // ROUTES
 app.use(indexRouter);

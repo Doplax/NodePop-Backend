@@ -13,6 +13,8 @@
     },
     // `rules` allows you to define how ESLint will apply specific rules to your code. You can configure them to be warnings or errors.
     "rules": {
+      "space-before-function-paren": "off",
+      "comma-dangle": ["off"],
       "spaced-comment": 0,
       "no-unused-vars": "warn", // Warns about variables that are declared but not used.
       "no-undef": "error", // Errors when using variables that are not declared, useful for catching typographical and scope errors.
