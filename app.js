@@ -1,7 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("node:path");
+const logger = require("morgan");
 const indexRouter = require("./src/routes/index.js");
+
 require("./src/config/mongo.js")(); // Connects to the database
 
 const app = express();
@@ -15,7 +17,7 @@ app.use(cors()); // Avoid CORS errors
 app.use(express.json()); // Allows to receive information in JSON
 app.use(express.static(path.join(__dirname, "..", "/public"))); // Serves static files in the public folder
 app.use(express.urlencoded({ extended: false })); // Parse request bodies with content type application/x-www-form-urlencoded
-
+app.use(logger("dev")); // Log requests and responses on the console in development mode.
 // ROUTES
 app.use(indexRouter);
 
