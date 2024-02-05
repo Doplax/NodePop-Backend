@@ -1,8 +1,17 @@
-const express = require("express");
-const router = express.Router();
+const { Router } = require("express");
+const router = Router();
+const authRoutes = require("./api/auth.js");
+//const { validatorRegister, validatorLogin } = require("../validators/auth");
 
-router.get("/", (req, res) => {
-  res.render("index", { title: "Inicio" }); // Asume que tienes un archivo `index.ejs` dentro del directorio `views`
+// API routes
+//router.use("/api/products", );
+router.use("/api/auth/", authRoutes);
+//router.use("/api/upload", );
+
+// ViEWS routes
+router.get("/", (req, res, next) => {
+  res.send("hola");
 });
+//router.use("/change-locale", );
 
 module.exports = router;

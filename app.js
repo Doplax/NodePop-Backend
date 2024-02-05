@@ -14,7 +14,7 @@ app.set("view engine", "ejs");
 app.use(cors()); // Avoid CORS errors
 app.use(express.json()); // Allows to receive information in JSON
 app.use(express.static(path.join(__dirname, "..", "/public"))); // Serves static files in the public folder
-app.use(express.urlencoded({ extended: true })); // Parse request bodies with content type application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: false })); // Parse request bodies with content type application/x-www-form-urlencoded
 
 // ROUTES
 app.use(indexRouter);

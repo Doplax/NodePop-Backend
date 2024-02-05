@@ -1,10 +1,19 @@
+//const { check } = require("express-validator");
+
 //const userValidationRules = [
-//  body('email')
+//  check("email")
 //    .trim()
-//    .isEmail().withMessage('The email field must be a valid email address')
+//    .isEmail()
+//    .withMessage("The email field must be a valid email address")
 //    .normalizeEmail(), // Opcional: normaliza el email a minúsculas
-//  body('password')
+//  check("password")
 //    .trim()
-//    .isLength({ min: 6 }).withMessage('The password must be at least 6 characters long')
-//    .isStrongPassword().withMessage('The password must be strong. It should contain a mix of letters, numbers, and symbols.'),
+//    .isLength({ min: 6 })
+//    .withMessage("The password must be at least 6 characters long")
+//    .isStrongPassword()
+//    .withMessage(
+//      "The password must be strong. It should contain a mix of letters, numbers, and symbols."
+//    ),
 //];
+
+//module.exports = userValidationRules;

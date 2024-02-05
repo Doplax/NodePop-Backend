@@ -18,7 +18,10 @@
 //    .isBoolean()
 //    .withMessage("The isForSale field must be a boolean")
 //    .default(true),
-//  check("photo").optional().isString().withMessage("The photo must be a string"),
+//  check("photo")
+//    .optional()
+//    .isString()
+//    .withMessage("The photo must be a string"),
 //  check("tags")
 //    .optional()
 //    .isArray()
@@ -32,3 +35,5 @@
 //      "Invalid tag value. Valid values are: Laptop, Tablet, Smartphone, Desktop"
 //    ),
 //];
+
+//module.exports = productValidationRules;
