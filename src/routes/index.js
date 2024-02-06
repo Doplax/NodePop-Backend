@@ -5,7 +5,7 @@ const authRoutes = require("./api/auth.js");
 
 // API routes
 //router.use("/api/products", );
-router.use("/api/auth/", authRoutes);
+router.use("/api/auth", authRoutes);
 //router.use("/api/upload", );
 
 // ViEWS routes
