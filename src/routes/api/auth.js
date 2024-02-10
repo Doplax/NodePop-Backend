@@ -8,7 +8,7 @@ const {
 const {
   validatorRegister,
   validatorLogin,
-} = require("../../validators/auth.js");
+} = require("../../validators/authValidator.js");
 
 //const { validatorRegister, validatorLogin } = require("../validators/auth");
 

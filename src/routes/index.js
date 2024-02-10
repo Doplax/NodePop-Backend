@@ -1,10 +1,10 @@
 const { Router } = require("express");
 const router = Router();
 const authRoutes = require("./api/auth.js");
-//const { validatorRegister, validatorLogin } = require("../validators/auth");
+const productRoutes = require("./api/products.js");
 
 // API routes
-//router.use("/api/products", );
+router.use("/api/products", productRoutes);
 router.use("/api/auth", authRoutes);
 //router.use("/api/upload", );
 

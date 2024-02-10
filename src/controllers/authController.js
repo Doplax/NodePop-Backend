@@ -35,7 +35,6 @@ const registerCtrl = async (req, res) => {
 const loginCtrl = async (req, res) => {
   try {
     req = matchedData(req);
-    console.log("POL", req);
     const user = await User.findOne({ email: req.email });
 
     if (!user) {
