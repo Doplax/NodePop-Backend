@@ -4,6 +4,7 @@ require("dotenv").config();
 const readline = require("node:readline");
 const dbConnect = require("../config/mongo.js");
 const { Product, User } = require("../models/index.js");
+const { encrypt } = require("../utils/handlePassword.js");
 
 async function main() {
   try {
@@ -55,10 +56,16 @@ async function initUsers() {
   const deletedUsers = await User.deleteMany();
   console.log(`Deleted ${deletedUsers.deletedCount} users.`);
 
-  const users = [
+  let users = [
     { email: "admin@example.com", password: "1234" },
     { email: "user@example.com", password: "1234" },
   ];
+
+  users = await Promise.all(users.map(async user => {
+    const encryptedPassword = await encrypt(user.password);
+    return { ...user, password: encryptedPassword };
+  }));
+
   const insertedUsers = await User.insertMany(users);
   console.log(`Inserted ${insertedUsers.length} users.`);
 }

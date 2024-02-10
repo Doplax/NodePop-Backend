@@ -1,14 +1,31 @@
 //const { matchedData } = require("express-validator");
 const { User } = require("../models/index.js");
 const handleHttpError = require("../utils/errorHandler");
+const { matchedData } = require("express-validator");
+const { encrypt, compare } = require("../utils/handlePassword.js");
+const { tokenSign } = require("../utils/handleJwt");
 
 const registerCtrl = async (req, res) => {
   try {
-    console.log("registro");
-    const { email, password } = req.body;
-    const response = await User.create({ email, password });
+    req = matchedData(req);
 
-    res.send(response);
+    const userExists = await User.findOne({ email: req.email });
+    if (userExists) {
+      return handleHttpError(res, "ERROR_REGISTER_USER_ALREADY_EXISTS", 409);
+    }
+
+    const password = await encrypt(req.password);
+    const body = { ...req, password };
+    const dataUser = await User.create(body);
+    dataUser.set("password", undefined, { strict: false });
+
+    console.log("dataUser", dataUser);
+    const data = {
+      token: await tokenSign(dataUser),
+      user: dataUser,
+    };
+    res.status(201);
+    res.send({ data });
   } catch (e) {
     console.log(e);
     handleHttpError(res, "ERROR_REGISTER_USER");
@@ -16,15 +33,42 @@ const registerCtrl = async (req, res) => {
 };
 
 const loginCtrl = async (req, res) => {
-  const email = req.body.email;
   try {
-    const user = await User.findOne({ email });
-    console.log(user);
-    res.send(user);
+    req = matchedData(req);
+    console.log("POL", req);
+    const user = await User.findOne({ email: req.email });
+
+    if (!user) {
+      handleHttpError(res, "USER_NOT_EXISTS", 404);
+      return;
+    }
+
+    const hashPassword = user.get("password");
+
+    const check = await compare(req.password, hashPassword);
+
+    if (!check) {
+      handleHttpError(res, "PASSWORD_INVALID", 401);
+      return;
+    }
+
+    const token = await tokenSign(user);
+
+    res.send({ token });
   } catch (e) {
     console.log(e);
     handleHttpError(res, "ERROR_LOGIN_USER");
   }
 };
 
-module.exports = { registerCtrl, loginCtrl };
+const getAllUsersCtrl = async (req, res) => {
+  try {
+    const users = await User.find({});
+    res.send(users);
+  } catch (e) {
+    console.log(e);
+    handleHttpError(res, "ERROR_GET_ALL_USERS");
+  }
+};
+
+module.exports = { registerCtrl, loginCtrl, getAllUsersCtrl };
