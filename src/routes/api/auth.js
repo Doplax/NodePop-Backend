@@ -4,7 +4,7 @@ const {
   loginCtrl,
   registerCtrl,
   getAllUsersCtrl,
-} = require("../../controllers/auth.js");
+} = require("../../controllers/authController.js");
 const {
   validatorRegister,
   validatorLogin,

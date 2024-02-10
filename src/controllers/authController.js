@@ -1,9 +1,9 @@
 //const { matchedData } = require("express-validator");
 const { User } = require("../models/index.js");
-const handleHttpError = require("../utils/errorHandler");
+const handleHttpError = require("../utils/errorHandler.js");
 const { matchedData } = require("express-validator");
 const { encrypt, compare } = require("../utils/handlePassword.js");
-const { tokenSign } = require("../utils/handleJwt");
+const { tokenSign } = require("../utils/handleJwt.js");
 
 const registerCtrl = async (req, res) => {
   try {
