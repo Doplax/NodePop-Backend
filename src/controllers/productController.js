@@ -32,7 +32,7 @@ const createItem = async (req, res) => {
       return res.status(400).send({ message: "No se subió ninguna imagen." });
     }
 
-    body.imagePath = file.path;
+    body.photo = file.path;
 
     const data = await Product.create(body);
     res.send({ data });
@@ -40,14 +40,24 @@ const createItem = async (req, res) => {
     handleHttpError(res, "ERROR_CREATE_ITEMS");
   }
 };
-
 const updateItem = async (req, res) => {
   try {
     const { id } = req.params;
     const body = matchedData(req);
+
+    if (req.file) {
+      body.photo = req.file.path;
+    }
+
     const data = await Product.findOneAndUpdate({ _id: id }, body, {
       new: true,
+      runValidators: true,
     });
+
+    if (!data) {
+      handleHttpError(res, "ERROR_UPDATE_ITEM: Product not Found", 404);
+    }
+
     res.send({ data });
     console.log("Product", id, "updated");
   } catch (error) {
