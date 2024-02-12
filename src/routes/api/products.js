@@ -8,11 +8,29 @@ const {
   updateItem,
   deleteItem,
 } = require("../../controllers/productController.js");
+const uploadMiddleware = require("../../middlewares/uploadMiddleware.js");
 
+//GET
 router.get("/", getItems);
 router.get("/:id", getItem);
-router.post("/", productValidationRules, createItem);
-router.put("/:id", productValidationRules, updateItem);
+
+//POST
+router.post(
+  "/",
+  uploadMiddleware.uploadSingle,
+  productValidationRules,
+  createItem
+);
+
+//PUT
+router.put(
+  "/:id",
+  uploadMiddleware.uploadSingle,
+  productValidationRules,
+  updateItem
+);
+
+//DELETE
 router.delete("/:id", deleteItem);
 
 module.exports = router;

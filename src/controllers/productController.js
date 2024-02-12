@@ -26,7 +26,14 @@ const getItem = async (req, res) => {
 
 const createItem = async (req, res) => {
   try {
-    const body = matchedData(req);
+    const body = matchedData(req, { locations: ["body"] });
+    const file = req.file;
+    if (!file) {
+      return res.status(400).send({ message: "No se subió ninguna imagen." });
+    }
+
+    body.imagePath = file.path;
+
     const data = await Product.create(body);
     res.send({ data });
   } catch (error) {
