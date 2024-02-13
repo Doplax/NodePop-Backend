@@ -16,7 +16,7 @@ const getItem = async (req, res) => {
     const { id } = req.params;
     const data = await Product.findById(id);
     if (!data) {
-      return res.status(404).send({ message: "Item not found" });
+      return handleHttpError(res, "ERROR_GET_ITEM: Product not Found", 404);
     }
     res.send({ data });
   } catch (error) {
@@ -29,15 +29,21 @@ const createItem = async (req, res) => {
     const body = matchedData(req, { locations: ["body"] });
     const file = req.file;
     if (!file) {
-      return res.status(400).send({ message: "No se subió ninguna imagen." });
+      return handleHttpError(
+        res,
+        "ERROR_CREATE_ITEMS: No images were uploaded",
+        400
+      );
     }
 
     body.photo = file.path;
 
     const data = await Product.create(body);
+    await data.createThumbnail();
+
     res.send({ data });
   } catch (error) {
-    handleHttpError(res, "ERROR_CREATE_ITEMS");
+    handleHttpError(res, `ERROR_CREATE_ITEMS: ${error.message}`);
   }
 };
 const updateItem = async (req, res) => {

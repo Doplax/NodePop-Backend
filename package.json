@@ -6,11 +6,11 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production node ./src/bin/www",
     "dev": "cross-env NODE_ENV=development DEBUG=nodeapp:* nodemon ./src/bin/www",
-    "dev:cluster": "cross-env DEBUG=nodeapp:* nodemon --inspect --exec ts-node ./src/bin/cluster.ts",
+    "dev:cluster": "cross-env DEBUG=nodeapp:* nodemon --inspect --exec ts-node ./src/bin/cluster.ts && node ./microservices/thumbnailCote.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "init-db": "node ./src/db/init-db.js",
     "init-docker": "docker-compose up -d",
-    "lint": "eslint ."
+    "thumbnail-microservice": "node ./microservices/thumbnailCote.js"
   },
   "repository": {
     "type": "git",
@@ -26,6 +26,7 @@
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
+    "cote": "^1.0.3",
     "cross-env": "^7.0.3",
     "dotenv": "^16.4.1",
     "ejs": "^3.1.9",
@@ -33,6 +34,7 @@
     "express-validator": "^7.0.1",
     "i18n": "^0.15.1",
     "install": "^0.13.0",
+    "jimp": "^0.22.10",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.1.1",
     "morgan": "^1.10.0",
