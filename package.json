@@ -10,7 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "init-db": "node ./src/db/init-db.js",
     "init-docker": "docker-compose up -d",
-    "thumbnail-microservice": "node ./microservices/thumbnailCote.js"
+    "thumbnail-microservice": "nodemon ./microservices/thumbnailCote.js"
   },
   "repository": {
     "type": "git",

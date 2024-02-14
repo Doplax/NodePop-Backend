@@ -39,8 +39,8 @@ const createItem = async (req, res) => {
     body.photo = file.path;
     console.log({ file });
     console.log({ body });
-    const data = await Product.create(body);
-    //await data.createThumbnail();
+    const data = await Product.create({ ...body, photo: file.filename });
+    await data.createThumbnail();
 
     res.send({ data });
   } catch (error) {
