@@ -19,10 +19,10 @@ const productValidationRules = [
     .optional()
     .isBoolean()
     .withMessage("The isForSale field must be a boolean"),
-  //check("photo")
-  //  .optional()
-  //  .isString()
-  //  .withMessage("The photo must be a string"),
+  check("photo")
+    .optional()
+    .isString()
+    .withMessage("The photo must be a string"),
   check("tags")
     .optional()
     .isArray()
