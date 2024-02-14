@@ -19,7 +19,6 @@ const registerCtrl = async (req, res) => {
     const dataUser = await User.create(body);
     dataUser.set("password", undefined, { strict: false });
 
-    console.log("dataUser", dataUser);
     const data = {
       token: await tokenSign(dataUser),
       user: dataUser,

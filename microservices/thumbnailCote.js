@@ -16,7 +16,6 @@ const main = async () => {
         "/images",
         fileName
       );
-      console.log({fileName});
       const image = await jimp.read(imagePath);
       await image.resize(100, jimp.AUTO);
       const thumbnailPath = path.join(
@@ -26,7 +25,7 @@ const main = async () => {
         "thumbnails",
         `thumb-${fileName}`
       );
-      const result = await image.writeAsync(thumbnailPath);
+      await image.writeAsync(thumbnailPath);
       done("Thumbnail created correctly");
     });
   } catch (error) {

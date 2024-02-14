@@ -3,7 +3,6 @@ const path = require("path");
 
 const filePath = path.resolve(__dirname, "..", "..", "public", "images");
 
-console.log({ filePath });
 const fileStorage = multer.diskStorage({
   destination: (req, file, callback) => {
     callback(null, filePath);
