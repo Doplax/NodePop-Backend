@@ -9,23 +9,22 @@ const main = async () => {
     });
     responder.on("create-thumbnail", async (req, done) => {
       const { fileName } = req;
-      console.log('1filename',fileName);
-      const imagePath = path.join(
-        __dirname,
-        "..",
-        "/public",
-        "/images",
-        fileName
-      );
-      console.log("Ruta", imagePath);
-      const image = await jimp.read(imagePath);
+      //const imagePath = path.join(
+      //  __dirname,
+      //  "..",
+      //  "/public",
+      //  "/images",
+      //  fileName
+      //);
+      const image = await jimp.read(fileName);
       await image.resize(100, jimp.AUTO);
       const thumbnailPath = path.join(
         __dirname,
         "..",
-        "/public",
-        "/thumbnails",
-        `thumb-${fileName}`
+        "public",
+        "thumbnails",
+        "file.png"
+        //`thumb-${fileName}`
       );
       const result = await image.writeAsync(thumbnailPath);
       console.log("result", result);

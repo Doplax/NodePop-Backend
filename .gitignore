@@ -2,5 +2,6 @@
 .vscode
 node_modules
 public/images/
+mongo
 # FILES
 .env
