@@ -12,8 +12,8 @@ const main = async () => {
       const imagePath = path.join(
         __dirname,
         "..",
-        "/public",
-        "/images",
+        "public",
+        "images",
         fileName
       );
       const image = await jimp.read(imagePath);

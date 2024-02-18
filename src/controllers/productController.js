@@ -1,13 +1,14 @@
 const Product = require("../models/Product.js");
 const { matchedData } = require("express-validator");
 const handleHttpError = require("../utils/errorHandler.js");
+const { deleteOldPhotoAndThumbnail } = require("../utils/photoManager.js"); // Asegúrate de ajustar la ruta de importación según tu estructura de proyecto
 
 const getItems = async (req, res) => {
   try {
     const data = await Product.find({});
     res.send({ data });
   } catch (error) {
-    handleHttpError(res, "ERROR_GET_ITEMS");
+    return handleHttpError(res, "ERROR_GET_ITEMS");
   }
 };
 
@@ -20,7 +21,7 @@ const getItem = async (req, res) => {
     }
     res.send({ data });
   } catch (error) {
-    handleHttpError(res, "ERROR_GET_ITEM");
+    return handleHttpError(res, "ERROR_GET_ITEM");
   }
 };
 
@@ -36,39 +37,43 @@ const createItem = async (req, res) => {
       );
     }
 
-    body.photo = file.path;
-    console.log({ file });
-    console.log({ body });
     const data = await Product.create({ ...body, photo: file.filename });
+    console.log({ data });
     await data.createThumbnail();
 
     res.send({ data });
   } catch (error) {
-    handleHttpError(res, `ERROR_CREATE_ITEMS: ${error.message}`);
+    return handleHttpError(res, `ERROR_CREATE_ITEMS: ${error.message}`);
   }
 };
 const updateItem = async (req, res) => {
   try {
     const { id } = req.params;
     const body = matchedData(req);
+    const file = req.file;
 
-    if (req.file) {
-      body.photo = req.file.path;
+    const currentProduct = await Product.findById(id);
+    if (!currentProduct) {
+      return handleHttpError(res, "ERROR_UPDATE_ITEM: Product not Found", 404);
     }
 
-    const data = await Product.findOneAndUpdate({ _id: id }, body, {
+    if (file) {
+      await deleteOldPhotoAndThumbnail(currentProduct.photo);
+    }
+
+    const update = file ? { ...body, photo: file.filename } : body;
+    const data = await Product.findOneAndUpdate({ _id: id }, update, {
       new: true,
       runValidators: true,
     });
 
-    if (!data) {
-      handleHttpError(res, "ERROR_UPDATE_ITEM: Product not Found", 404);
+    if (file) {
+      await data.createThumbnail();
     }
 
     res.send({ data });
-    console.log("Product", id, "updated");
   } catch (error) {
-    handleHttpError(res, "ERROR_UPDATE_ITEM");
+    return handleHttpError(res, "ERROR_UPDATE_ITEM");
   }
 };
 
@@ -76,9 +81,15 @@ const deleteItem = async (req, res) => {
   try {
     const { id } = req.params;
     const data = await Product.findByIdAndDelete(id);
+
+    if (!data) {
+      return handleHttpError(res, "PRODUCT_NOT_FOUND", 404);
+    }
+    await deleteOldPhotoAndThumbnail(data.photo);
+
     res.send({ data });
   } catch (error) {
-    handleHttpError(res, "ERROR_DELETE_ITEM");
+    return handleHttpError(res, "ERROR_DELETE_ITEM");
   }
 };
 

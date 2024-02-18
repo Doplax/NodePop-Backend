@@ -9,6 +9,7 @@ const {
   deleteItem,
 } = require("../../controllers/productController.js");
 const uploadMiddleware = require("../../middlewares/uploadMiddleware.js");
+const verifyProductExists = require("../../middlewares/verifyProductExists");
 
 //GET
 router.get("/", getItems);
@@ -25,6 +26,7 @@ router.post(
 //PUT
 router.put(
   "/:id",
+  verifyProductExists,
   uploadMiddleware.uploadSingle,
   productValidationRules,
   updateItem
