@@ -1,8 +1,8 @@
 # FOLDERS
 .vscode
 node_modules
-public/images/
-public/thumbnails/
+#public/images/
+#public/thumbnails/
 
 mongo
 # FILES

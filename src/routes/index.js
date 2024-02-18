@@ -10,7 +10,6 @@ router.use("/api/auth", authRoutes);
 
 // Protected routes
 router.use("/api/products", authMiddleware, productRoutes);
-//router.use("/api/upload", );
 
 // ViEWS routes
 router.get("/", (req, res, next) => {
