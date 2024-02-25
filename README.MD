@@ -1,8 +1,9 @@
 # **NodePop Backend API**
 
 ## Despliegue en AWS
-[Despliegue de Node](http://13.48.193.130/)
-[Despliegue de React](http://ec2-13-48-193-130.eu-north-1.compute.amazonaws.com/login)
+[Despliegue de Node](http://13.48.193.130/).
+
+[Despliegue de React](http://ec2-13-48-193-130.eu-north-1.compute.amazonaws.com/login).
 
 ## **Overview**
 
