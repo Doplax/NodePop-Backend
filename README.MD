@@ -1,5 +1,9 @@
 # **NodePop Backend API**
 
+## Despliegue en AWS
+[Despliegue de Node](http://13.48.193.130/)
+[Despliegue de React](http://ec2-13-48-193-130.eu-north-1.compute.amazonaws.com/login)
+
 ## **Overview**
 
 NodePop is a backend API developed for the Full Stack 2023 Bootcamp by Keep Coding. It features product management, including thumbnail creation for product images using Cote.js and Jimp in the background.
