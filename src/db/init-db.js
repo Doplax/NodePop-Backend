@@ -1,5 +1,7 @@
 "use strict";
 
+import products from "./products.js"
+
 require("dotenv").config();
 const readline = require("node:readline");
 const dbConnect = require("../config/mongo.js");
@@ -32,22 +34,6 @@ async function initProducts() {
   const deletedProducts = await Product.deleteMany();
   console.log(`Deleted ${deletedProducts.deletedCount} products.`);
 
-  const products = [
-    {
-      name: "Laptop Pro",
-      price: 1200,
-      isForSale: true,
-      photo: "laptop_pro.jpg",
-      tags: ["Laptop"],
-    },
-    {
-      name: "Smartphone Lite",
-      price: 299,
-      isForSale: true,
-      photo: "smartphone_lite.jpg",
-      tags: ["Smartphone"],
-    },
-  ];
   const insertedProducts = await Product.insertMany(products);
   console.log(`Inserted ${insertedProducts.length} products.`);
 }
@@ -59,6 +45,7 @@ async function initUsers() {
   let users = [
     { email: "admin@example.com", password: "1234" },
     { email: "user@example.com", password: "1234" },
+    { email: "pedro@gmail.com", password: "pedro" },
   ];
 
   users = await Promise.all(users.map(async user => {
