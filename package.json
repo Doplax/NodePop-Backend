@@ -2,15 +2,16 @@
   "name": "nodepop-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=production node ./src/bin/www",
-    "dev": "cross-env NODE_ENV=development DEBUG=nodeapp:* nodemon ./src/bin/www",
+    "dev": "cross-env NODE_ENV=development DEBUG=nodeapp:* nodemon ./index.js",
     "dev:cluster": "cross-env DEBUG=nodeapp:* nodemon --inspect --exec ts-node ./src/bin/cluster.ts && node ./microservices/thumbnailCote.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "init-db": "node ./src/db/init-db.js",
     "init-docker": "docker-compose up -d",
-    "thumbnail-microservice": "nodemon ./microservices/thumbnailCote.js"
+    "thumbnail-microservice": "nodemon ./microservices/thumbnailCote.js",
+    "build": "echo 'no neded'"
   },
   "repository": {
     "type": "git",
@@ -40,7 +41,9 @@
     "mongoose": "^8.1.1",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
-    "npm": "^10.4.0"
+    "npm": "^10.4.0",
+    "vercel": "^37.4.0",
+    "yarn": "^1.22.22"
   },
   "devDependencies": {
     "eslint": "^8.56.0",
