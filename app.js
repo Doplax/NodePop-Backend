@@ -5,31 +5,26 @@ const logger = require("morgan");
 const indexRouter = require("./src/routes/index.js");
 const i18n = require("./src/config/i18nConfigure.js");
 const cookieParser = require("cookie-parser");
-const swaggerJsdoc = require('swagger-jsdoc');
-const swaggerUi = require('swagger-ui-express');
+const swaggerJsdoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
 
 require("./src/config/mongo.js")(); // Connects to the database
 
 const app = express();
 const swaggerOptions = {
-    definition: {
-      openapi: '3.0.0',
-      info: {
-        title: 'API Documentation',
-        version: '1.0.0',
-        description: 'Autogenerada por Swagger para la API',
-      },
-      servers: [
-        {
-          url: 'http://localhost:4000',
-        },
-      ],
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "API Documentation",
+      version: "1.0.0",
+      description: "Autogenerada por Swagger para la API",
     },
-    apis: ['./src/routes/**/*.js'],  // Ruta donde están tus rutas
-  };
+  },
+  apis: [path.join(__dirname, "./src/routes/**/*.js")], // Asegurarse que la ruta esté correcta
+};
 
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // VIEW ENGINE SETUP
 app.set("views", path.join(__dirname, "./src/views/"));
