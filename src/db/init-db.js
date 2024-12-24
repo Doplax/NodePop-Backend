@@ -1,7 +1,6 @@
 "use strict";
 
-import products from "./products.js"
-
+const products = require("./products.js");
 require("dotenv").config();
 const readline = require("node:readline");
 const dbConnect = require("../config/mongo.js");

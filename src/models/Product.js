@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { Requester } = require("cote");
+//const { Requester } = require("cote");
 
 const ProductSchema = new mongoose.Schema(
   {
@@ -35,20 +35,20 @@ const ProductSchema = new mongoose.Schema(
   }
 );
 
-const requester = new Requester({
-  name: "thumbnail-microservice-requester",
-});
+//const requester = new Requester({
+//  name: "thumbnail-microservice-requester",
+//});
 
-ProductSchema.methods.createThumbnail = async function () {
-  const event = {
-    type: "create-thumbnail",
-    fileName: this.photo,
-    test: "testeando requester",
-  };
-  return new Promise((resolve) => {
-    requester.send(event, resolve);
-  });
-};
+//ProductSchema.methods.createThumbnail = async function () {
+//  const event = {
+//    type: "create-thumbnail",
+//    fileName: this.photo,
+//    test: "testeando requester",
+//  };
+//  return new Promise((resolve) => {
+//    requester.send(event, resolve);
+//  });
+//};
 
 const Product = mongoose.model("Product", ProductSchema);
 

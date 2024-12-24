@@ -12,11 +12,25 @@
  *         price:
  *           type: number
  *           description: El precio del producto
+ *           minimum: 0
+ *           maximum: 99999
  *           example: 19.99
- *         image:
+ *         isForSale:
+ *           type: boolean
+ *           description: Indica si el producto está a la venta
+ *           example: true
+ *         photo:
  *           type: string
  *           format: binary
  *           description: Imagen del producto
+ *           example: "http://example.com/photo.jpg"
+ *         tags:
+ *           type: array
+ *           items:
+ *             type: string
+ *             enum: ["Laptop", "Tablet", "Smartphone", "Desktop"]
+ *           description: Etiquetas asociadas al producto
+ *           example: ["Laptop", "Tablet"]
  */
 
 /**
@@ -69,7 +83,7 @@
  *     requestBody:
  *       required: true
  *       content:
- *         multipart/form-data:
+ *         application/json:
  *           schema:
  *             $ref: '#/components/schemas/Product'
  *     responses:
@@ -93,7 +107,7 @@
  *     requestBody:
  *       required: true
  *       content:
- *         multipart/form-data:
+ *         application/json:
  *           schema:
  *             $ref: '#/components/schemas/Product'
  *     responses:

@@ -6,6 +6,7 @@ const { deleteOldPhotoAndThumbnail } = require("../utils/photoManager.js"); // A
 const getItems = async (req, res) => {
   try {
     const data = await Product.find({});
+    console.log(data);
     res.send({ data });
   } catch (error) {
     return handleHttpError(res, "ERROR_GET_ITEMS");
@@ -19,7 +20,7 @@ const getItem = async (req, res) => {
     if (!data) {
       return handleHttpError(res, "ERROR_GET_ITEM: Product not Found", 404);
     }
-    res.send({ data });
+    res.send(data);
   } catch (error) {
     return handleHttpError(res, "ERROR_GET_ITEM");
   }
