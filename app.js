@@ -5,7 +5,9 @@ const logger = require("morgan");
 const indexRouter = require("./src/routes/index.js");
 const i18n = require("./src/config/i18nConfigure.js");
 const cookieParser = require("cookie-parser");
+
 const swaggerDocs = require("./src/config/swaggerConfig.js"); // Swagger Config
+//const swaggerDocs = require("./src/scripts/swagger-output.json");
 
 const swaggerUi = require("swagger-ui-express");
 

@@ -1,7 +1,7 @@
 const productSwaggerDocs = require("./productSwaggerDocs");
-const authSwaggerDocs = require("./authSwaggerDocs");
+const userSwaggerDocs = require("./userSwaggerDocs");
 
 module.exports = {
   productSwaggerDocs,
-  authSwaggerDocs,
+  userSwaggerDocs,
 };

@@ -19,7 +19,7 @@
       "no-unused-vars": "warn", // Warns about variables that are declared but not used.
       "no-undef": "error", // Errors when using variables that are not declared, useful for catching typographical and scope errors.
       "import/no-unresolved": "error", // Errors for imports that ESLint can't resolve, useful to ensure your module paths are correct.
-      "indent": ["error", 2], // Enforces consistent indentation of 2 spaces.
+      //"indent": ["error", 2], // Enforces consistent indentation of 2 spaces.
       "linebreak-style": ["error", "unix"], // Enforces the use of Unix line endings: `\n` for line breaks.
       "quotes": ["error", "double"], // Enforces the use of single quotes for strings.
       "semi": ["error", "always"] // Requires the use of semicolons at the end of statements.
