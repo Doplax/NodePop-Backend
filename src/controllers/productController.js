@@ -1,26 +1,33 @@
 const Product = require("../models/Product.js");
 const { matchedData } = require("express-validator");
 const handleHttpError = require("../utils/errorHandler.js");
-const { deleteOldPhotoAndThumbnail } = require("../utils/photoManager.js"); // Asegúrate de ajustar la ruta de importación según tu estructura de proyecto
+const { transformProduct } = require("../utils/transformProduct.js");
+
+// TODO eliminar lógica relacionada con 'deleteOldPhotoAndThumbnail'
+//const { deleteOldPhotoAndThumbnail } = require("../utils/photoManager.js"); // Asegúrate de ajustar la ruta de importación según tu estructura de proyecto
 
 const getItems = async (req, res) => {
   try {
-    const data = await Product.find({});
-    console.log(data);
-    res.send({ data });
+    const products = await Product.find({});
+    const transformedProducts = products.map((product) => transformProduct(product, req));
+    res.send(transformedProducts);
   } catch (error) {
-    return handleHttpError(res, "ERROR_GET_ITEMS");
+    return handleHttpError(res, "ERROR_FETCHING_PRODUCTS", 404);
   }
 };
 
 const getItem = async (req, res) => {
   try {
     const { id } = req.params;
-    const data = await Product.findById(id);
-    if (!data) {
+    const product = await Product.findById(id);
+
+    if (!product) {
       return handleHttpError(res, "ERROR_GET_ITEM: Product not Found", 404);
     }
-    res.send(data);
+
+    // Transformar un único producto
+    const transformedProduct = transformProduct(product, req);
+    res.send(transformedProduct);
   } catch (error) {
     return handleHttpError(res, "ERROR_GET_ITEM");
   }
@@ -37,10 +44,15 @@ const createItem = async (req, res) => {
         400
       );
     }
-
-    const data = await Product.create({ ...body, photo: file.filename });
-    console.log({ data });
-    await data.createThumbnail();
+    console.log(body);
+    const data = await Product.create({
+      ...body,
+      photo: {
+        data: file.buffer,
+        contenType: file.mimetype,
+      }
+    });
+    //await data.createThumbnail();
 
     res.send({ data });
   } catch (error) {
