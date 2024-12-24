@@ -19,8 +19,8 @@ const ProductSchema = new mongoose.Schema(
       default: true,
     },
     photo: {
-      type: String,
-      // required: [true, "You must upload a photo"],
+      data: Buffer,
+      contentType: String,
     },
     tags: [
       {

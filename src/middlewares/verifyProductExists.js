@@ -10,7 +10,7 @@ const verifyProductExists = async (req, res, next) => {
     }
     next();
   } catch (error) {
-    return handleHttpError(res, "ERROR VERYFING PRODUCT", 500);
+    return handleHttpError(res, `ERROR VERYFING PRODUCT: ${error.message}`, 500);
   }
 };
 
