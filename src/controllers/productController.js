@@ -3,9 +3,6 @@ const { matchedData } = require("express-validator");
 const handleHttpError = require("../utils/errorHandler.js");
 const { transformProduct } = require("../utils/transformProduct.js");
 
-// TODO eliminar lógica relacionada con 'deleteOldPhotoAndThumbnail'
-//const { deleteOldPhotoAndThumbnail } = require("../utils/photoManager.js"); // Asegúrate de ajustar la ruta de importación según tu estructura de proyecto
-
 const getItems = async (req, res) => {
   try {
     const products = await Product.find({});
@@ -71,7 +68,7 @@ const updateItem = async (req, res) => {
     }
 
     if (file) {
-      await deleteOldPhotoAndThumbnail(currentProduct.photo);
+      //await deleteOldPhotoAndThumbnail(currentProduct.photo);
     }
 
     const update = file ? { ...body, photo: file.filename } : body;
@@ -79,10 +76,6 @@ const updateItem = async (req, res) => {
       new: true,
       runValidators: true,
     });
-
-    if (file) {
-      await data.createThumbnail();
-    }
 
     res.send({ data });
   } catch (error) {
@@ -98,7 +91,6 @@ const deleteItem = async (req, res) => {
     if (!data) {
       return handleHttpError(res, "PRODUCT_NOT_FOUND", 404);
     }
-    await deleteOldPhotoAndThumbnail(data.photo);
 
     res.send({ data });
   } catch (error) {

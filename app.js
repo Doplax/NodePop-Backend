@@ -14,6 +14,7 @@ const swaggerUi = require("swagger-ui-express");
 require("./src/config/mongo.js")(); // Connects to the database
 
 const app = express();
+app.use(cors()); // Avoid CORS errors
 
 // Serve Swagger Docs
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
@@ -23,7 +24,6 @@ app.set("views", path.join(__dirname, "./src/views/"));
 app.set("view engine", "ejs");
 
 // MIDDLEWARES
-app.use(cors()); // Avoid CORS errors
 app.use(express.json()); // Allows to receive information in JSON
 app.use(express.static(path.join(__dirname, "/public"))); // Serves static files in the public folder
 app.use(express.urlencoded({ extended: false })); // Parse request bodies with content type application/x-www-form-urlencoded
