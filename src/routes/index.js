@@ -11,7 +11,8 @@ const { getImage } = require("../controllers/imagesController.js");
 
 // VIEW ROUTES
 router.get("/", (req, res, next) => {
-  res.render("index");
+  //res.render("index");
+  res.redirect("/docs");
 });
 
 router.use("/change-locale", changeLocale);
