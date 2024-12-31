@@ -1,12 +1,44 @@
 require("dotenv").config(); // Carga las variables de entorno desde el archivo .env
-
-const app = require("./app.js");
+const express = require("express");
+const cors = require("cors");
+const path = require("node:path");
+const logger = require("morgan");
 const http = require("node:http");
-// const debug = require("debug")("nodeapp:server"); // Comentado, se puede usar para depuración si es necesario
+const indexRouter = require("./src/routes/index.js");
+const i18n = require("./src/config/i18nConfigure.js");
+const cookieParser = require("cookie-parser");
+const swaggerDocs = require("./src/config/swaggerConfig.js"); // Dinamic Gerenation
+// const swaggerDocs = require("./src/swagger-output.json"); // Static document
+const swaggerUi = require("swagger-ui-express");
 
+require("./src/config/mongo.js")(); // Connects to the database
+
+const app = express();
 const PORT = process.env.PORT || 4000;
 
 app.set("port", PORT);
+
+// Middlewares
+app.use(cors()); // Avoid CORS errors
+app.use(express.json()); // Allows to receive information in JSON
+app.use(express.urlencoded({ extended: false })); // Parse request bodies with content type application/x-www-form-urlencoded
+app.use(express.static(path.join(__dirname, "/public"))); // Serves static files in the public folder
+app.use(logger("dev")); // Log requests and responses on the console in development mode.
+app.use(cookieParser());
+app.use(i18n.init);
+
+// Serve Swagger Docs
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use("/swagger-ui", express.static(path.join(require.resolve("swagger-ui-dist"), "..")));
+
+// View Engine Setup
+app.set("views", path.join(__dirname, "./src/views/"));
+app.set("view engine", "ejs");
+
+// Routes
+app.use(indexRouter);
+
+// Create and start server
 const server = http.createServer(app);
 
 server.listen(PORT, () => {
