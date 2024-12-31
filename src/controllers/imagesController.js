@@ -1,9 +1,6 @@
 const Product = require("../models/Product.js");
 const handleHttpError = require("../utils/errorHandler.js");
 
-// TODO eliminar lógica relacionada con 'deleteOldPhotoAndThumbnail'
-//const { deleteOldPhotoAndThumbnail } = require("../utils/photoManager.js"); // Asegúrate de ajustar la ruta de importación según tu estructura de proyecto
-
 const getImage = async (req, res) => {
   try {
     const { id } = req.params;
