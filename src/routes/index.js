@@ -7,6 +7,7 @@ const router = Router();
 const authRoutes = require("./api/auth.js");
 const productRoutes = require("./api/products.js");
 const imagesRoutes = require("./api/images.js");
+const tracksRoutes = require("./api/tracks.js");
 const changeLocale = require("./web/changeLocale.js");
 
 // VIEW ROUTES
@@ -21,6 +22,7 @@ router.use("/change-locale", changeLocale);
 // - Unprotected routes
 router.use("/api/auth", authRoutes);
 router.use("/api/images", imagesRoutes);
+router.use("/api/tracks", tracksRoutes);
 
 // - Protected routes
 router.use("/api/products", authMiddleware, productRoutes);
