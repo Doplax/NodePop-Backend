@@ -26,6 +26,7 @@ app.use(express.static(path.join(__dirname, "/public"))); // Serves static files
 app.use(logger("dev")); // Log requests and responses on the console in development mode.
 app.use(cookieParser());
 app.use(i18n.init);
+app.use("/public", express.static(path.join(__dirname, "public"))); // Set public folder
 
 // Serve Swagger Docs
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
