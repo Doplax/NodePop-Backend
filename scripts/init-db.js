@@ -1,11 +1,11 @@
 "use strict";
 
-const products = require("./products.js");
+const products = require("../src/db/productsList.js");
 require("dotenv").config();
 const readline = require("node:readline");
-const dbConnect = require("../config/mongo.js");
-const { Product, User } = require("../models/index.js");
-const { encrypt } = require("../utils/handlePassword.js");
+const dbConnect = require("../src/config/mongo.js");
+const { Product, User } = require("../src/models/index.js");
+const { encrypt } = require("../src/utils/handlePassword.js");
 
 async function main() {
   try {

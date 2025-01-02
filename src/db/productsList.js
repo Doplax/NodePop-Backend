@@ -1,4 +1,4 @@
-const products = [
+const productsList = [
   {
     name: "MacBook Pro",
     price: 1299,
@@ -51,4 +51,4 @@ const products = [
   },
 ];
 
-module.exports = products;
+module.exports = productsList;
