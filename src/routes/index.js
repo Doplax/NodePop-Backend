@@ -7,13 +7,15 @@ const router = Router();
 const authRoutes = require("./api/auth.js");
 const productRoutes = require("./api/products.js");
 const imagesRoutes = require("./api/images.js");
+const swaggerRoutes = require("./api/swaggerDocs.js");
+
 const tracksRoutes = require("./api/tracks.js");
 const changeLocale = require("./web/changeLocale.js");
 
 // VIEW ROUTES
 router.get("/", (req, res, next) => {
   //res.render("index");
-  res.redirect("/docs");
+  res.redirect("/swaggerDocs");
 });
 
 router.use("/change-locale", changeLocale);
@@ -23,6 +25,7 @@ router.use("/change-locale", changeLocale);
 router.use("/api/auth", authRoutes);
 router.use("/api/images", imagesRoutes);
 router.use("/api/tracks", tracksRoutes);
+router.use("/api/swaggerDocs", swaggerRoutes);
 
 // - Protected routes
 router.use("/api/products", authMiddleware, productRoutes);

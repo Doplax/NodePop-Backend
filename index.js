@@ -7,9 +7,6 @@ const http = require("node:http");
 const indexRouter = require("./src/routes/index.js");
 const i18n = require("./src/config/i18nConfigure.js");
 const cookieParser = require("cookie-parser");
-const swaggerDocs = require("./src/config/swaggerConfig.js"); // Dinamic Gerenation
-// const swaggerDocs = require("./src/swagger-output.json"); // Static document
-const swaggerUi = require("swagger-ui-express");
 
 require("./src/config/mongo.js")(); // Connects to the database
 
@@ -27,10 +24,6 @@ app.use(logger("dev")); // Log requests and responses on the console in developm
 app.use(cookieParser());
 app.use(i18n.init);
 app.use("/public", express.static(path.join(__dirname, "public"))); // Set public folder
-
-// Serve Swagger Docs
-app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-app.use("/swagger-ui", express.static(path.join(require.resolve("swagger-ui-dist"), "..")));
 
 // View Engine Setup
 app.set("views", path.join(__dirname, "./src/views/"));
