@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development DEBUG=nodeapp:* nodemon ./index.js",
+    "start": "cross-env NODE_ENV=development DEBUG=nodeapp:* nodemon ./index.js",
     "dev:cluster": "cross-env DEBUG=nodeapp:* nodemon --inspect --exec ts-node ./src/bin/cluster.ts && node ./microservices/thumbnailCote.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "init-db": "node ./src/db/init-db.js",
