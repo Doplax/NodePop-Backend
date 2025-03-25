@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development DEBUG=nodeapp:* nodemon ./index.js",
+    "start": "cross-env NODE_ENV=development DEBUG=nodeapp:* nodemon ./index.js",
     "dev:cluster": "cross-env DEBUG=nodeapp:* nodemon --inspect --exec ts-node ./src/bin/cluster.ts && node ./microservices/thumbnailCote.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "init-db": "node ./src/db/init-db.js",
@@ -40,6 +40,7 @@
     "mongoose": "^8.1.1",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.10.0",
     "npm": "^10.4.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",

@@ -18,7 +18,7 @@ const verifyProductExists = require("../../middlewares/verifyProductExists");
  *   description: API para gestionar productos
  */
 
-/**
+/**ap
  * @swagger
  * /api/products:
  *   get:
