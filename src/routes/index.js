@@ -16,7 +16,7 @@ const changeLocale = require("./web/changeLocale.js");
 // VIEW ROUTES
 router.get("/", (req, res, next) => {
   //res.render("index");
-  res.redirect("/swaggerDocs");
+  res.redirect("/api/swaggerDocs/swagger-ui");
 });
 
 router.use("/change-locale", changeLocale);
