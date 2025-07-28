@@ -1,7 +1,7 @@
-const { check } = require("express-validator"); // Import the `check` function from the `express-validator` package.
-const validateResults = require("../utils/handleValidators.js");
+import { check } from "express-validator";
+import validateResults from "../utils/handleValidators";
 
-const validatorRegister = [
+export const validatorRegister = [
   check("email") // Define a validation chain for the "email" field.
     .trim() // Removes whitespace from both ends of the string.
     .isEmail() // Checks if the input is a valid email address.
@@ -11,17 +11,15 @@ const validatorRegister = [
     .trim() // Removes whitespace from both ends of the string.
     .isLength({ min: 4 }) // Checks if the password is at least 6 characters long.
     .withMessage("The password must be at least 4 characters long"),
-  (req, res, next) => {
+  (req: any, res: any, next: any) => {
     return validateResults(req, res, next);
   }, // Custom error message if the password is too short.     // Custom error message if the password is not considered "strong".
 ];
 
-const validatorLogin = [
+export const validatorLogin = [
   check("password").exists().notEmpty().isLength({ min: 3, max: 15 }),
   check("email").exists().notEmpty().isEmail(),
-  (req, res, next) => {
+  (req: any, res: any, next: any) => {
     return validateResults(req, res, next);
   },
 ];
-
-module.exports = { validatorRegister, validatorLogin };

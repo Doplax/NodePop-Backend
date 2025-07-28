@@ -1,7 +1,7 @@
-const fs = require("fs");
-const path = require("path");
+import fs from "fs";
+import path from "path";
 
-const deleteOldPhotoAndThumbnail = async (currentPhoto) => {
+export const deleteOldPhotoAndThumbnail = async (currentPhoto: string): Promise<void> => {
   if (currentPhoto) {
     const oldPhotoPath = path.join(
       __dirname,
@@ -24,7 +24,7 @@ const deleteOldPhotoAndThumbnail = async (currentPhoto) => {
       if (fs.existsSync(oldPhotoPath)) {
         fs.unlinkSync(oldPhotoPath);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(`Error deleting the old photo: ${error.message}`);
     }
 
@@ -32,10 +32,8 @@ const deleteOldPhotoAndThumbnail = async (currentPhoto) => {
       if (fs.existsSync(oldThumbnailPath)) {
         fs.unlinkSync(oldThumbnailPath);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(`Error deleting the thumbnail: ${error.message}`);
     }
   }
 };
-
-module.exports = { deleteOldPhotoAndThumbnail };

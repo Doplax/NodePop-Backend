@@ -1,5 +1,5 @@
-const multer = require("multer");
-const path = require("path");
+import multer from "multer";
+import path from "path";
 
 // SAVE IN LOCAL STORAGE
 //const filePath = path.resolve(__dirname, "..", "..", "public", "images");
@@ -26,4 +26,4 @@ const upload = multer({
   storage: fileStorage,
 });
 
-module.exports = upload;
+export default upload;

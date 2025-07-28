@@ -1,5 +1,5 @@
-const { check } = require("express-validator");
-const validateResults = require("../utils/handleValidators.js");
+import { check } from "express-validator";
+import validateResults from "../utils/handleValidators";
 
 const productValidationRules = [
   check("name")
@@ -28,16 +28,16 @@ const productValidationRules = [
     .isArray()
     .withMessage("The tags must be an array")
     .custom((tags) =>
-      tags.every((tag) =>
+      tags.every((tag: string) =>
         ["Laptop", "Tablet", "Smartphone", "Desktop"].includes(tag)
       )
     )
     .withMessage(
       "Invalid tag value. Valid values are: Laptop, Tablet, Smartphone, Desktop"
     ),
-  (req, res, next) => {
+  (req: any, res: any, next: any) => {
     return validateResults(req, res, next);
   },
 ];
 
-module.exports = module.exports = productValidationRules;
+export default productValidationRules;

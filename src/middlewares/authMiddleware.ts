@@ -1,8 +1,17 @@
-const handleHttpError = require("../utils/errorHandler.js");
-const { verifyToken } = require("../utils/handleJwt.js");
-const { User } = require("../models");
+import { Request, Response, NextFunction } from "express";
+import handleHttpError from "../utils/errorHandler";
+import { verifyToken } from "../utils/handleJwt";
+import User from "../models/User";
 
-const authMiddleware = async (req, res, next) => {
+declare global {
+  namespace Express {
+    interface Request {
+      user?: any;
+    }
+  }
+}
+
+const authMiddleware = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     if (!req.headers.authorization) {
       handleHttpError(
@@ -14,6 +23,15 @@ const authMiddleware = async (req, res, next) => {
     }
 
     const token = req.headers.authorization.split(" ").pop();
+    if (!token) {
+      handleHttpError(
+        res,
+        "ERROR_TOKEN: No token provided.",
+        401
+      );
+      return;
+    }
+
     const dataToken = await verifyToken(token);
 
     if (!dataToken) {
@@ -36,7 +54,6 @@ const authMiddleware = async (req, res, next) => {
     }
     req.user = dataToken;
 
-    
     next();
   } catch (e) {
     handleHttpError(
@@ -47,4 +64,4 @@ const authMiddleware = async (req, res, next) => {
   }
 };
 
-module.exports = authMiddleware;
+export default authMiddleware;
