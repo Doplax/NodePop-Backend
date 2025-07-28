@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import handleHttpError from "../utils/errorHandler";
+import handleHttpError from "@/utils/errorHandler";
 import { tracksList as mainMusicTracks } from "../../public/music/main-music";
 import { tracksList as lofiMusicTracks } from "../../public/music/lofi-music";
-import User from "../models/User";
+import User from "@/models/User";
 
 export const getItems = async (req: Request, res: Response): Promise<void> => {
   try {

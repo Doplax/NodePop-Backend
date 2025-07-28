@@ -1,15 +1,15 @@
 import { Router } from "express";
 const router = Router();
-import productValidationRules from "../../validators/productValidator";
+import productValidationRules from "@/validators/productValidator";
 import {
   getItems,
   getItem,
   createItem,
   updateItem,
   deleteItem,
-} from "../../controllers/productController";
-import uploadMiddleware from "../../middlewares/uploadMiddleware";
-import verifyProductExists from "../../middlewares/verifyProductExists";
+} from "@/controllers/productController";
+import uploadMiddleware from "@/middlewares/uploadMiddleware";
+import verifyProductExists from "@/middlewares/verifyProductExists";
 
 /**
  * @swagger

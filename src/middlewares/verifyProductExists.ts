@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import Product from "../models/Product";
-import handleHttpError from "../utils/errorHandler";
+import Product from "@/models/Product";
+import handleHttpError from "@/utils/errorHandler";
 
 const verifyProductExists = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const { id } = req.params;

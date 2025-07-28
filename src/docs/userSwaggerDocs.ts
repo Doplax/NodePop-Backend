@@ -1,5 +1,5 @@
-import User from "../models/User";
-import { generateSwaggerSchema } from "../utils/swaggerUtils";
+import User from "@/models/User";
+import { generateSwaggerSchema } from "@/utils/swaggerUtils";
 
 const userSwaggerSchema = generateSwaggerSchema(User.schema);
 

@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import Product from "../models/Product";
+import Product from "@/models/Product";
 import { matchedData } from "express-validator";
-import handleHttpError from "../utils/errorHandler";
-import { transformProduct } from "../utils/transformProduct";
+import handleHttpError from "@/utils/errorHandler";
+import { transformProduct } from "@/utils/transformProduct";
 
 export const getItems = async (req: Request, res: Response): Promise<void> => {
   try {

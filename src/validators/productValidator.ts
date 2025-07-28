@@ -1,5 +1,5 @@
 import { check } from "express-validator";
-import validateResults from "../utils/handleValidators";
+import validateResults from "@/utils/handleValidators";
 
 const productValidationRules = [
   check("name")

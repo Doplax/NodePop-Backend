@@ -3,7 +3,7 @@ import path from "node:path";
 const router = express.Router();
 
 import swaggerUi from "swagger-ui-express";
-import swaggerDocs from "../../config/swaggerConfig"; // Dinamic Gerenation
+import swaggerDocs from "@/config/swaggerConfig"; // Dinamic Gerenation
 // const swaggerDocs = require("./src/swagger-output.json"); // Static document
 
 router.use("/", swaggerUi.serve, swaggerUi.setup(swaggerDocs));

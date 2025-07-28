@@ -4,11 +4,11 @@ import {
   loginCtrl,
   registerCtrl,
   getAllUsersCtrl,
-} from "../../controllers/authController";
+} from "@/controllers/authController";
 import {
   validatorRegister,
   validatorLogin,
-} from "../../validators/authValidator";
+} from "@/validators/authValidator";
 
 /**
  * @swagger

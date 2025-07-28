@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
-import handleHttpError from "../utils/errorHandler";
-import { verifyToken } from "../utils/handleJwt";
-import User from "../models/User";
+import handleHttpError from "@/utils/errorHandler";
+import { verifyToken } from "@/utils/handleJwt";
+import User from "@/models/User";
 
 declare global {
   namespace Express {
