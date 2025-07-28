@@ -1,23 +1,13 @@
-interface Photo {
-  data: Buffer | null;
-  contentType: string;
-}
+import { ProductData } from "@/models";
 
-interface Product {
-  name: string;
-  price: number;
-  isForSale: boolean;
-  photo: Photo;
-  tags: string[];
-}
 
-const productsList: Product[] = [
+const productsList: ProductData[] = [
   {
     name: "MacBook Pro",
     price: 1299,
     isForSale: true,
     photo: {
-      data: null, // Aquí puedes cargar un Buffer con la imagen si es necesario
+      data: null, 
       contentType: "image/jpeg",
     },
     tags: ["Laptop", "Smartphone"],

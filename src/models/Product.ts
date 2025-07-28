@@ -1,21 +1,20 @@
 import { Schema, model, Document } from "mongoose";
 
-// Definir los tags permitidos
 export type Tag = "Laptop" | "Tablet" | "Smartphone" | "Desktop";
 
-// Definir la interfaz del documento
-export interface IProduct extends Document {
+export interface ProductData {
   name: string;
   price: number;
   isForSale?: boolean;
   photo?: {
-    data: Buffer;
+    data: Buffer | null;
     contentType: string;
   };
   tags?: Tag[];
 }
 
-// Esquema de Mongoose
+export interface IProduct extends ProductData, Document {}
+
 const ProductSchema: Schema<IProduct> = new Schema(
   {
     name: {
