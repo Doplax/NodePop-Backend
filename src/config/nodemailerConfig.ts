@@ -1,4 +1,13 @@
-const nodemailer = require("nodemailer");
+import nodemailer from "nodemailer";
+
+interface MailOptions {
+  from?: string;
+  to: string;
+  subject: string;
+  text?: string;
+  html?: string;
+  [key: string]: any;
+}
 
 const transporter = nodemailer.createTransport({
 //  service: process.env.EMAIL_SERVICE,
@@ -10,7 +19,7 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-const sendEmail = async (mailOptions) => {
+export const sendEmail = async (mailOptions: MailOptions): Promise<{ success: boolean; error?: any }> => {
   try {
     await transporter.sendMail(mailOptions);
     return { success: true };
@@ -19,5 +28,3 @@ const sendEmail = async (mailOptions) => {
     return { success: false, error };
   }
 };
-
-module.exports = { sendEmail };

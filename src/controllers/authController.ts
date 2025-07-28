@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { matchedData } from "express-validator";
-import { IUser } from "@/models/User"; // <-- Usa tu alias o ruta relativa si no has configurado alias
+import User, { IUser } from "@/models/User"; // <-- Usa tu alias o ruta relativa si no has configurado alias
 import handleHttpError from "@/utils/errorHandler";
 import { encrypt, compare } from "@/utils/handlePassword";
 import { tokenSign } from "@/utils/handleJwt";
