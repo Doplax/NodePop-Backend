@@ -1,16 +1,23 @@
-require("dotenv").config(); // Carga las variables de entorno desde el archivo .env
-const express = require("express");
-const cors = require("cors");
-const path = require("node:path");
-const logger = require("morgan");
-const http = require("node:http");
-const indexRouter = require("./src/routes/index.js");
-const i18n = require("./src/config/i18nConfigure.js");
-const cookieParser = require("cookie-parser");
+import dotenv from "dotenv";
+dotenv.config(); // Carga las variables de entorno
 
-require("./src/config/mongo.js")(); // Connects to the database
+import express from "express";
+import cors from "cors";
+import path from "node:path";
+import logger from "morgan";
+import http from "node:http";
+import cookieParser from "cookie-parser";
+
+// Configuraciones internas
+import {indexRouter} from "./src/routes/index";
+import i18n from "./src/config/i18nConfigure";
+
+// Conexión a la DB
+import connectDB from "./src/config/mongo";
+connectDB(); // conecta la base de datos
 
 const app = express();
+
 const PORT = process.env.PORT || 4000;
 
 app.set("port", PORT);
@@ -40,6 +47,6 @@ server.listen(PORT, () => {
   console.log(`http://localhost:${PORT}/`);
 });
 
-server.on("error", (err) => {
+server.on("error", (err: NodeJS.ErrnoException) => {
   console.error("Server error:", err);
 });

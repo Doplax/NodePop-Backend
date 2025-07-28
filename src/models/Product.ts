@@ -1,7 +1,22 @@
-const mongoose = require("mongoose");
-//const { Requester } = require("cote");
+import { Schema, model, Document } from "mongoose";
 
-const ProductSchema = new mongoose.Schema(
+// Definir los tags permitidos
+export type Tag = "Laptop" | "Tablet" | "Smartphone" | "Desktop";
+
+// Definir la interfaz del documento
+export interface IProduct extends Document {
+  name: string;
+  price: number;
+  isForSale?: boolean;
+  photo?: {
+    data: Buffer;
+    contentType: string;
+  };
+  tags?: Tag[];
+}
+
+// Esquema de Mongoose
+const ProductSchema: Schema<IProduct> = new Schema(
   {
     name: {
       type: String,
@@ -35,21 +50,7 @@ const ProductSchema = new mongoose.Schema(
   }
 );
 
-//const requester = new Requester({
-//  name: "thumbnail-microservice-requester",
-//});
+// Modelo
+const Product = model<IProduct>("Product", ProductSchema); // ✅
 
-//ProductSchema.methods.createThumbnail = async function () {
-//  const event = {
-//    type: "create-thumbnail",
-//    fileName: this.photo,
-//    test: "testeando requester",
-//  };
-//  return new Promise((resolve) => {
-//    requester.send(event, resolve);
-//  });
-//};
-
-const Product = mongoose.model("Product", ProductSchema);
-
-module.exports = Product;
+export default Product;

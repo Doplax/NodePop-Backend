@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development DEBUG=nodeapp:* nodemon ./index.js",
-    "dev": "cross-env NODE_ENV=development DEBUG=nodeapp:* nodemon ./index.js",
+    "dev": "cross-env NODE_ENV=development DEBUG=nodeapp:* nodemon --watch src --ext ts --exec ts-node index.ts",
     "dev:cluster": "cross-env DEBUG=nodeapp:* nodemon --inspect --exec ts-node ./src/bin/cluster.ts && node ./microservices/thumbnailCote.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "init-db": "node ./src/db/init-db.js",
@@ -49,11 +49,21 @@
     "yarn": "^1.22.22"
   },
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.9",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/i18n": "^0.13.12",
+    "@types/mongoose": "^5.11.96",
+    "@types/morgan": "^1.9.10",
+    "@types/node": "^24.1.0",
+    "@types/swagger-jsdoc": "^6.0.4",
     "eslint": "^8.56.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-n": "^16.6.2",
     "eslint-plugin-promise": "^6.1.1",
-    "nodemon": "^3.0.3"
+    "nodemon": "^3.0.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
   }
 }

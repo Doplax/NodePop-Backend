@@ -1,4 +1,5 @@
 // Import middlewares and modules
+import { Request, Response, NextFunction } from "express";
 const authMiddleware = require("../middlewares/authMiddleware.js");
 const { Router } = require("express");
 const router = Router();
@@ -14,7 +15,7 @@ const tracksRoutes = require("./api/tracks.js");
 const changeLocale = require("./web/changeLocale.js");
 
 // VIEW ROUTES
-router.get("/", (req, res, next) => {
+router.get("/", (req: Request, res: Response, next: NextFunction) => {
   //res.render("index");
   res.redirect("/api/swaggerDocs/swagger-ui");
 });
@@ -32,4 +33,4 @@ router.use("/api/tracks", tracksRoutes);
 // - Protected routes
 router.use("/api/products", authMiddleware, productRoutes);
 
-module.exports = router;
+export {router as indexRouter};

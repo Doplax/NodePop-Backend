@@ -1,8 +1,7 @@
-const swaggerJsdoc = require("swagger-jsdoc");
-const path = require("node:path");
+import swaggerJSDoc from "swagger-jsdoc";
+import path from "node:path";
 
-// Importar documentación modular
-const { productSwaggerDocs, userSwaggerDocs } = require("../docs");
+import { productSwaggerDocs, userSwaggerDocs } from "../docs/index";
 
 const swaggerOptions = {
   definition: {
@@ -27,6 +26,6 @@ const swaggerOptions = {
   apis: [path.join(__dirname, "../routes/**/*.js")], // adds aditional comments
 };
 
-const swaggerDocs = swaggerJsdoc(swaggerOptions);
+const swaggerDocs = swaggerJSDoc(swaggerOptions);
 
 module.exports = swaggerDocs;

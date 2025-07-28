@@ -1,6 +1,7 @@
-const i18n = require("i18n");
-const path = require("node:path");
+import i18n from "i18n";
+import path from "node:path";
 
+// Configuración de i18n
 i18n.configure({
   locales: ["en", "es"],
   directory: path.join(__dirname, "..", "locales"),
@@ -10,7 +11,7 @@ i18n.configure({
   cookie: "nodeapp-locale",
 });
 
+// Establecer localización por defecto (opcional, ya se establece arriba)
 i18n.setLocale("en");
 
-// exportar
-module.exports = i18n;
+export default i18n;

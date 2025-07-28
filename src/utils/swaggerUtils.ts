@@ -1,18 +1,34 @@
-const generateSwaggerSchema = (mongooseSchema) => {
-  const swaggerSchema = {
+import { Schema } from "mongoose";
+
+// Tipo para campos Swagger (muy simplificado)
+interface SwaggerProperty {
+  type: string;
+  enum?: string[];
+  minimum?: number;
+  maximum?: number;
+  default?: unknown;
+}
+
+interface SwaggerSchema {
+  type: "object";
+  required?: string[];
+  properties: Record<string, SwaggerProperty>;
+}
+
+// Función principal
+export function generateSwaggerSchema(mongooseSchema: Schema): SwaggerSchema {
+  const swaggerSchema: SwaggerSchema = {
     type: "object",
     properties: {},
   };
 
-  Object.entries(mongooseSchema.paths).forEach(([key, value]) => {
-    if (key === "_id") return; // Ignorar el campo _id
-    if (key === "__v") return; // Ignorar el campo de versión
+  Object.entries(mongooseSchema.paths).forEach(([key, value]: [string, any]) => {
+    if (key === "_id" || key === "__v") return;
 
-    const fieldSchema = {
+    const fieldSchema: SwaggerProperty = {
       type: mapMongooseTypeToSwaggerType(value.instance),
     };
 
-    // Añadir restricciones de validación
     if (value.options.required) {
       swaggerSchema.required = swaggerSchema.required || [];
       swaggerSchema.required.push(key);
@@ -34,9 +50,10 @@ const generateSwaggerSchema = (mongooseSchema) => {
   });
 
   return swaggerSchema;
-};
+}
 
-const mapMongooseTypeToSwaggerType = (type) => {
+// Mapeo de tipos Mongoose a Swagger
+function mapMongooseTypeToSwaggerType(type: string): string {
   switch (type) {
     case "String":
       return "string";
@@ -47,10 +64,8 @@ const mapMongooseTypeToSwaggerType = (type) => {
     case "Array":
       return "array";
     case "ObjectId":
-      return "string"; // Para IDs de MongoDB
+      return "string"; // MongoDB ObjectId
     default:
       return "string";
   }
-};
-
-module.exports = { generateSwaggerSchema };
+}
