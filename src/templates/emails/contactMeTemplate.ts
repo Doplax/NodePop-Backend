@@ -1,4 +1,11 @@
-const contactMeTemplate = (data) => ({
+interface ContactData {
+  name: string;
+  email: string;
+  message: string;
+  subject?: string;
+}
+
+const contactMeTemplate = (data: ContactData): { subject: string; text: string; html: string } => ({
   subject: `Nuevo mensaje de contacto: ${data.subject || "Sin asunto"}`,
   text: `
       Nombre: ${data.name}
@@ -13,4 +20,4 @@ const contactMeTemplate = (data) => ({
     `
 });
 
-module.exports = contactMeTemplate;
+export default contactMeTemplate;

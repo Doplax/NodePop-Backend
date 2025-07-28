@@ -23,9 +23,9 @@ const swaggerOptions = {
     //  ...authDocs.paths, // Rutas de autenticación
     //},
   },
-  apis: [path.join(__dirname, "../routes/**/*.js")], // adds aditional comments
+  apis: [path.join(__dirname, "../routes/**/*.{js,ts}")], // adds aditional comments
 };
 
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
 
-module.exports = swaggerDocs;
+export default swaggerDocs;

@@ -1,15 +1,15 @@
-const { Router } = require("express");
+import { Router } from "express";
 const router = Router();
-const productValidationRules = require("../../validators/productValidator.js");
-const {
+import productValidationRules from "../../validators/productValidator";
+import {
   getItems,
   getItem,
   createItem,
   updateItem,
   deleteItem,
-} = require("../../controllers/productController.js");
-const uploadMiddleware = require("../../middlewares/uploadMiddleware.js");
-const verifyProductExists = require("../../middlewares/verifyProductExists");
+} from "../../controllers/productController";
+import uploadMiddleware from "../../middlewares/uploadMiddleware";
+import verifyProductExists from "../../middlewares/verifyProductExists";
 
 /**
  * @swagger
@@ -142,4 +142,4 @@ router.put(
  */
 router.delete("/:id", deleteItem);
 
-module.exports = router;
+export default router;

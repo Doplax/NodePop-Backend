@@ -1,12 +1,12 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const {
+import {
   getItems,
   getItem,
   createItem,
   deleteItem,
   updateItem,
-} = require("../../controllers/tracks");
+} from "../../controllers/tracks";
 //const { validateCreate } = require("../validators/users");
 
 router.get("/", getItems);
@@ -20,4 +20,4 @@ router.patch("/:id", updateItem);
 
 router.delete("/:id", deleteItem);
 
-module.exports = router;
+export default router;

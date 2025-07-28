@@ -1,6 +1,6 @@
-const { Router } = require("express");
+import { Router } from "express";
 const router = Router();
-const { getImage } = require("../../controllers/imagesController.js");
+import { getImage } from "../../controllers/imagesController";
 
 /**
  * @swagger
@@ -37,4 +37,4 @@ const { getImage } = require("../../controllers/imagesController.js");
  */
 router.get("/:id", getImage);
 
-module.exports = router;
+export default router;

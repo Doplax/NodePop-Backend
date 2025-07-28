@@ -1,62 +1,66 @@
-const Product = require("../models/Product.js");
-const { matchedData } = require("express-validator");
-const handleHttpError = require("../utils/errorHandler.js");
-const { transformProduct } = require("../utils/transformProduct.js");
+import { Request, Response } from "express";
+import Product from "../models/Product";
+import { matchedData } from "express-validator";
+import handleHttpError from "../utils/errorHandler";
+import { transformProduct } from "../utils/transformProduct";
 
-const getItems = async (req, res) => {
+export const getItems = async (req: Request, res: Response): Promise<void> => {
   try {
     const products = await Product.find({});
     const transformedProducts = products.map((product) => transformProduct(product, req));
     res.send(transformedProducts);
   } catch (error) {
-    return handleHttpError(res, "ERROR_FETCHING_PRODUCTS", 404);
+    handleHttpError(res, "ERROR_FETCHING_PRODUCTS", 404);
   }
 };
 
-const getItem = async (req, res) => {
+export const getItem = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
     const product = await Product.findById(id);
 
     if (!product) {
-      return handleHttpError(res, "ERROR_GET_ITEM: Product not Found", 404);
+      handleHttpError(res, "ERROR_GET_ITEM: Product not Found", 404);
+      return;
     }
 
     // Transformar un único producto
     const transformedProduct = transformProduct(product, req);
     res.send(transformedProduct);
   } catch (error) {
-    return handleHttpError(res, "ERROR_GET_ITEM");
+    handleHttpError(res, "ERROR_GET_ITEM");
   }
 };
 
-const createItem = async (req, res) => {
+export const createItem = async (req: Request, res: Response): Promise<void> => {
   try {
     const body = matchedData(req, { locations: ["body"] });
     const file = req.file;
     if (!file) {
-      return handleHttpError(
+      handleHttpError(
         res,
         "ERROR_CREATE_ITEMS: No images were uploaded",
         400
       );
+      return;
     }
     console.log(body);
     const data = await Product.create({
       ...body,
       photo: {
         data: file.buffer,
-        contenType: file.mimetype,
+        contentType: file.mimetype,
       }
     });
     //await data.createThumbnail();
 
     res.send({ data });
-  } catch (error) {
-    return handleHttpError(res, `ERROR_CREATE_ITEMS: ${error.message}`);
+  } catch (error: any) {
+    handleHttpError(res, `ERROR_CREATE_ITEMS: ${error.message}`);
   }
 };
-const updateItem = async (req, res) => {
+
+export const updateItem = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
     const body = matchedData(req);
@@ -64,14 +68,15 @@ const updateItem = async (req, res) => {
 
     const currentProduct = await Product.findById(id);
     if (!currentProduct) {
-      return handleHttpError(res, "ERROR_UPDATE_ITEM: Product not Found", 404);
+      handleHttpError(res, "ERROR_UPDATE_ITEM: Product not Found", 404);
+      return;
     }
 
     if (file) {
       //await deleteOldPhotoAndThumbnail(currentProduct.photo);
     }
 
-    const update = file ? { ...body, photo: file.filename } : body;
+    const update = file ? { ...body, photo: { data: file.buffer, contentType: file.mimetype } } : body;
     const data = await Product.findOneAndUpdate({ _id: id }, update, {
       new: true,
       runValidators: true,
@@ -79,29 +84,22 @@ const updateItem = async (req, res) => {
 
     res.send({ data });
   } catch (error) {
-    return handleHttpError(res, "ERROR_UPDATE_ITEM");
+    handleHttpError(res, "ERROR_UPDATE_ITEM");
   }
 };
 
-const deleteItem = async (req, res) => {
+export const deleteItem = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
     const data = await Product.findByIdAndDelete(id);
 
     if (!data) {
-      return handleHttpError(res, "PRODUCT_NOT_FOUND", 404);
+      handleHttpError(res, "PRODUCT_NOT_FOUND", 404);
+      return;
     }
 
     res.send({ data });
   } catch (error) {
-    return handleHttpError(res, "ERROR_DELETE_ITEM");
+    handleHttpError(res, "ERROR_DELETE_ITEM");
   }
-};
-
-module.exports = {
-  getItem,
-  getItems,
-  createItem,
-  updateItem,
-  deleteItem,
 };

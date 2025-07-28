@@ -1,14 +1,14 @@
-const { Router } = require("express");
+import { Router } from "express";
 const router = Router();
-const {
+import {
   loginCtrl,
   registerCtrl,
   getAllUsersCtrl,
-} = require("../../controllers/authController.js");
-const {
+} from "../../controllers/authController";
+import {
   validatorRegister,
   validatorLogin,
-} = require("../../validators/authValidator.js");
+} from "../../validators/authValidator";
 
 /**
  * @swagger
@@ -72,4 +72,4 @@ router.post("/login", validatorLogin, loginCtrl);
  */
 router.get("/users", getAllUsersCtrl);
 
-module.exports = router;
+export default router;

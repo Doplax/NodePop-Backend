@@ -1,7 +1,30 @@
-require("dotenv").config();
+import dotenv from "dotenv";
+dotenv.config();
+
 const PUBLIC_URL = `${process.env.PUBLIC_URL}/public/music/main-music`;
 
-const tracksList = [
+interface Artist {
+  name: string;
+  nickname: string;
+  nationality: string;
+}
+
+interface Duration {
+  start: number;
+  end: number;
+}
+
+interface Track {
+  _id: number;
+  name: string;
+  album: string;
+  cover: string;
+  artist: Artist;
+  duration: Duration;
+  url: string;
+}
+
+export const tracksList: Track[] = [
   {
     _id: 1,
     name: "Getting Over",
@@ -135,5 +158,3 @@ const tracksList = [
     url: `${PUBLIC_URL}/track-7.mp3`,
   },
 ];
-
-module.exports = { tracksList };
