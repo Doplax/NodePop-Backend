@@ -1,28 +1,9 @@
 import dotenv from "dotenv";
+import { Artist, Duration, Track } from "../../../src/models/Track";
+
 dotenv.config();
 
 const PUBLIC_URL = `${process.env.PUBLIC_URL}/public/music/main-music`;
-
-interface Artist {
-  name: string;
-  nickname: string;
-  nationality: string;
-}
-
-interface Duration {
-  start: number;
-  end: number;
-}
-
-interface Track {
-  _id: number;
-  name: string;
-  album: string;
-  cover: string;
-  artist: Artist;
-  duration: Duration;
-  url: string;
-}
 
 export const tracksList: Track[] = [
   {

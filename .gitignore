@@ -8,3 +8,6 @@ mongo
 # FILES
 .env
 .vercel
+
+# Backup files
+*.backup

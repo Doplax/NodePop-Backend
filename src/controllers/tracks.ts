@@ -1,11 +1,13 @@
 import { Request, Response } from "express";
 import handleHttpError from "../utils/errorHandler";
-import { tracksList } from "../../public/music/main-music/tracksList";
+import { tracksList as mainMusicTracks } from "../../public/music/main-music";
+import { tracksList as lofiMusicTracks } from "../../public/music/lofi-music";
 import User from "../models/User";
 
 export const getItems = async (req: Request, res: Response): Promise<void> => {
   try {
-    res.send({ data: tracksList });
+    const allTracks = [...mainMusicTracks, ...lofiMusicTracks];
+    res.send({ data: allTracks });
   } catch (e: any) {
     handleHttpError(res, e);
   }
