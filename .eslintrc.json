@@ -3,26 +3,46 @@
     "env": {
       "browser": false, // Indicates that the code will run in a browser environment (makes globals like `window` and `document` available).
       "commonjs": true, // Enables support for CommonJS style require/export (used in Node.js environments).
-      "es2021": true // Specifies that the code is written using ES2021 features, allowing ESLint to understand modern JavaScript syntax.
+      "es2021": true, // Specifies that the code is written using ES2021 features, allowing ESLint to understand modern JavaScript syntax.
+      "node": true
     },
     // `extends` allows inheriting configurations from other sources. "standard" is a popular style guide enforcing certain formatting rules and best practices.
-    "extends": "standard",
+    "extends": [
+      "standard",
+      "@typescript-eslint/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
     // `parserOptions` specifies options for the parser used by ESLint.
     "parserOptions": {
-      "ecmaVersion": "latest" // Sets the version of ECMAScript used for parsing, "latest" ensures ESLint uses the most recent version supported.
+      "ecmaVersion": "latest", // Sets the version of ECMAScript used for parsing, "latest" ensures ESLint uses the most recent version supported.
+      "sourceType": "module",
+      "project": "./tsconfig.json"
     },
+    "plugins": ["@typescript-eslint"],
     // `rules` allows you to define how ESLint will apply specific rules to your code. You can configure them to be warnings or errors.
     "rules": {
       "space-before-function-paren": "off",
       "comma-dangle": ["off"],
       "spaced-comment": 0,
-      "no-unused-vars": "warn", // Warns about variables that are declared but not used.
-      "no-undef": "error", // Errors when using variables that are not declared, useful for catching typographical and scope errors.
-      "import/no-unresolved": "error", // Errors for imports that ESLint can't resolve, useful to ensure your module paths are correct.
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": "warn", // Warns about variables that are declared but not used.
+      "no-undef": "off", // Disabled for TypeScript as TypeScript handles this
+      "@typescript-eslint/no-explicit-any": "warn",
+      "import/no-unresolved": "off", // Disabled for TypeScript as TypeScript handles this
       //"indent": ["error", 2], // Enforces consistent indentation of 2 spaces.
       "linebreak-style": ["error", "unix"], // Enforces the use of Unix line endings: `\n` for line breaks.
-      "quotes": ["error", "double"], // Enforces the use of single quotes for strings.
+      "quotes": ["error", "double"], // Enforces the use of double quotes for strings.
       "semi": ["error", "always"] // Requires the use of semicolons at the end of statements.
-    }
+    },
+    "overrides": [
+      {
+        "files": ["*.js"],
+        "extends": ["standard"],
+        "rules": {
+          "@typescript-eslint/no-unused-vars": "off",
+          "no-unused-vars": "warn"
+        }
+      }
+    ]
   }
   
