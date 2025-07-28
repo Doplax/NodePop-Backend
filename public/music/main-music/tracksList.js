@@ -1,14 +1,12 @@
 require("dotenv").config();
-const PUBLIC_URL =
-  `${process.env.PUBLIC_URL}/public/music` || "/public/music";
+const PUBLIC_URL = `${process.env.PUBLIC_URL}/public/music/main-music`;
 
 const tracksList = [
   {
     _id: 1,
     name: "Getting Over",
     album: "One Love",
-    cover:
-      "https://jenesaispop.com/wp-content/uploads/2009/09/guetta_onelove.jpg",
+    cover: "https://jenesaispop.com/wp-content/uploads/2009/09/guetta_onelove.jpg",
     artist: {
       name: "David Guetta",
       nickname: "David Guetta",

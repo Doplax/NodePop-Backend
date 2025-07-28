@@ -1,4 +1,4 @@
-const colors = require("./colors.js");
+const colors = require("../../../src/db/colors.js");
 
 const songs = [
   {

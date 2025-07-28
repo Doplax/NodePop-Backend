@@ -1,5 +1,5 @@
 const { handleHttpError } = require("../utils/errorHandler");
-const { tracksList } = require("../db/tracksList");
+const { tracksList } = require("../../public/music/main-music/tracksList");
 const userModel = require("../models/User");
 
 const getItems = async (req, res) => {
