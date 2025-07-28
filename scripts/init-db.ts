@@ -1,13 +1,15 @@
 "use strict";
 
-const products = require("../src/db/productsList.js");
-require("dotenv").config();
-const readline = require("node:readline");
-const dbConnect = require("../src/config/mongo.js");
-const { Product, User } = require("../src/models/index.js");
-const { encrypt } = require("../src/utils/handlePassword.js");
+import products from "../src/db/productsList";
+import dotenv from "dotenv";
+dotenv.config();
+import readline from "node:readline";
+import dbConnect from "../src/config/mongo";
+import Product from "../src/models/Product";
+import User from "../src/models/User";
+import { encrypt } from "../src/utils/handlePassword";
 
-async function main() {
+async function main(): Promise<void> {
   try {
     // Wait for database connection
     await dbConnect();
@@ -29,7 +31,7 @@ async function main() {
   }
 }
 
-async function initProducts() {
+async function initProducts(): Promise<void> {
   const deletedProducts = await Product.deleteMany();
   console.log(`Deleted ${deletedProducts.deletedCount} products.`);
 
@@ -37,11 +39,16 @@ async function initProducts() {
   console.log(`Inserted ${insertedProducts.length} products.`);
 }
 
-async function initUsers() {
+async function initUsers(): Promise<void> {
   const deletedUsers = await User.deleteMany();
   console.log(`Deleted ${deletedUsers.deletedCount} users.`);
 
-  let users = [
+  interface UserData {
+    email: string;
+    password: string;
+  }
+
+  let users: UserData[] = [
     { email: "admin@example.com", password: "1234" },
     { email: "user@example.com", password: "1234" },
     { email: "pedro@gmail.com", password: "pedro" },
@@ -56,7 +63,7 @@ async function initUsers() {
   console.log(`Inserted ${insertedUsers.length} users.`);
 }
 
-function ask(question) {
+function ask(question: string): Promise<boolean> {
   return new Promise((resolve) => {
     const rl = readline.createInterface({
       input: process.stdin,

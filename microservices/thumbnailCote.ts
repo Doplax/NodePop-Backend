@@ -1,13 +1,18 @@
-const { Responder } = require("cote");
-const path = require("path");
-const jimp = require("jimp");
+import { Responder } from "cote";
+import path from "path";
+import jimp from "jimp";
 
-const main = async () => {
+interface ThumbnailRequest {
+  fileName: string;
+}
+
+const main = async (): Promise<void> => {
   try {
     const responder = new Responder({
       name: "thumbnail-microservice-responder",
     });
-    responder.on("create-thumbnail", async (req, done) => {
+    
+    responder.on("create-thumbnail", async (req: ThumbnailRequest, done: (result: string) => void) => {
       const { fileName } = req;
       const imagePath = path.join(
         __dirname,

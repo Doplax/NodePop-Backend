@@ -6,11 +6,11 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development DEBUG=nodeapp:* nodemon ./index.js",
     "dev": "cross-env NODE_ENV=development DEBUG=nodeapp:* nodemon --watch src --ext ts --exec ts-node index.ts",
-    "dev:cluster": "cross-env DEBUG=nodeapp:* nodemon --inspect --exec ts-node ./src/bin/cluster.ts && node ./microservices/thumbnailCote.js",
+    "dev:cluster": "cross-env DEBUG=nodeapp:* nodemon --inspect --exec ts-node ./src/bin/cluster.ts && ts-node ./microservices/thumbnailCote.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "init-db": "node ./src/db/init-db.js",
+    "init-db": "ts-node ./scripts/init-db.ts",
     "init-docker": "docker-compose up -d",
-    "thumbnail-microservice": "nodemon ./microservices/thumbnailCote.js",
+    "thumbnail-microservice": "nodemon --exec ts-node ./microservices/thumbnailCote.ts",
     "build": "echo 'no neded'"
   },
   "repository": {
@@ -52,8 +52,10 @@
     "@types/bcryptjs": "^2.4.6",
     "@types/cookie-parser": "^1.4.9",
     "@types/cors": "^2.8.19",
+    "@types/cote": "^0.19.5",
     "@types/express": "^5.0.3",
     "@types/i18n": "^0.13.12",
+    "@types/jimp": "^0.2.1",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/mongoose": "^5.11.96",
     "@types/morgan": "^1.9.10",
@@ -69,6 +71,7 @@
     "eslint-plugin-promise": "^6.1.1",
     "nodemon": "^3.0.3",
     "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.8.3"
   }
 }

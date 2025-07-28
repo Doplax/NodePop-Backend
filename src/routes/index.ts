@@ -1,18 +1,18 @@
 // Import middlewares and modules
-import { Request, Response, NextFunction } from "express";
-const authMiddleware = require("../middlewares/authMiddleware.js");
-const { Router } = require("express");
+import { Request, Response, NextFunction, Router } from "express";
+import authMiddleware from "../middlewares/authMiddleware";
+
 const router = Router();
 
 // Import routes and controllers
-const authRoutes = require("./api/auth.js");
-const emailRoutes = require("./api/email.js");
-const productRoutes = require("./api/products.js");
-const imagesRoutes = require("./api/images.js");
-const swaggerRoutes = require("./api/swaggerDocs.js");
+import authRoutes from "./api/auth";
+import emailRoutes from "./api/email";
+import productRoutes from "./api/products";
+import imagesRoutes from "./api/images";
+import swaggerRoutes from "./api/swaggerDocs";
 
-const tracksRoutes = require("./api/tracks.js");
-const changeLocale = require("./web/changeLocale.js");
+import tracksRoutes from "./api/tracks";
+import changeLocale from "./web/changeLocale";
 
 // VIEW ROUTES
 router.get("/", (req: Request, res: Response, next: NextFunction) => {
@@ -33,4 +33,4 @@ router.use("/api/tracks", tracksRoutes);
 // - Protected routes
 router.use("/api/products", authMiddleware, productRoutes);
 
-export {router as indexRouter};
+export { router as indexRouter };

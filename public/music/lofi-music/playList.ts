@@ -1,12 +1,34 @@
-const colors = require("../../../src/db/colors.js");
+import colors from "../../../src/db/colors";
 
-const songs = [
+interface Song {
+  id: number;
+  albumId: number;
+  title: string;
+  image: string;
+  artists: string[];
+  album: string;
+  duration: string;
+}
+
+interface Playlist {
+  id: string;
+  albumId: number;
+  title: string;
+  color: {
+    accent: string;
+    dark: string;
+  };
+  cover: string;
+  artists: string[];
+}
+
+const songs: Song[] = [
   {
     id: 1,
     albumId: 1,
     title: "Moonlit Walk",
     image:
-      "https: //vinyl.lofirecords.com/cdn/shop/products/VINYL_MORNING_COFFEE_4-min.png?v=1680526353",
+      "https://vinyl.lofirecords.com/cdn/shop/products/VINYL_MORNING_COFFEE_4-min.png?v=1680526353",
     artists: ["LoFi Dreamer"],
     album: "Chill Lo-Fi Music",
     duration: "3:12",
@@ -16,7 +38,7 @@ const songs = [
     albumId: 1,
     title: "Coffee Daze",
     image:
-      "https: //vinyl.lofirecords.com/cdn/shop/products/VINYL_MORNING_COFFEE_4-min.png?v=1680526353",
+      "https://vinyl.lofirecords.com/cdn/shop/products/VINYL_MORNING_COFFEE_4-min.png?v=1680526353",
     artists: ["LoFi Dreamer"],
     album: "Chill Lo-Fi Music",
     duration: "4:07",
@@ -26,7 +48,7 @@ const songs = [
     albumId: 1,
     title: "Skyline Serenade",
     image:
-      "https: //vinyl.lofirecords.com/cdn/shop/products/VINYL_MORNING_COFFEE_4-min.png?v=1680526353",
+      "https://vinyl.lofirecords.com/cdn/shop/products/VINYL_MORNING_COFFEE_4-min.png?v=1680526353",
     artists: ["LoFi Dreamer"],
     album: "Chill Lo-Fi Music",
     duration: "3:50",
@@ -36,7 +58,7 @@ const songs = [
     albumId: 1,
     title: "Urban Echoes",
     image:
-      "https: //vinyl.lofirecords.com/cdn/shop/products/VINYL_MORNING_COFFEE_4-min.png?v=1680526353",
+      "https://vinyl.lofirecords.com/cdn/shop/products/VINYL_MORNING_COFFEE_4-min.png?v=1680526353",
     artists: ["LoFi Dreamer"],
     album: "Chill Lo-Fi Music",
     duration: "3:30",
@@ -46,7 +68,7 @@ const songs = [
     albumId: 1,
     title: "Night's End",
     image:
-      "https: //vinyl.lofirecords.com/cdn/shop/products/VINYL_MORNING_COFFEE_4-min.png?v=1680526353",
+      "https://vinyl.lofirecords.com/cdn/shop/products/VINYL_MORNING_COFFEE_4-min.png?v=1680526353",
     artists: ["LoFi Dreamer"],
     album: "Chill Lo-Fi Music",
     duration: "4:20",
@@ -56,7 +78,7 @@ const songs = [
     albumId: 2,
     title: "Silent Rain",
     image:
-      "https: //vinyl.lofirecords.com/cdn/shop/files/2amsynth-vinyl.png?v=1693312187",
+      "https://vinyl.lofirecords.com/cdn/shop/files/2amsynth-vinyl.png?v=1693312187",
     artists: ["Urban Nocturne"],
     album: "Midnight Tales",
     duration: "3:40",
@@ -66,7 +88,7 @@ const songs = [
     albumId: 2,
     title: "Lost Pages",
     image:
-      "https: //vinyl.lofirecords.com/cdn/shop/files/2amsynth-vinyl.png?v=1693312187",
+      "https://vinyl.lofirecords.com/cdn/shop/files/2amsynth-vinyl.png?v=1693312187",
     artists: ["Urban Nocturne"],
     album: "Midnight Tales",
     duration: "3:20",
@@ -76,7 +98,7 @@ const songs = [
     albumId: 2,
     title: "Midnight Tales",
     image:
-      "https: //vinyl.lofirecords.com/cdn/shop/files/2amsynth-vinyl.png?v=1693312187",
+      "https://vinyl.lofirecords.com/cdn/shop/files/2amsynth-vinyl.png?v=1693312187",
     artists: ["Urban Nocturne"],
     album: "Midnight Tales",
     duration: "3:50",
@@ -86,7 +108,7 @@ const songs = [
     albumId: 2,
     title: "City Lights",
     image:
-      "https: //vinyl.lofirecords.com/cdn/shop/files/2amsynth-vinyl.png?v=1693312187",
+      "https://vinyl.lofirecords.com/cdn/shop/files/2amsynth-vinyl.png?v=1693312187",
     artists: ["Urban Nocturne"],
     album: "Midnight Tales",
     duration: "3:30",
@@ -96,7 +118,7 @@ const songs = [
     albumId: 2,
     title: "Night Drive",
     image:
-      "https: //vinyl.lofirecords.com/cdn/shop/files/2amsynth-vinyl.png?v=1693312187",
+      "https://vinyl.lofirecords.com/cdn/shop/files/2amsynth-vinyl.png?v=1693312187",
     artists: ["Urban Nocturne"],
     album: "Midnight Tales",
     duration: "4:20",
@@ -105,7 +127,7 @@ const songs = [
     id: 1,
     albumId: 3,
     title: "Lunar",
-    image: "https: //f4.bcbits.com/img/a1435058381_65.jpg",
+    image: "https://f4.bcbits.com/img/a1435058381_65.jpg",
     artists: ["Tenno"],
     album: "Study Session",
     duration: "3:40",
@@ -114,7 +136,7 @@ const songs = [
     id: 2,
     albumId: 3,
     title: "Go go go!",
-    image: "https: //f4.bcbits.com/img/a1435058381_65.jpg",
+    image: "https://f4.bcbits.com/img/a1435058381_65.jpg",
     artists: ["Tenno"],
     album: "Study Session",
     duration: "3:20",
@@ -123,7 +145,7 @@ const songs = [
     id: 3,
     albumId: 3,
     title: "Keep focus!",
-    image: "https: //f4.bcbits.com/img/a1435058381_65.jpg",
+    image: "https://f4.bcbits.com/img/a1435058381_65.jpg",
     artists: ["Tenno"],
     album: "Study Session",
     duration: "2:40",
@@ -132,7 +154,7 @@ const songs = [
     id: 4,
     albumId: 3,
     title: "JavaScript is the way",
-    image: "https: //f4.bcbits.com/img/a1435058381_65.jpg",
+    image: "https://f4.bcbits.com/img/a1435058381_65.jpg",
     artists: ["Tenno"],
     album: "Study Session",
     duration: "3:10",
@@ -141,7 +163,7 @@ const songs = [
     id: 5,
     albumId: 3,
     title: "No more TypeScript for me",
-    image: "https: //f4.bcbits.com/img/a1435058381_65.jpg",
+    image: "https://f4.bcbits.com/img/a1435058381_65.jpg",
     artists: ["Tenno"],
     album: "Study Session",
     duration: "2:10",
@@ -238,7 +260,7 @@ const songs = [
   },
 ];
 
-const playlists = [
+const playlists: Playlist[] = [
   {
     id: "1",
     albumId: 1,
@@ -290,3 +312,5 @@ const playlists = [
     artists: ["WFS", "Nadav Cohen"],
   },
 ];
+
+export { songs, playlists };

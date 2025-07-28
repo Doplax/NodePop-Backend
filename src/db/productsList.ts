@@ -1,4 +1,17 @@
-const productsList = [
+interface Photo {
+  data: Buffer | null;
+  contentType: string;
+}
+
+interface Product {
+  name: string;
+  price: number;
+  isForSale: boolean;
+  photo: Photo;
+  tags: string[];
+}
+
+const productsList: Product[] = [
   {
     name: "MacBook Pro",
     price: 1299,
@@ -51,4 +64,4 @@ const productsList = [
   },
 ];
 
-module.exports = productsList;
+export default productsList;
