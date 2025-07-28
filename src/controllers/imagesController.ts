@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import Product from "../models/Product";
-import handleHttpError from "../utils/errorHandler";
+import Product from "@/models/Product";
+import handleHttpError from "@/utils/errorHandler";
 
 export const getImage = async (req: Request, res: Response): Promise<void> => {
   try {

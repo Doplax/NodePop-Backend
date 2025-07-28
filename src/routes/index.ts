@@ -1,18 +1,18 @@
 // Import middlewares and modules
 import { Request, Response, NextFunction, Router } from "express";
-import authMiddleware from "../middlewares/authMiddleware";
+import authMiddleware from "@/middlewares/authMiddleware";
 
 const router = Router();
 
 // Import routes and controllers
-import authRoutes from "./api/auth";
-import emailRoutes from "./api/email";
-import productRoutes from "./api/products";
-import imagesRoutes from "./api/images";
-import swaggerRoutes from "./api/swaggerDocs";
+import authRoutes from "@/routes/api/auth";
+import emailRoutes from "@/routes/api/email";
+import productRoutes from "@/routes/api/products";
+import imagesRoutes from "@/routes/api/images";
+import swaggerRoutes from "@/routes/api/swaggerDocs";
 
-import tracksRoutes from "./api/tracks";
-import changeLocale from "./web/changeLocale";
+import tracksRoutes from "@/routes/api/tracks";
+import changeLocale from "@/routes/web/changeLocale";
 
 // VIEW ROUTES
 router.get("/", (req: Request, res: Response, next: NextFunction) => {

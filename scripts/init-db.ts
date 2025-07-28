@@ -1,13 +1,13 @@
 "use strict";
 
-import products from "../src/db/productsList";
+import products from "@/db/productsList";
 import dotenv from "dotenv";
 dotenv.config();
 import readline from "node:readline";
-import dbConnect from "../src/config/mongo";
-import Product from "../src/models/Product";
-import User from "../src/models/User";
-import { encrypt } from "../src/utils/handlePassword";
+import dbConnect from "@/config/mongo";
+import Product from "@/models/Product";
+import User from "@/models/User";
+import { encrypt } from "@/utils/handlePassword";
 
 async function main(): Promise<void> {
   try {
