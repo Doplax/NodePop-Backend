@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { Artist, Duration, Track } from "@/modules/Tracks/Tracks.model";
+import { Artist, Duration, Track } from "@/modules/tracks/Tracks.model";
 
 dotenv.config();
 

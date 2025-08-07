@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import handleHttpError from "@/utils/errorHandler";
 import { sendEmail } from "@/config/nodemailerConfig";
-import contactMeTemplate from "@/modules/Email/templates/contactMeTemplate";
+import contactMeTemplate from "@/modules/email/templates/contactMeTemplate";
 
 export const contactMe = async (req: Request, res: Response): Promise<void> => {
   try {

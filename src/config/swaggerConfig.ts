@@ -1,7 +1,7 @@
 import swaggerJSDoc from "swagger-jsdoc";
 import path from "node:path";
 
-import { productSwaggerDocs, userSwaggerDocs } from "@/modules/Swagger/docs/index";
+import { productSwaggerDocs, userSwaggerDocs } from "@/modules/swagger/docs/index";
 
 const swaggerOptions = {
   definition: {

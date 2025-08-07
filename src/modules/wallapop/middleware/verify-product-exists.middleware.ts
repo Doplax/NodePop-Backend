@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import Product from "@/modules/Wallapop/Models/Product.model";
+import Product from "@/modules/wallapop/models/Product.model";
 import handleHttpError from "@/utils/errorHandler";
 
 const verifyProductExists = async (req: Request, res: Response, next: NextFunction): Promise<void> => {

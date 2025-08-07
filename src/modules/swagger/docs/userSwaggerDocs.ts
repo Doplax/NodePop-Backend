@@ -1,4 +1,4 @@
-import User from "@/modules/Wallapop/Models/User.model";
+import User from "@/modules/wallapop/models/User.model";
 import { generateSwaggerSchema } from "@/utils/swaggerUtils";
 
 const userSwaggerSchema = generateSwaggerSchema(User.schema);

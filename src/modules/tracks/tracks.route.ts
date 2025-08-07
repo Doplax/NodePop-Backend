@@ -6,7 +6,7 @@ import {
   createItem,
   deleteItem,
   updateItem,
-} from "@/modules/Tracks/tracks.controller";
+} from "@/modules/tracks/tracks.controller";
 //const { validateCreate } = require("../validators/users");
 
 router.get("/", getItems);
