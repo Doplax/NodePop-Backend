@@ -1,6 +1,6 @@
 import { Router } from "express";
 const router = Router();
-import { getImage } from "@/modules/Products/controller/images.controller";
+import { getImage } from "@/modules/Wallapop/controller/images.controller";
 
 /**
  * @swagger

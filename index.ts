@@ -9,7 +9,7 @@ import http from "node:http";
 import cookieParser from "cookie-parser";
 
 // Configuraciones internas
-import {indexRouter} from "@/routes/index.route";
+import {indexRouter} from "./index.route";
 import i18n from "@/config/i18nConfigure";
 
 // Conexión a la DB

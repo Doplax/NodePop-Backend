@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Product from "@/modules/Products/Models/Product.model";
+import Product from "@/modules/Wallapop/Models/Product.model";
 import { matchedData } from "express-validator";
 import handleHttpError from "@/utils/errorHandler";
 import { transformProduct } from "@/utils/transformProduct";

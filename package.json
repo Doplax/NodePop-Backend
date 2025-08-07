@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=development DEBUG=nodeapp:* nodemon ./index.js",
+    "start": "cross-env NODE_ENV=development DEBUG=nodeapp:* nodemon ./index.ts",
     "dev": "cross-env NODE_ENV=development DEBUG=nodeapp:* nodemon --watch src --ext ts --exec ts-node index.ts",
     "dev:cluster": "cross-env DEBUG=nodeapp:* nodemon --inspect --exec ts-node ./src/bin/cluster.ts && ts-node ./microservices/thumbnailCote.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -45,8 +45,7 @@
     "npm": "^10.4.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
-    "vercel": "^37.4.0",
-    "yarn": "^1.22.22"
+    "vercel": "^37.4.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",

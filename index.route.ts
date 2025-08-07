@@ -7,8 +7,8 @@ const router = Router();
 // Import routes and controllers
 import authRoutes from "@/modules/Auth/auth.route";
 import emailRoutes from "@/modules/Email/email.route";
-import productRoutes from "@/modules/Products/products.route";
-import imagesRoutes from "@/modules/Products/images.route";
+import productRoutes from "@/modules/Wallapop/products.route";
+import imagesRoutes from "@/modules/Wallapop/images.route";
 import swaggerRoutes from "@/modules/Swagger/swagger-docs.route";
 
 import tracksRoutes from "@/modules/Tracks/tracks.route";

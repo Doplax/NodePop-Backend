@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Product from "@/modules/Products/Models/Product.model";
+import Product from "@/modules/Wallapop/Models/Product.model";
 import handleHttpError from "@/utils/errorHandler";
 
 export const getImage = async (req: Request, res: Response): Promise<void> => {
@@ -14,7 +14,9 @@ export const getImage = async (req: Request, res: Response): Promise<void> => {
     const { data, contentType } = product.photo;
     console.log("contentType", contentType);
     res.set("Content-Type", contentType);
-    res.send(Buffer.from(data));
+    if(data) {
+      res.send(Buffer.from(data));
+    }
   } catch (error) {
     handleHttpError(res, "ERROR_FETCHING_IMAGE", 404);
   }

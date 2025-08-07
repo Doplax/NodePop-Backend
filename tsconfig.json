@@ -7,9 +7,10 @@
     "esModuleInterop": true,
     "strict": true,
     "skipLibCheck": true,
-    "baseUrl": "./src",            // <-- esto es clave
+    "baseUrl": "./",            
     "paths": {
-      "@/*": ["*"]                 // <-- alias principal
+      "@/public/*": ["./public/*"],      
+      "@/*": ["./src/*"]  
     }
   },
   "include": [

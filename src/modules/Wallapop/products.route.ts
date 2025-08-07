@@ -1,15 +1,15 @@
 import { Router } from "express";
 const router = Router();
-import productValidationRules from "@/modules/Products/validators/productValidator";
+import productValidationRules from "@/modules/Wallapop/validators/product.validator";
 import {
   getItems,
   getItem,
   createItem,
   updateItem,
   deleteItem,
-} from "@/modules/Products/controller/product.controller";
-import uploadMiddleware from "@/modules/Products/middleware/uploadMiddleware";
-import verifyProductExists from "@/modules/Products/middleware/verify-product-exists.middleware";
+} from "@/modules/Wallapop/controller/product.controller";
+import uploadMiddleware from "@/modules/Wallapop/middleware/upload.middleware";
+import verifyProductExists from "@/modules/Wallapop/middleware/verify-product-exists.middleware";
 
 /**
  * @swagger
