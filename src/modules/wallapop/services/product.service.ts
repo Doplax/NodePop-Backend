@@ -1,63 +1,63 @@
 import { Request } from "express";
-import Product, { IProduct } from "@/modules/wallapop/models/Product.model"; // <-- removed IProductDocument
-import { transformProduct } from "@/utils/transformProduct";
-
-type ProductBody = {
-  name: string; // <-- e.g., "TV"
-  price: number; // <-- e.g., 200
-  isForSale?: boolean; // <-- e.g., true
-  tags?: string[]; // <-- e.g., ["Laptop"]
-  [key: string]: unknown;
-};
-
-type ProductFile = {
-  buffer: Buffer; // <-- e.g., <Buffer ...>
-  mimetype: string; // <-- e.g., "image/png"
-};
+import { DocumentType } from "@typegoose/typegoose";
+import ProductModel, { Product } from "@/modules/wallapop/models/Product.model"; // <-- Updated import
 
 export class ProductService {
-  async getAllProducts(req: Request): Promise<ReturnType<typeof transformProduct>[]> {
-    const products: IProduct[] = await Product.find({}); // <-- use IProduct
-    // products: [IProduct, IProduct, ...]
-    return products.map((product) => transformProduct(product, req));
-    // transformProduct(product, req): e.g., TransformedProduct
+  private transformProduct(product: DocumentType<Product>, req: Request) {
+    const productData = product.toObject();
+    
+    const { photo, ...rest } = productData;
+    
+    return {
+      ...rest,
+      imgSrc: photo?.data
+        ? `${req.protocol}://${req.get("host")}/api/images/${product._id}` 
+        : null,
+    };
   }
 
-  async getProductById(id: string, req: Request): Promise<ReturnType<typeof transformProduct> | null> {
-    const product: IProduct | null = await Product.findById(id); // <-- use IProduct
-    // product: IProduct | null
+  async getAllProducts(req: Request) {
+    const products = await ProductModel.find({}); 
+    
+    return products.map((product) => this.transformProduct(product, req));
+  }
+
+  async getProductById(id: string, req: Request) {
+    const product = await ProductModel.findById(id);
+    
     if (!product) return null;
-    return transformProduct(product, req);
+    return this.transformProduct(product, req);
   }
 
-  async createProduct(body: ProductBody, file: ProductFile): Promise<IProduct> {
-    // body: { name: "TV", price: 200 }
-    // file: { buffer: <Buffer>, mimetype: "image/png" }
-    return Product.create({
-      ...body,
-      photo: { data: file.buffer, contentType: file.mimetype }
-    });
+  async createProduct(
+    productData: Partial<Product>, 
+    file?: { buffer: Buffer, mimetype: string }
+  ) {  
+    
+    const data = file 
+      ? { ...productData, photo: { data: file.buffer, contentType: file.mimetype } }
+      : productData;
+      
+    return ProductModel.create(data);
   }
 
   async updateProduct(
     id: string,
-    body: ProductBody,
-    file?: ProductFile
-  ): Promise<IProduct | null> { // <-- use IProduct
-    // id: "abc123"
-    // body: { name: "TV", price: 250 }
-    // file: { buffer: <Buffer>, mimetype: "image/png" } | undefined
+    productData: Partial<Product>,
+    file?: { buffer: Buffer, mimetype: string }
+  ) {  
+    
     const update = file
-      ? { ...body, photo: { data: file.buffer, contentType: file.mimetype } }
-      : body;
-    return Product.findOneAndUpdate({ _id: id }, update, {
+      ? { ...productData, photo: { data: file.buffer, contentType: file.mimetype } }
+      : productData;
+      
+    return ProductModel.findByIdAndUpdate(id, update, {
       new: true,
       runValidators: true,
     });
   }
 
-  async deleteProduct(id: string): Promise<IProduct | null> { // <-- use IProduct
-    // id: "abc123"
-    return Product.findByIdAndDelete(id);
+  async deleteProduct(id: string) {
+    return ProductModel.findByIdAndDelete(id);
   }
 }

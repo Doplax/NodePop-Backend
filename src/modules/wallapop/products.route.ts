@@ -9,7 +9,7 @@ import {
   deleteItem,
 } from "@/modules/wallapop/controller/product.controller";
 import uploadMiddleware from "@/modules/wallapop/middleware/upload.middleware";
-import verifyProductExists from "@/modules/wallapop/middleware/verify-product-exists.middleware";
+import verifyProductExists from "@/modules/wallapop/middleware/product-validation.middleware";
 
 /**
  * @swagger

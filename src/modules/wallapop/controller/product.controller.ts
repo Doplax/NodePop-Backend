@@ -31,11 +31,13 @@ export const getItem = async (req: Request, res: Response): Promise<void> => {
 export const createItem = async (req: Request, res: Response): Promise<void> => {
   try {
     const body = matchedData(req, { locations: ["body"] });
+    console.log(body);
     const file = req.file;
     if (!file) {
       handleHttpError(res, "ERROR_CREATE_ITEMS: No images were uploaded", 400);
       return;
     }
+    //@ts-ignore
     const data = await productService.createProduct(body, file); 
     res.send({ data });
   } catch (error: any) {
@@ -48,6 +50,7 @@ export const updateItem = async (req: Request, res: Response): Promise<void> => 
     const { id } = req.params;
     const body = matchedData(req);
     const file = req.file;
+    //@ts-ignore
     const data = await productService.updateProduct(id, body, file); 
     if (!data) {
       handleHttpError(res, "ERROR_UPDATE_ITEM: Product not Found", 404);

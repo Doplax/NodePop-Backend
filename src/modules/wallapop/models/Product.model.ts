@@ -1,55 +1,39 @@
-import { Schema, model, Document } from "mongoose";
+import { prop, getModelForClass } from '@typegoose/typegoose';
+import { IsString, IsNumber, Min, Max, IsOptional, IsEnum, IsNotEmpty, IsBoolean} from 'class-validator';
 
-export type Tag = "Laptop" | "Tablet" | "Smartphone" | "Desktop";
-
-export interface ProductData {
-  name: string;
-  price: number;
-  isForSale?: boolean;
-  photo?: {
-    data: Buffer | null;
-    contentType: string;
+export class Product {
+  @prop({ required: true, trim: true }) 
+  @IsString() 
+  @IsNotEmpty()                     
+  public name!: string;              
+  
+  @prop({ required: true, min: 0, max: 99999 })
+  @IsNumber()
+  @Min(0)
+  @Max(99999)
+  public price!: number;             
+  
+  @prop({ default: true })
+  @IsOptional()
+  @IsBoolean()
+  public isForSale?: boolean;        
+  
+  @prop({ _id: false })              
+  @IsOptional()
+  public photo?: {
+    data: Buffer | null;             
+    contentType: string;             
   };
-  tags?: Tag[];
+  
+  @prop({ type: () => String, enum: ["Laptop", "Tablet", "Smartphone", "Desktop"] })
+  @IsOptional()
+  @IsEnum(["Laptop", "Tablet", "Smartphone", "Desktop"], { each: true })
+  public tags?: string[];            
 }
 
-export interface IProduct extends ProductData, Document {}
 
-const ProductSchema: Schema<IProduct> = new Schema(
-  {
-    name: {
-      type: String,
-      required: [true, "The name field is required"],
-      trim: true,
-    },
-    price: {
-      type: Number,
-      required: true,
-      min: [0, "The minimum price value is 0"],
-      max: [99999, "The maximum price value is 99999"],
-    },
-    isForSale: {
-      type: Boolean,
-      default: true,
-    },
-    photo: {
-      data: Buffer,
-      contentType: String,
-    },
-    tags: [
-      {
-        type: String,
-        enum: ["Laptop", "Tablet", "Smartphone", "Desktop"],
-      },
-    ],
-  },
-  {
-    versionKey: false,
-    //timestamps: true,
-  }
-);
+export const ProductMongooseModel  = getModelForClass(Product, {
+  schemaOptions: { versionKey: false } 
+});
 
-// Modelo
-const Product = model<IProduct>("Product", ProductSchema); // ✅
-
-export default Product;
+export default ProductMongooseModel;
