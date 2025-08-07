@@ -4,7 +4,7 @@ import path from "node:path";
 // Configuración de i18n
 i18n.configure({
   locales: ["en", "es"],
-  directory: path.join(__dirname, "..", "locales"),
+  directory: path.join(__dirname, "../modules/locales/"),
   defaultLocale: "en",
   autoReload: true,
   syncFiles: true,
