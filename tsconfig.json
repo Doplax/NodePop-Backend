@@ -15,7 +15,7 @@
   "include": [
     "index.ts",
     "src/**/*"
-  ],
+, "index.route.ts"  ],
   "exclude": [
     "node_modules",
     "dist"

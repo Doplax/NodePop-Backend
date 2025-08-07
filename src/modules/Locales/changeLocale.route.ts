@@ -1,5 +1,5 @@
 import express from "express";
-import changeLocale from "@/controllers/changeLocaleController";
+import changeLocale from "@/modules/Locales/changeLocaleController";
 
 const router = express.Router();
 router.get("/:locale", changeLocale);
