@@ -17,6 +17,6 @@
       "@/shared/*": ["src/shared/*"]
     }
   },
-  "include": ["src/**/*", "micro-services/**/*", "index.ts", "src/shared/**/*"],
+  "include": ["src/**/*", "micro-services/**/*", "index.ts", "src/shared/**/*", "seed"],
   "exclude": ["node_modules", "dist", "**/*.test.ts"]
 }

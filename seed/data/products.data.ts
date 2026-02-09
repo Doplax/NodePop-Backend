@@ -1,4 +1,4 @@
-import { ProductData } from "../models/Product.model";
+import { ProductData } from "../../src/models/Product.model";
 
 const productsList: ProductData[] = [
   {
