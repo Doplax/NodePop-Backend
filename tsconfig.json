@@ -1,23 +1,22 @@
 {
   "compilerOptions": {
-    "outDir": "./dist",            
-    "rootDir": ".",                
+    "outDir": "./dist",
+    "rootDir": ".",
     "module": "commonjs",
     "target": "ES2017",
-    "allowJs": true,               
-    "checkJs": false,              
+    "allowJs": true,
+    "checkJs": false,
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"],
+      "@/shared/*": ["src/shared/*"]
+    }
   },
-  "include": [
-    "src/**/*",
-    "micro-services/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",                        
-    "**/*.test.ts"
-  ]
+  "include": ["src/**/*", "micro-services/**/*", "index.ts", "src/shared/**/*"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts"]
 }

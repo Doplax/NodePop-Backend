@@ -1,5 +1,5 @@
 import "dotenv/config";
-import amqplib from "amqplib";
+import amqplib, { ConsumeMessage } from "amqplib";
 import nodemailer, { Transporter } from "nodemailer";
 
 const QUEUE = "email-sender";
@@ -20,7 +20,7 @@ async function main() {
 
   canal.prefetch(1);
 
-  canal.consume(QUEUE, async (mensaje) => {
+  canal.consume(QUEUE, async (mensaje: ConsumeMessage | null) => {
     if (!mensaje) {
       return;
     }
