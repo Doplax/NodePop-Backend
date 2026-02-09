@@ -57,17 +57,17 @@ class LoginController {
       const { email, password } = req.body;
 
       // Buscar el User en la base de datos
-      const User = await User.findOne({ email });
+      const user = (await User.findOne({ email })) as any;
 
       // Si no lo encuentra o la contraseña no coincide --> error
-      if (!User || !(await User.comparePassword(password))) {
+      if (!user || !(await user.comparePassword(password))) {
         res.json({ error: "Invalid credentials" });
         return;
       }
 
       // Si existe y la contraseña coincide --> devolver un JWT
       const tokenJWT = await jwt.sign(
-        { _id: User._id },
+        { _id: user._id },
         process.env.JWT_SECRET!,
         {
           expiresIn: "2h",

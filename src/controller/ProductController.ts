@@ -14,8 +14,9 @@ const getAllProducts = async (
     // Create filter object
     const filter: any = {};
 
-    if (nombre) {
-      filter.nombre = new RegExp(nombre, "i"); // Búsqueda sin distinción de mayúsculas
+    const nombreValue = Array.isArray(nombre) ? nombre[0] : nombre;
+    if (typeof nombreValue === "string" && nombreValue.trim() !== "") {
+      filter.nombre = new RegExp(nombreValue, "i"); // Búsqueda sin distinción de mayúsculas
     }
 
     if (minPrice !== undefined) {
@@ -114,6 +115,14 @@ const deleteProduct = async (
 };
 
 export {
+  createProduct,
+  getAllProducts,
+  getProductById,
+  updateProduct,
+  deleteProduct,
+};
+
+export default {
   createProduct,
   getAllProducts,
   getProductById,

@@ -1,7 +1,9 @@
+import { Request, Response, NextFunction } from "express";
+
 class UsersController {
-  new(req, res, next) {
+  public new(req: Request, res: Response, next: NextFunction) {
     res.render("users-new");
   }
 }
 
-module.exports = UsersController;
+export default UsersController;
