@@ -24,6 +24,10 @@ const usersList: UserData[] = [
     email: "test.user@example.com",
     password: "test1234",
   },
+  {
+    email: "pedro@gmail.com",
+    password: "1234",
+  },
 ];
 
 export { usersList };

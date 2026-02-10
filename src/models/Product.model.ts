@@ -14,7 +14,7 @@ export interface ProductData {
 }
 
 export interface IProduct extends ProductData, Document {
-  _id: Types.ObjectId; 
+  _id: Types.ObjectId;
 }
 const ProductSchema: Schema<IProduct> = new Schema(
   {
@@ -47,7 +47,7 @@ const ProductSchema: Schema<IProduct> = new Schema(
   {
     versionKey: false,
     //timestamps: true,
-  }
+  },
 );
 
 // Modelo

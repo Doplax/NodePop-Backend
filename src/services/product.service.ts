@@ -9,7 +9,6 @@ export class ProductService {
   }
 
   async findByIdOrFail(id: string, req: Request) {
-    // <-- new (throws if not found)
     const product = await Product.findById(id);
     if (!product) {
       throw new Error("Product not found");
