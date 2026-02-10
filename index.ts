@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+
 import express from "express";
 import http from "http";
 import cors from "cors";
@@ -12,7 +13,6 @@ import i18n from "./src/shared/config/i18nConfigure";
 
 // Conexión a la DB
 import connectDB from "./src/shared/config/mongo";
-
 dotenv.config();
 
 // Conectar DB
@@ -27,7 +27,20 @@ const port = normalizePort(process.env.PORT || "3000");
 app.set("port", port);
 
 // Middlewares
-app.use(cors()); // Avoid CORS errors
+app.use(
+  cors({
+    // Array con los dominios permitidos
+    origin: [
+      "http://localhost:5173", // Tu frontend en desarrollo (Vite)
+      "http://localhost:3000", // Tu frontend en desarrollo (alternativo)
+      "https://node-pop-frontend.vercel.app", // Tu frontend en producción (Vercel)
+    ],
+    credentials: true, // Permite cookies y headers de autorización
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+  }),
+);
+
 app.use(express.json()); // Allows to receive information in JSON
 app.use(express.urlencoded({ extended: false })); // Parse request bodies
 app.use(express.static(path.join(__dirname, "public"))); // Serves static files
