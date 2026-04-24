@@ -1,22 +1,22 @@
-import Product, { IProduct } from "../models/Product.model";
+import Product, { IProduct, ProductData } from "../models/Product.model";
 import { transformProduct } from "../shared/utils/transformProduct";
 import { Request } from "express";
 
 export class ProductService {
-  async findAll(req: Request) {
+  async findAll(req: Request): Promise<any[]> {
     const products = await Product.find();
     return products.map((p) => transformProduct(p));
   }
 
-  async findByIdOrFail(id: string, req: Request) {
+  async findByIdOrFail(id: string, req: Request): Promise<any> {
     const product = await Product.findById(id);
     if (!product) {
-      throw new Error("Product not found");
+      throw new Error("NOT_FOUND");
     }
     return transformProduct(product);
   }
 
-  async create(data: any, file: Express.Multer.File) {
+  async create(data: ProductData, file: Express.Multer.File): Promise<IProduct> {
     const product = await Product.create({
       ...data,
       photo: { data: file.buffer, contentType: file.mimetype },
@@ -24,7 +24,7 @@ export class ProductService {
     return product;
   }
 
-  async update(id: string, data: any, file?: Express.Multer.File) {
+  async update(id: string, data: Partial<ProductData>, file?: Express.Multer.File): Promise<any> {
     const update = file
       ? { ...data, photo: { data: file.buffer, contentType: file.mimetype } }
       : data;
@@ -34,14 +34,14 @@ export class ProductService {
       runValidators: true,
     });
 
-    if (!product) throw new Error("NOT_FOUND"); // <-- centralize
+    if (!product) throw new Error("NOT_FOUND");
 
     return product;
   }
 
-  async delete(id: string) {
+  async delete(id: string): Promise<any> {
     const deleted = await Product.findByIdAndDelete(id);
-    if (!deleted) throw new Error("NOT_FOUND"); // <-- centralize
+    if (!deleted) throw new Error("NOT_FOUND");
     return deleted;
   }
 }
