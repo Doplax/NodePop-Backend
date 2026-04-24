@@ -27,17 +27,25 @@ const port = normalizePort(process.env.PORT || "3000");
 app.set("port", port);
 
 // Middlewares
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:3000",
+  "https://node-pop-frontend.vercel.app",
+];
+
 app.use(
   cors({
-    // Array con los dominios permitidos
-    origin: [
-      "http://localhost:5173", // Tu frontend en desarrollo (Vite)
-      "http://localhost:3000", // Tu frontend en desarrollo (alternativo)
-      "https://node-pop-frontend.vercel.app", // Tu frontend en producción (Vercel)
-    ],
-    credentials: true, // Permite cookies y headers de autorización
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("CORS not allowed"));
+      }
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+    optionsSuccessStatus: 200,
   }),
 );
 
