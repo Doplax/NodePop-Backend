@@ -9,7 +9,7 @@ const productsList: ProductData[] = [
       data: null,
       contentType: "image/jpeg",
     },
-    tags: ["Laptop", "Smartphone"],
+    tags: ["work", "mobile"],
   },
   {
     name: "Samsung Galaxy Tab",
@@ -19,7 +19,7 @@ const productsList: ProductData[] = [
       data: null,
       contentType: "image/png",
     },
-    tags: ["Tablet"],
+    tags: ["mobile"],
   },
   {
     name: "Dell Desktop PC",
@@ -29,7 +29,7 @@ const productsList: ProductData[] = [
       data: null,
       contentType: "image/jpeg",
     },
-    tags: ["Desktop"],
+    tags: ["work"],
   },
   {
     name: "iPhone 14",
@@ -39,7 +39,7 @@ const productsList: ProductData[] = [
       data: null,
       contentType: "image/jpeg",
     },
-    tags: ["Smartphone"],
+    tags: ["mobile", "lifestyle"],
   },
   {
     name: "Microsoft Surface Laptop",
@@ -49,7 +49,7 @@ const productsList: ProductData[] = [
       data: null,
       contentType: "image/png",
     },
-    tags: ["Laptop", "Tablet"],
+    tags: ["work", "mobile"],
   },
 ];
 
