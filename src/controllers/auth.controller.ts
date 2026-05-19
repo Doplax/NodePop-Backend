@@ -1,17 +1,21 @@
 import { Request, Response } from "express";
-import User, { IUser } from "../models/User.model";
+import { matchedData } from "express-validator";
+import User from "../models/User.model";
 import handleHttpError from "../shared/utils/errorHandler";
 import { encrypt, compare } from "../shared/utils/handlePassword";
 import { tokenSign } from "../shared/utils/handleJwt";
 
-const { matchedData } = require("express-validator");
+const sanitizeUser = (user: { _id: unknown; email: string }) => ({
+  _id: user._id,
+  email: user.email,
+});
 
 export const registerCtrl = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
   try {
-    const data = matchedData(req);
+    const data = matchedData(req) as { email: string; password: string };
 
     const userExists = await User.findOne({ email: data.email });
     if (userExists) {
@@ -20,15 +24,14 @@ export const registerCtrl = async (
     }
 
     const password = await encrypt(data.password);
-    const body = { ...data, password };
-    const dataUser = await User.create(body);
-    dataUser.set("password", undefined, { strict: false });
+    const created = await User.create({ email: data.email, password });
 
-    const result = {
-      token: await tokenSign(dataUser),
-      user: dataUser,
-    };
-    res.status(201).send({ data: result });
+    res.status(201).send({
+      data: {
+        token: await tokenSign(created),
+        user: sanitizeUser(created),
+      },
+    });
   } catch (e) {
     console.error(e);
     handleHttpError(res, "ERROR_REGISTER_USER");
@@ -37,39 +40,34 @@ export const registerCtrl = async (
 
 export const loginCtrl = async (req: Request, res: Response): Promise<void> => {
   try {
-    const data = matchedData(req);
-    const user = await User.findOne({ email: data.email });
+    const data = matchedData(req) as { email: string; password: string };
+    const user = await User.findOne({ email: data.email }).select(
+      "+password email _id",
+    );
 
     if (!user) {
-      handleHttpError(res, "USER_NOT_EXISTS", 404);
+      handleHttpError(res, "INVALID_CREDENTIALS", 401);
       return;
     }
 
-    const hashPassword = user.get("password");
-    const check = await compare(data.password, hashPassword);
-
+    const check = await compare(data.password, user.password);
     if (!check) {
-      handleHttpError(res, "PASSWORD_INVALID", 401);
+      handleHttpError(res, "INVALID_CREDENTIALS", 401);
       return;
     }
 
     const token = await tokenSign(user);
-    res.send({ token });
+    res.send({ token, user: sanitizeUser(user) });
   } catch (e) {
     console.error(e);
     handleHttpError(res, "ERROR_LOGIN_USER");
   }
 };
 
-export const getAllUsersCtrl = async (
-  _req: Request,
-  res: Response,
-): Promise<void> => {
-  try {
-    const users = await User.find({});
-    res.send(users);
-  } catch (e) {
-    console.error(e);
-    handleHttpError(res, "ERROR_GET_ALL_USERS");
+export const meCtrl = async (req: Request, res: Response): Promise<void> => {
+  if (!req.user) {
+    handleHttpError(res, "ERROR_UNAUTHORIZED", 401);
+    return;
   }
+  res.send({ data: sanitizeUser(req.user as { _id: unknown; email: string }) });
 };

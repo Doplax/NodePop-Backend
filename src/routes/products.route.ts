@@ -9,6 +9,7 @@ import {
 } from "../controllers/product.controller";
 import uploadMiddleware from "../middlewares/upload.middleware";
 import verifyProductExists from "../middlewares/verify-product-exists.middleware";
+import authMiddleware from "../middlewares/auth.middleware";
 const router = Router();
 
 /**
@@ -81,6 +82,7 @@ router.get("/:id", getItem);
  */
 router.post(
   "/",
+  authMiddleware,
   uploadMiddleware.uploadSingle,
   productValidationRules,
   createItem,
@@ -115,6 +117,7 @@ router.post(
  */
 router.put(
   "/:id",
+  authMiddleware,
   verifyProductExists,
   uploadMiddleware.uploadSingle,
   productValidationRules,
@@ -140,6 +143,6 @@ router.put(
  *       404:
  *         description: Producto no encontrado
  */
-router.delete("/:id", deleteItem);
+router.delete("/:id", authMiddleware, verifyProductExists, deleteItem);
 
 export default router;

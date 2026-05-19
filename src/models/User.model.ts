@@ -1,13 +1,13 @@
 import { Schema, model, Document, Types } from "mongoose";
 
-// Interfaz con los campos del usuario
 export interface IUser extends Document {
   _id: Types.ObjectId;
   email: string;
   password: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-// Esquema Mongoose
 const UserSchema: Schema<IUser> = new Schema(
   {
     email: {
@@ -15,20 +15,28 @@ const UserSchema: Schema<IUser> = new Schema(
       required: [true, "The email field is required"],
       trim: true,
       unique: true,
+      lowercase: true,
+      match: [/^\S+@\S+\.\S+$/, "Invalid email format"],
     },
     password: {
       type: String,
       required: true,
       trim: true,
+      select: false,
     },
   },
   {
     versionKey: false,
-    //timestamps: true,
+    timestamps: true,
+    toJSON: {
+      transform: (_doc, ret) => {
+        delete ret.password;
+        return ret;
+      },
+    },
   },
 );
 
-// Modelo
 const User = model<IUser>("User", UserSchema);
 
 export default User;

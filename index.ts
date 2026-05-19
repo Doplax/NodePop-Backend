@@ -1,24 +1,24 @@
 import dotenv from "dotenv";
+dotenv.config();
 
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import http from "http";
 import cors from "cors";
 import path from "node:path";
 import logger from "morgan";
-import cookieParser from "cookie-parser"; // Carga las variables de entorno
+import cookieParser from "cookie-parser";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
 
-// Configuraciones internas
 import { indexRouter } from "./index.route";
 import i18n from "./src/shared/config/i18nConfigure";
-
-// Conexión a la DB
 import connectDB from "./src/shared/config/mongo";
-dotenv.config();
 
-// Conectar DB
 connectDB();
 
 const app = express();
+
+app.set("trust proxy", 1);
 
 /**
  * Configuración del Puerto
@@ -27,12 +27,22 @@ const port = normalizePort(process.env.PORT || "3000");
 app.set("port", port);
 
 // Middlewares
-const allowedOrigins = [
+const defaultOrigins = [
   "http://localhost:5173",
   "http://localhost:3000",
   "https://node-pop-frontend.vercel.app",
 ];
+const allowedOrigins = (process.env.CORS_ORIGINS || "")
+  .split(",")
+  .map((o) => o.trim())
+  .filter(Boolean)
+  .concat(defaultOrigins);
 
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+  }),
+);
 app.use(
   cors({
     origin: (origin, callback) => {
@@ -49,15 +59,34 @@ app.use(
   }),
 );
 
-app.use(express.json()); // Allows to receive information in JSON
-app.use(express.urlencoded({ extended: false })); // Parse request bodies
-app.use(express.static(path.join(__dirname, "public"))); // Serves static files
-app.use(logger("dev")); // Log requests and responses
+app.use(express.json({ limit: "1mb" }));
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, "public")));
+if (process.env.NODE_ENV !== "test") {
+  app.use(logger(process.env.NODE_ENV === "production" ? "combined" : "dev"));
+}
 app.use(cookieParser());
-app.use((req: any, res: any, next: any) => {
-  i18n.init(req, res);
+app.use((req, res, next) => {
+  // i18n's @types signature is overly narrow; cast at the boundary.
+  i18n.init(req as any, res as any);
   next();
 });
+
+// Health check (lightweight, no DB roundtrip)
+app.get("/health", (_req, res) => {
+  res.json({ status: "ok", uptime: process.uptime() });
+});
+
+// Brute-force protection on auth endpoints
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { success: false, error: "TOO_MANY_AUTH_ATTEMPTS" },
+});
+app.use("/api/auth/login", authLimiter);
+app.use("/api/auth/register", authLimiter);
 
 // View Engine Setup
 app.set("views", path.join(__dirname, "src", "views"));
@@ -66,14 +95,41 @@ app.set("view engine", "ejs");
 // Routes
 app.use(indexRouter);
 
+// 404 fallback
+app.use((req: Request, res: Response) => {
+  res.status(404).json({ success: false, error: "NOT_FOUND", path: req.path });
+});
+
+// Centralised error handler
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+  if (err?.message === "CORS not allowed") {
+    res.status(403).json({ success: false, error: "CORS_NOT_ALLOWED" });
+    return;
+  }
+  if (err?.name === "MulterError") {
+    res.status(400).json({ success: false, error: err.code || "UPLOAD_ERROR" });
+    return;
+  }
+  console.error(err);
+  const status = typeof err?.status === "number" ? err.status : 500;
+  res.status(status).json({
+    success: false,
+    error: err?.message || "INTERNAL_SERVER_ERROR",
+  });
+});
+
 /**
  * Creación y arranque del Servidor HTTP
  */
 const server = http.createServer(app);
 
-server.listen(port);
-server.on("error", onError);
-server.on("listening", onListening);
+// Vercel handles the listener itself when imported as a serverless function.
+if (process.env.VERCEL !== "1") {
+  server.listen(port);
+  server.on("error", onError);
+  server.on("listening", onListening);
+}
 
 /**
  * Funciones Helper

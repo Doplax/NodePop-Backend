@@ -2,9 +2,10 @@ import { Router } from "express";
 import {
   loginCtrl,
   registerCtrl,
-  getAllUsersCtrl,
+  meCtrl,
 } from "../controllers/auth.controller";
 import { validatorRegister, validatorLogin } from "../validators/authValidator";
+import authMiddleware from "../middlewares/auth.middleware";
 const router = Router();
 
 /**
@@ -59,18 +60,18 @@ router.post("/login", validatorLogin, loginCtrl);
 
 /**
  * @swagger
- * /api/auth/users:
+ * /api/auth/me:
  *   get:
- *     summary: Obtiene la lista de todos los usuarios
+ *     summary: Devuelve la información del usuario autenticado
  *     tags: [Auth]
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: Retorna una lista de usuarios.
+ *         description: Usuario actual.
+ *       401:
+ *         description: Token inválido o ausente.
  */
-router.get("/users", getAllUsersCtrl);
-
-router.get("/test", (req, res) => {
-  res.send({ message: "Auth route is working!" });
-});
+router.get("/me", authMiddleware, meCtrl);
 
 export default router;
