@@ -88,10 +88,6 @@ const authLimiter = rateLimit({
 app.use("/api/auth/login", authLimiter);
 app.use("/api/auth/register", authLimiter);
 
-// View Engine Setup
-app.set("views", path.join(__dirname, "src", "views"));
-app.set("view engine", "ejs");
-
 // Routes
 app.use(indexRouter);
 
