@@ -17,7 +17,10 @@ export const getItems = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-export const getItem = async (req: Request, res: Response): Promise<void> => {
+export const getItem = async (
+  req: Request<{ id: string }>,
+  res: Response,
+): Promise<void> => {
   if (!isValidObjectId(req.params.id)) {
     handleHttpError(res, "INVALID_PRODUCT_ID", 400);
     return;
@@ -54,7 +57,7 @@ export const createItem = async (
 };
 
 export const updateItem = async (
-  req: Request,
+  req: Request<{ id: string }>,
   res: Response,
 ): Promise<void> => {
   if (!isValidObjectId(req.params.id)) {
@@ -62,9 +65,9 @@ export const updateItem = async (
     return;
   }
   try {
-    const body = matchedData(req, { locations: ["body"] }) as Partial<
-      ProductData
-    >;
+    const body = matchedData(req, {
+      locations: ["body"],
+    }) as Partial<ProductData>;
     const updated = await productService.update(req.params.id, body, req.file);
     res.send({ data: updated });
   } catch (error) {
@@ -78,7 +81,7 @@ export const updateItem = async (
 };
 
 export const deleteItem = async (
-  req: Request,
+  req: Request<{ id: string }>,
   res: Response,
 ): Promise<void> => {
   if (!isValidObjectId(req.params.id)) {

@@ -4,7 +4,7 @@ import Product from "../models/Product.model";
 import handleHttpError from "../shared/utils/errorHandler";
 
 const verifyProductExists = async (
-  req: Request,
+  req: Request<{ id: string }>,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {

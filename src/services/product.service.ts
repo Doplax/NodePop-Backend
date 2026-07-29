@@ -1,11 +1,14 @@
-import { FilterQuery, SortOrder } from "mongoose";
+import { QueryFilter, SortOrder } from "mongoose";
 import Product, {
   IProduct,
   PRODUCT_TAGS,
   ProductData,
   Tag,
 } from "../models/Product.model";
-import { ProductView, transformProduct } from "../shared/utils/transformProduct";
+import {
+  ProductView,
+  transformProduct,
+} from "../shared/utils/transformProduct";
 
 export interface ListQuery {
   search?: string;
@@ -41,9 +44,7 @@ const toBool = (value: unknown): boolean | undefined => {
   return undefined;
 };
 
-const parseSort = (
-  sort?: string,
-): Record<string, SortOrder> => {
+const parseSort = (sort?: string): Record<string, SortOrder> => {
   if (!sort) return { createdAt: -1 };
   const result: Record<string, SortOrder> = {};
   for (const part of sort.split(",")) {
@@ -58,8 +59,8 @@ const parseSort = (
   return Object.keys(result).length > 0 ? result : { createdAt: -1 };
 };
 
-const buildFilter = (query: ListQuery): FilterQuery<IProduct> => {
-  const filter: FilterQuery<IProduct> = {};
+const buildFilter = (query: ListQuery): QueryFilter<IProduct> => {
+  const filter: QueryFilter<IProduct> = {};
 
   if (query.search) {
     const escaped = query.search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");

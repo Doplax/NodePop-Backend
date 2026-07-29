@@ -3,7 +3,10 @@ import { Types } from "mongoose";
 import Product from "../models/Product.model";
 import handleHttpError from "../shared/utils/errorHandler";
 
-export const getImage = async (req: Request, res: Response): Promise<void> => {
+export const getImage = async (
+  req: Request<{ id: string }>,
+  res: Response,
+): Promise<void> => {
   const { id } = req.params;
   if (!Types.ObjectId.isValid(id)) {
     handleHttpError(res, "INVALID_PRODUCT_ID", 400);
