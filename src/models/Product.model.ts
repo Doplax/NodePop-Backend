@@ -1,11 +1,6 @@
 import { Schema, model, Document, Types } from "mongoose";
 
-export const PRODUCT_TAGS = [
-  "lifestyle",
-  "mobile",
-  "motor",
-  "work",
-] as const;
+export const PRODUCT_TAGS = ["lifestyle", "mobile", "motor", "work"] as const;
 export type Tag = (typeof PRODUCT_TAGS)[number];
 
 export interface ProductData {
