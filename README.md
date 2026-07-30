@@ -43,7 +43,7 @@ npm run dev
 Base path: `/api`
 
 ### Auth
-- `POST /api/auth/register` — `{ email, password }`
+- `POST /api/auth/register` — `{ email, password }` → `{ token, user }`
 - `POST /api/auth/login` — `{ email, password }` → `{ token, user }`
 - `GET  /api/auth/me` — current user (requires `Authorization: Bearer <token>`)
 

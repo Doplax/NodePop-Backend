@@ -26,11 +26,11 @@ export const registerCtrl = async (
     const password = await encrypt(data.password);
     const created = await User.create({ email: data.email, password });
 
+    // Misma forma que /login (`{ token, user }`): antes register anidaba la
+    // respuesta bajo `data`, así que el mismo cliente necesitaba dos parsers.
     res.status(201).send({
-      data: {
-        token: await tokenSign(created),
-        user: sanitizeUser(created),
-      },
+      token: await tokenSign(created),
+      user: sanitizeUser(created),
     });
   } catch (e) {
     console.error(e);
