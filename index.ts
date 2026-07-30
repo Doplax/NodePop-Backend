@@ -77,16 +77,30 @@ app.get("/health", (_req, res) => {
   res.json({ status: "ok", uptime: process.uptime() });
 });
 
-// Brute-force protection on auth endpoints
-const authLimiter = rateLimit({
+// Brute-force protection on auth endpoints.
+// Cada endpoint lleva su propio limitador: al compartir una sola instancia,
+// login y registro consumían el mismo cupo de 20 peticiones por IP.
+const loginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 20,
+  limit: 10,
+  // Sólo cuentan los intentos fallidos: antes bastaban 20 inicios de sesión
+  // correctos para bloquear a un usuario legítimo (o a toda una IP con NAT).
+  skipSuccessfulRequests: true,
   standardHeaders: true,
   legacyHeaders: false,
   message: { success: false, error: "TOO_MANY_AUTH_ATTEMPTS" },
 });
-app.use("/api/auth/login", authLimiter);
-app.use("/api/auth/register", authLimiter);
+
+const registerLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  limit: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { success: false, error: "TOO_MANY_AUTH_ATTEMPTS" },
+});
+
+app.use("/api/auth/login", loginLimiter);
+app.use("/api/auth/register", registerLimiter);
 
 // Routes
 app.use(indexRouter);

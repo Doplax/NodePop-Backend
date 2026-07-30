@@ -69,6 +69,10 @@ Base path: `/api`
 ## Security
 
 - `JWT_SECRET` is required in production; the server refuses to start without it.
-- `helmet` is enabled and the login/register endpoints are rate-limited (20 req / 15 min).
+- `helmet` is enabled. Login is rate-limited to 10 **failed** attempts / 15 min
+  per IP (successful logins are not counted); register to 10 req / hour. Each
+  endpoint has its own budget.
+- Login spends the same time on a non-existent email as on a wrong password,
+  so accounts cannot be enumerated by timing the response.
 - Passwords are never returned (schema `select: false` + JSON transform).
 - All write operations on `/api/products` require a valid bearer token.

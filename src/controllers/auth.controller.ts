@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { matchedData } from "express-validator";
 import User from "../models/User.model";
 import handleHttpError from "../shared/utils/errorHandler";
-import { encrypt, compare } from "../shared/utils/handlePassword";
+import { encrypt, compare, fakeCompare } from "../shared/utils/handlePassword";
 import { tokenSign } from "../shared/utils/handleJwt";
 
 const sanitizeUser = (user: { _id: unknown; email: string }) => ({
@@ -46,6 +46,9 @@ export const loginCtrl = async (req: Request, res: Response): Promise<void> => {
     );
 
     if (!user) {
+      // Se compara igualmente contra un hash ficticio para que un email
+      // inexistente tarde lo mismo que uno existente con contraseña errónea.
+      await fakeCompare(data.password);
       handleHttpError(res, "INVALID_CREDENTIALS", 401);
       return;
     }
