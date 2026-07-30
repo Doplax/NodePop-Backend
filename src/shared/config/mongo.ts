@@ -1,7 +1,16 @@
 import mongoose from "mongoose";
 
 const connectDB = async (): Promise<void> => {
-  const DB_URI = process.env.DB_URI || "mongodb://localhost:27017/nodepop";
+  // Se aceptan ambos nombres: el .env de este proyecto define MONGODB_URI,
+  // mientras que el código sólo leía DB_URI, así que la variable configurada
+  // se ignoraba y siempre se caía al valor por defecto.
+  // El host por defecto es 127.0.0.1 y no localhost: en Windows localhost
+  // resuelve primero a ::1 y Mongo escucha sólo en IPv4, lo que provoca un
+  // ECONNREFUSED que luego aparece como un 500 opaco en el login.
+  const DB_URI =
+    process.env.DB_URI ||
+    process.env.MONGODB_URI ||
+    "mongodb://127.0.0.1:27017/nodepop";
 
   mongoose.connection.on("error", (err) => {
     console.error("MongoDB connection error:", err);

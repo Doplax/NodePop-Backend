@@ -30,7 +30,7 @@ npm run dev
 
 | Variable          | Required          | Default                          | Notes                                              |
 | ----------------- | ----------------- | -------------------------------- | -------------------------------------------------- |
-| `DB_URI`          | yes               | `mongodb://localhost:27017/...`  | Mongo connection string                            |
+| `DB_URI`          | yes               | `mongodb://127.0.0.1:27017/nodepop` | Mongo connection string. `MONGODB_URI` also works. On Windows prefer `127.0.0.1` over `localhost` (it resolves to `::1` first) |
 | `JWT_SECRET`      | yes in production | dev fallback (warning logged)    | Use a long random string                           |
 | `JWT_EXPIRES_IN`  | no                | `24h`                            | e.g. `1h`, `7d`                                    |
 | `PORT`            | no                | `3000`                           | HTTP port                                          |
